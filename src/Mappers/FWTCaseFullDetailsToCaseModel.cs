@@ -65,7 +65,7 @@ namespace verint_service.Mappers
             {
                 foreach (var eForm in fwtCaseFullDetails.EformData)
                 {
-                    if (eForm != null)
+                    if (eForm != null && eForm.EformData != null)
                     {
                         foreach (var dataItem in eForm.EformData)
                         {

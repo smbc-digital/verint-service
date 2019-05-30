@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using verint_service.Services;
@@ -19,9 +20,9 @@ namespace verint_service.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery]string caseId)
+        public async Task<IActionResult> Get([FromQuery]string caseId)
         {
-            var verintCase = _caseService.GetCase(caseId);
+            var verintCase = await _caseService.GetCase(caseId);
 
             return Ok(verintCase);
         }
