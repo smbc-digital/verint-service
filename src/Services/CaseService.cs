@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using verint_service.Helpers.VerintConnection;
+using verint_service.Mappers;
 using verint_service.Models;
 using VerintWebService;
 
@@ -29,21 +30,11 @@ namespace verint_service.Services
                 Option = new[] { "all" }
             };
             
-            var caseDetails = await _verintConnection.retrieveCaseDetailsAsync(caseRequest);
+            var response = await _verintConnection.retrieveCaseDetailsAsync(caseRequest);
 
-            var verintCase = new Case
-            {
+            var caseDetails = FWTCaseFullDetailsToCaseMapper.MapFrom(response.FWTCaseFullDetails);
 
-            };
-
-            var caseDetails3 = await _verintConnection.retrieveCaseDetailsAsync(caseRequest);
-
-            var verintCase3 = new Case
-            {
-
-            };
-
-            return verintCase;
+            return caseDetails;
         }
     }
 }

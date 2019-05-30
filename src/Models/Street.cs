@@ -2,6 +2,10 @@
 {
     public class Street
     {
+        public Street()
+        {
+        }
+
         public Street(string strReference, string strDescription)
         {
             this.Reference = strReference;

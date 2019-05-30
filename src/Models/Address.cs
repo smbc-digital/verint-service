@@ -4,6 +4,10 @@ namespace verint_service.Models
 {
     public class Address
     {
+        public Address()
+        {
+        }
+
         public Address(string strReference, string strDescription)
         {
             this.Reference = strReference;
