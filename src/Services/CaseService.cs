@@ -34,6 +34,31 @@ namespace verint_service.Services
 
             var caseDetails = FWTCaseFullDetailsToCaseMapper.MapFrom(response.FWTCaseFullDetails);
 
+            if (response.FWTCaseFullDetails.CoreDetails.AssociatedObject != null)
+            {
+                if (response.FWTCaseFullDetails.CoreDetails.AssociatedObject.ObjectID.ObjectType ==
+                    Common.OrganisationObjectType)
+                {
+                    var organisation = await _verintConnection.retrieveOrganisationAsync(response.FWTCaseFullDetails.CoreDetails.AssociatedObject.ObjectID);
+
+                    if (organisation != null)
+                    {
+                        caseDetails.Organisation = FWTCaseAssociatedOrganisationToOrganisation.MapFrom(organisation.FWTOrganisation);
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(response.FWTCaseFullDetails.Interactions[0].PartyID.ObjectReference[0])
+                    && response.FWTCaseFullDetails.Interactions[0].PartyID.ObjectType == "C1")
+                {
+                    var individual = await _verintConnection.retrieveIndividualAsync(response.FWTCaseFullDetails.Interactions[0].PartyID);
+
+                    if (individual != null)
+                    {
+                        caseDetails.Customer = FWTCaseAssociastedIndividualToCustomer.MapFrom(individual.FWTIndividual);
+                    }
+                }
+            }
+
             return caseDetails;
         }
     }

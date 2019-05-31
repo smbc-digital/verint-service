@@ -2,6 +2,10 @@
 {
     public class Organisation
     {
+        public Organisation()
+        {
+
+        }
         public Organisation(string strReference, string strDescription)
         {
             this.Reference = strReference;
