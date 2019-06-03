@@ -1,10 +1,9 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using verint_service.Controllers;
 using Moq;
-using verint_service.Models;
 using verint_service.Services;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace verint_service_tests.Controllers
 {
@@ -19,26 +18,26 @@ namespace verint_service_tests.Controllers
         }
 
         [Fact]
-        public void Get_ShouldCallCaseService()
+        public async Task Get_ShouldCallCaseService()
         {
             //Arrange
             var caseId = "test case";
 
             //Act
-            _caseController.Get(caseId);
+            await _caseController.Get(caseId);
 
             //Assert
             _mockCaseService.Verify(service => service.GetCase(caseId), Times.Once);
         }
 
         [Fact]
-        public void Get_ShouldReturnOkObjectResult()
+        public async Task Get_ShouldReturnOkObjectResult()
         {
             //Arrange
             var caseId = "test case";
 
             //Act
-            var response = _caseController.Get(caseId);
+            var response = await _caseController.Get(caseId);
 
             //Assert
             Assert.IsAssignableFrom<OkObjectResult>(response);
