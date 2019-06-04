@@ -1,13 +1,12 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 
 namespace verint_service.Controllers
 {
     [Produces("application/json")]
-    [Route("api/v1/[Controller]")]
+    [Route("[Controller]")]
     [ApiController]
-    public class HealthcheckController : ControllerBase
+    public class HealthCheckController : ControllerBase
     {
         [HttpGet]
         public IActionResult Get()
