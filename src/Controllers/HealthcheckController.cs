@@ -16,7 +16,7 @@ namespace verint_service.Controllers
         {
             var name = Assembly.GetEntryAssembly().GetName().Name;
             var assembly = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "verint-service.dll");
-            var version = FileVersionInfo.GetVersionInfo(assembly);
+            var version = FileVersionInfo.GetVersionInfo(assembly).FileVersion;
             return Ok($"{{'Verson': '{version}', 'Name': '{name}'}}");
         }
     }
