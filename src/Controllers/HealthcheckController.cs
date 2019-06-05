@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 
 namespace verint_service.Controllers
@@ -12,7 +15,8 @@ namespace verint_service.Controllers
         public IActionResult Get()
         {
             var name = Assembly.GetEntryAssembly().GetName().Name;
-            var version = Assembly.GetEntryAssembly().GetName().Version.ToString();
+            var assembly = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "verint-service.dll");
+            var version = FileVersionInfo.GetVersionInfo(assembly);
             return Ok($"{{'Verson': '{version}', 'Name': '{name}'}}");
         }
     }
