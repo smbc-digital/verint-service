@@ -25,10 +25,6 @@
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.5.3" />
     <PackageReference Include="System.ServiceModel.Security" Version="4.4.*" />
   </ItemGroup>
-  
-  <PropertyGroup>
-    <EnableMSDeployAppOffline>true</EnableMSDeployAppOffline>
-  </PropertyGroup>
 
   <PropertyGroup>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
