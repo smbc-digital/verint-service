@@ -23,12 +23,10 @@ namespace verint_service
 
         public static void Main(string[] args)
         {
-            var logConfig = new LoggerConfiguration()
+            Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
-                .Enrich.FromLogContext()
-                .WriteTo.Console();
-
-            Log.Logger = Configurator.Create(Configuration, logConfig);
+                .WriteToElasticsearchAws(Configuration)
+                .CreateLogger();
 
             BuildWebHost(args).Run();
         }

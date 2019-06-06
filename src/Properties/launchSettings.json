@@ -14,7 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "swagger/index.html",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "local"
       }
     },
     "verint-service": {
@@ -23,7 +23,7 @@
       "launchUrl": "api/values",
       "applicationUrl": "https://localhost:6000;http://localhost:6001",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "local"
       }
     }
   }
