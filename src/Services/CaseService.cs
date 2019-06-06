@@ -9,7 +9,7 @@ namespace verint_service.Services
 {
     public class CaseService : ICaseService
     {
-        private readonly FLWebInterfaceClient _verintConnection;
+        private readonly IVerintClient _verintConnection;
 
         public CaseService(IVerintConnection verint)
         {
@@ -32,7 +32,7 @@ namespace verint_service.Services
             
             var response = await _verintConnection.retrieveCaseDetailsAsync(caseRequest);
 
-            var caseDetails = FWTCaseFullDetailsToCaseMapper.MapFrom(response.FWTCaseFullDetails);
+            var caseDetails = response.FWTCaseFullDetails.MapToCase();
 
             if (response.FWTCaseFullDetails.CoreDetails.AssociatedObject != null)
             {
@@ -43,7 +43,7 @@ namespace verint_service.Services
 
                     if (organisation != null)
                     {
-                        caseDetails.Organisation = FWTCaseAssociatedOrganisationToOrganisation.MapFrom(organisation.FWTOrganisation);
+                        caseDetails.Organisation = organisation.FWTOrganisation.MapToOrganisation();
                     }
                 }
 
@@ -54,7 +54,7 @@ namespace verint_service.Services
 
                     if (individual != null)
                     {
-                        caseDetails.Customer = FWTCaseAssociastedIndividualToCustomer.MapFrom(individual.FWTIndividual);
+                        caseDetails.Customer = individual.FWTIndividual.MapToCustomer();
                     }
                 }
             }

@@ -49,7 +49,6 @@ namespace verint_service.Mappers
                 }
             }
 
-
             if (individual.ContactEmails != null && individual.ContactEmails.Any())
             {
                 mappedCustomer.Email = individual.ContactEmails.Any(_ => _.Preferred)

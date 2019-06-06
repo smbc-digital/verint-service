@@ -39,7 +39,7 @@ namespace verint_service.Helpers.VerintConnection
             _httpBinding.Security.Mode = BasicHttpSecurityMode.None;
         }
 
-        public FLWebInterfaceClient Client()
+        public IVerintClient Client()
         {
             if (_client == null)
             {

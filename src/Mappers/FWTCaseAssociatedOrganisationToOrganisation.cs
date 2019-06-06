@@ -1,15 +1,16 @@
-﻿using verint_service.Models;
+﻿using System.Linq;
+using verint_service.Models;
 using VerintWebService;
 
 namespace verint_service.Mappers
 {
-    public static class FWTCaseAssociatedOrganisationToOrganisation
+    public static class FwtCaseAssociatedOrganisationToOrganisation
     {
-        public static Organisation MapFrom(FWTOrganisation organisation)
+        public static Organisation MapToOrganisation(this FWTOrganisation organisation)
         {
             var mappedOrganisation = new Organisation();
 
-            if (organisation.SocialContacts != null && organisation.SocialContacts.Length > 0)
+            if (organisation.SocialContacts != null && organisation.SocialContacts.Any())
             {
                 mappedOrganisation.SocialContacts = new SocialContact[organisation.SocialContacts.Length];
                 for (int i = 0; i < organisation.SocialContacts.Length; i++)
@@ -22,13 +23,15 @@ namespace verint_service.Mappers
                 }
             }
 
-            if (organisation.Name != null && organisation.Name[0].FullName != null)
+            if (organisation.Name?[0].FullName != null)
             {
                 mappedOrganisation.Name = organisation.Name[0].FullName;
             }
 
-            if (organisation.ContactEmails != null && organisation.ContactEmails.Length > 0)
+            if (organisation.ContactEmails != null && organisation.ContactEmails.Any())
+            {
                 mappedOrganisation.Email = organisation.ContactEmails[0].EmailAddress;
+            }
 
             return mappedOrganisation;
         }

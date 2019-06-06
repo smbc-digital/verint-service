@@ -25607,6 +25607,7 @@ namespace VerintWebService
         
         public enum EndpointConfiguration
         {
+            
             FL,
         }
     }

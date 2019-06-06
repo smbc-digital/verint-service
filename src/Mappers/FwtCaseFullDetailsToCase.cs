@@ -21,7 +21,6 @@ namespace verint_service.Mappers
                 EventDate = fwtCaseFullDetails.Events.First().Created,
                 Description = fwtCaseFullDetails.CoreDetails.Description,
                 Status = fwtCaseFullDetails.CoreDetails.Status,
-
             };
 
             for (int index = 0; index < fwtCaseFullDetails.CoreDetails.Classification.Length; index++)
@@ -61,7 +60,7 @@ namespace verint_service.Mappers
                 }
             }
 
-            if (fwtCaseFullDetails.EformData != null && fwtCaseFullDetails.EformData.Length > 0)
+            if (fwtCaseFullDetails.EformData != null && fwtCaseFullDetails.EformData.Any())
             {
                 foreach (var eForm in fwtCaseFullDetails.EformData)
                 {
@@ -76,7 +75,7 @@ namespace verint_service.Mappers
                 }
             }
 
-            if (fwtCaseFullDetails.Eforms != null && fwtCaseFullDetails.Eforms.Length > 0)
+            if (fwtCaseFullDetails.Eforms != null && fwtCaseFullDetails.Eforms.Any())
             {
                 var dateCreated = DateTime.MinValue;
                 foreach (var eForm in fwtCaseFullDetails.Eforms)
@@ -89,28 +88,20 @@ namespace verint_service.Mappers
                 }
             }
 
-            if (fwtCaseFullDetails.Notes != null)
+            if (fwtCaseFullDetails.Notes != null && fwtCaseFullDetails.Notes.Any())
             {
+                mappedCase.Notes = new List<Note>();
                 foreach (var note in fwtCaseFullDetails.Notes)
                 {
-                    if (mappedCase.Notes == null)
-                    {
-                        mappedCase.Notes = new List<Note>();
-                    }
-
                     mappedCase.Notes.Add(new Note(note.NoteID, note.Text, note.Created, note.CreatedBy.UserName));
                 }
             }
 
-            if (fwtCaseFullDetails.LinkCases != null)
+            if (fwtCaseFullDetails.LinkCases != null && fwtCaseFullDetails.LinkCases.Any())
             {
+                mappedCase.LinkCases = new List<string>();
                 foreach (var linkCase in fwtCaseFullDetails.LinkCases)
                 {
-                    if (mappedCase.LinkCases == null)
-                    {
-                        mappedCase.LinkCases = new List<string>();
-                    }
-
                     mappedCase.LinkCases.Add(linkCase.LinkedCase);
                 }
             }

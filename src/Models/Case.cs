@@ -36,7 +36,7 @@ namespace verint_service.Models
 
         public List<CustomField> CaseFormFields { get; set; }
 
-        public List<Note> Notes { get; set; }
+        public List<Note> Notes { get; set; } 
 
         public string FormName { get; set; }
 

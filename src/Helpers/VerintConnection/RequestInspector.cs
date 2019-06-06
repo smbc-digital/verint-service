@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Dispatcher;
 using System.Text;
+using System.Xml.Linq;
 using Microsoft.Extensions.Options;
 using verint_service.Models.Config;
 using VerintAuthWebService;
@@ -22,6 +24,24 @@ namespace verint_service.Helpers.VerintConnection
 
         public void AfterReceiveReply(ref Message reply, object correlationState)
         {
+            if (!reply.IsFault)
+            {
+                return;
+            }
+
+            var xDocument = XDocument.Parse(reply.ToString());
+            var elements = xDocument.Descendants("detail")?.FirstOrDefault()?.Descendants().FirstOrDefault();
+
+            if (elements == null)
+            {
+                throw new Exception($"Verint Exception. Unable to parse XML. {reply}");
+            }
+
+            var errorMessage = elements.Element("ErrorMessage")?.Value;
+            var errorCode = elements.Element("ErrorCode")?.Value;
+            var additionalInfo = elements.Element("AdditionalInfo")?.Value;
+
+            throw new Exception($"Verint Exception. Error message: {errorMessage}. Error code: {errorCode}. Additional info: {additionalInfo}");
         }
 
         public object BeforeSendRequest(ref Message request, IClientChannel channel)
