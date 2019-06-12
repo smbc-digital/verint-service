@@ -11,7 +11,8 @@ namespace verint_service.Mappers
             var mappedCustomer = new Customer
             {
                 Forename = individual.Name[0].Forename[0],
-                Surname = individual.Name[0].Surname
+                Surname = individual.Name[0].Surname,
+                DateOfBirth = individual.DateOfBirth
             };
 
             if (individual.ContactPostals != null && individual.ContactPostals.Any())
