@@ -13,13 +13,11 @@ namespace verint_service.Helpers.VerintConnection
 {
     internal class RequestInspector : IClientMessageInspector
     {
-        private TokenSecurityHeader _securityHeader;
         private readonly VerintConnectionConfiguration _verintConfiguration;
 
         public RequestInspector(IOptions<VerintConnectionConfiguration> verintConfiguration)
         {
             _verintConfiguration = verintConfiguration.Value;
-            GetAuthToken();
         }
 
         public void AfterReceiveReply(ref Message reply, object correlationState)
@@ -46,12 +44,14 @@ namespace verint_service.Helpers.VerintConnection
 
         public object BeforeSendRequest(ref Message request, IClientChannel channel)
         {
-            request.Headers.Add(_securityHeader);
+            var securityHeader = GetAuthToken();
+
+            request.Headers.Add(securityHeader);
 
             return null;
         }
 
-        private void GetAuthToken()
+        private TokenSecurityHeader GetAuthToken()
         {
             var defaultSize = 67108864;
             var defaultTime = new TimeSpan(0, 10, 0);
@@ -82,10 +82,11 @@ namespace verint_service.Helpers.VerintConnection
 
                 auth.verifyAsync().Wait();
 
+
                 var data = currentContext.IncomingMessageHeaders.GetReaderAtHeader(0);
                 data.ReadToFollowing("wsse:BinarySecurityToken");
 
-                _securityHeader = new TokenSecurityHeader(data.ReadElementContentAsString());
+                return new TokenSecurityHeader(data.ReadElementContentAsString());
             }
         }
     }
