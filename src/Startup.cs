@@ -5,6 +5,7 @@ using System.ServiceModel.Dispatcher;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StockportGovUK.AspNetCore.Middleware;
@@ -14,6 +15,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Models.Config;
 using verint_service.Services;
+using verint_service.Services.Case;
+using verint_service.Services.Update;
 
 namespace verint_service
 {
@@ -32,9 +35,11 @@ namespace verint_service
             services.Configure<VerintConnectionConfiguration>(Configuration.GetSection("VerintConnectionConfiguration"));
 
             services.AddTransient<ICaseService, CaseService>();
+            services.AddTransient<IUpdateService, UpdateService>();
             services.AddSingleton<IVerintConnection, VerintConnection>();
             services.AddTransient<IClientMessageInspector, RequestInspector>();
             services.AddTransient<IEndpointBehavior, RequestBehavior>();
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

@@ -13,7 +13,12 @@ namespace VerintWebService
         Task<retrieveOrganisationResponse> retrieveOrganisationAsync(FWTObjectID FLOrganisationID);
 
         Task<retrieveIndividualResponse> retrieveIndividualAsync(FWTObjectID FLIndividualID);
+
+        Task<writeCaseEformDataResponse> writeCaseEformDataAsync(FWTCaseEformData eformData);
     }
 
-    public partial class FLWebInterfaceClient : IVerintClient {}
+    public partial class FLWebInterfaceClient : IVerintClient
+    {
+
+    }
 }

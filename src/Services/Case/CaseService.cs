@@ -5,7 +5,7 @@ using verint_service.Mappers;
 using verint_service.Models;
 using VerintWebService;
 
-namespace verint_service.Services
+namespace verint_service.Services.Case
 {
     public class CaseService : ICaseService
     {
@@ -16,7 +16,7 @@ namespace verint_service.Services
             _verintConnection = verint.Client();
         }
 
-        public async Task<Case> GetCase(string caseId)
+        public async Task<Models.Case> GetCase(string caseId)
         {
 
             if (string.IsNullOrWhiteSpace(caseId))
