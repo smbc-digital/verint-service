@@ -47,8 +47,8 @@ namespace verint_service.Services
                     }
                 }
 
-                if (!string.IsNullOrWhiteSpace(response.FWTCaseFullDetails.Interactions[0].PartyID.ObjectReference[0])
-                    && response.FWTCaseFullDetails.Interactions[0].PartyID.ObjectType == "C1")
+                if (!string.IsNullOrWhiteSpace(response.FWTCaseFullDetails.Interactions[0]?.PartyID?.ObjectReference[0])
+                    && response.FWTCaseFullDetails.Interactions[0]?.PartyID?.ObjectType == "C1")
                 {
                     var individual = await _verintConnection.retrieveIndividualAsync(response.FWTCaseFullDetails.Interactions[0].PartyID);
 
