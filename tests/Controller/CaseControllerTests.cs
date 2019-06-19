@@ -1,9 +1,13 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using verint_service.Controllers;
 using Moq;
-using verint_service.Services;
+using verint_service.Models;
+using verint_service.Services.Case;
+using verint_service.Services.Update;
 using Xunit;
 using System.Threading.Tasks;
+using VerintWebService;
 
 namespace verint_service_tests.Controllers
 {
@@ -11,10 +15,11 @@ namespace verint_service_tests.Controllers
     {
         private readonly CaseController _caseController;
         private readonly Mock<ICaseService> _mockCaseService = new Mock<ICaseService>();
+        private readonly  Mock<IUpdateService> _mockUpdateService = new Mock<IUpdateService>();
 
         public CaseControllerTests()
         {
-            _caseController = new CaseController(_mockCaseService.Object);
+            _caseController = new CaseController(_mockCaseService.Object,_mockUpdateService.Object);
         }
 
         [Fact]
@@ -41,6 +46,51 @@ namespace verint_service_tests.Controllers
 
             //Assert
             Assert.IsAssignableFrom<OkObjectResult>(response);
+        }
+
+
+        [Fact]
+        public async Task UpdateIntegrationFormField_shouldCallUpdateService()
+        {
+            // Arrange
+            var updateEntity = new IntegrationFormFieldsUpdateEntity
+            {
+                CaseReference = "121212",
+                IntegrationFormName = "Form_Name"
+            };
+
+            _mockUpdateService.Setup(_ => _.UpdateIntegrationFormFields(It.IsAny<IntegrationFormFieldsUpdateEntity>()))
+                .ReturnsAsync(new writeCaseEformDataResponse(0));
+
+            // Act
+            var result = await _caseController.UpdateIntegrationFormFields(updateEntity);
+
+
+            // Assert
+            _mockUpdateService.Verify(_ => _.UpdateIntegrationFormFields(It.IsAny<IntegrationFormFieldsUpdateEntity>()), Times.Once);
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
+        public async Task UpdateIntegrationFormFields_ShouldReturn_InternalServerErrorOnException()
+        {
+            // Arrange
+            var updateEntity = new IntegrationFormFieldsUpdateEntity
+            {
+                CaseReference = "121212",
+                IntegrationFormName = "Form_Name"
+            };
+
+            _mockUpdateService.Setup(_ => _.UpdateIntegrationFormFields(It.IsAny<IntegrationFormFieldsUpdateEntity>()))
+                .ThrowsAsync(new Exception());
+
+            // Act
+            var result = await _caseController.UpdateIntegrationFormFields(updateEntity);
+
+
+            // Assert
+            _mockUpdateService.Verify(_ => _.UpdateIntegrationFormFields(It.IsAny<IntegrationFormFieldsUpdateEntity>()), Times.Once);
+            Assert.IsType<StatusCodeResult>(result);
         }
     }
 }

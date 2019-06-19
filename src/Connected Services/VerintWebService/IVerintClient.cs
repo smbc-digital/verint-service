@@ -15,6 +15,8 @@ namespace VerintWebService
         Task<retrieveIndividualResponse> retrieveIndividualAsync(FWTObjectID FLIndividualID);
 
         Task<writeCaseEformDataResponse> writeCaseEformDataAsync(FWTCaseEformData eformData);
+
+        Task<updateCaseResponse> updateCaseAsync(FWTCaseUpdate FWTCaseUpdate);
     }
 
     public partial class FLWebInterfaceClient : IVerintClient

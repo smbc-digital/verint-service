@@ -3,7 +3,8 @@ using System;
 using System.Threading.Tasks;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Models;
-using verint_service.Services;
+using verint_service.Services.Case;
+using verint_service.Services.Update;
 using VerintWebService;
 using Xunit;
 
@@ -13,7 +14,8 @@ namespace verint_service_tests.Services
     {
         private readonly Mock<IVerintClient> _mockClient = new Mock<IVerintClient>();
         private readonly Mock<IVerintConnection> _mockConnection = new Mock<IVerintConnection>();
-        private readonly CaseService _service;
+        private readonly CaseService _caseService;
+        private readonly UpdateService __updateService;
 
         public CaseServiceTests()
         {
@@ -21,7 +23,7 @@ namespace verint_service_tests.Services
                 .Setup(_ => _.Client())
                 .Returns(_mockClient.Object);
 
-            _service = new CaseService(_mockConnection.Object);
+            _caseService = new CaseService(_mockConnection.Object);
         }
 
         [Theory]
@@ -31,7 +33,7 @@ namespace verint_service_tests.Services
         public void GetCase_ShouldThrowException_WhenCaseIdIsNullOrWhiteSpace(string caseId)
         {
             // Act & Assert
-            var ex = Assert.Throws<AggregateException>(() => _service.GetCase(caseId).Wait());
+            var ex = Assert.Throws<AggregateException>(() => _caseService.GetCase(caseId).Wait());
             Assert.Equal("Null or empty references are not allowed", ex.InnerException.Message);
         }
 
@@ -50,7 +52,7 @@ namespace verint_service_tests.Services
                 .ReturnsAsync(caseDetails);
 
             // Act
-            await _service.GetCase("baseCase1");
+            await _caseService.GetCase("baseCase1");
 
             // Assert
             _mockClient.Verify(client => client.retrieveCaseDetailsAsync(It.IsAny<FWTCaseFullDetailsRequest>()), Times.Once);
@@ -82,7 +84,7 @@ namespace verint_service_tests.Services
                 .ReturnsAsync(caseDetails);
 
             // Act
-            await _service.GetCase("baseCase1");
+            await _caseService.GetCase("baseCase1");
 
             // Assert
             _mockClient.Verify(client => client.retrieveOrganisationAsync(It.IsAny<FWTObjectID>()), Times.Once);
@@ -122,7 +124,7 @@ namespace verint_service_tests.Services
 
 
             // Act
-            var result = await _service.GetCase("baseCase1");
+            var result = await _caseService.GetCase("baseCase1");
 
             // Assert
             Assert.NotNull(result.Organisation);
@@ -157,7 +159,7 @@ namespace verint_service_tests.Services
                 .ReturnsAsync(caseDetails);
 
             // Act
-            await _service.GetCase("baseCase1");
+            await _caseService.GetCase("baseCase1");
 
             // Assert
             _mockClient.Verify(client => client.retrieveIndividualAsync(It.IsAny<FWTObjectID>()), Times.Once);
@@ -211,7 +213,7 @@ namespace verint_service_tests.Services
                 .ReturnsAsync(individualDetails);
 
             // Act
-            var result = await _service.GetCase("baseCase1");
+            var result = await _caseService.GetCase("baseCase1");
 
             // Assert
             Assert.NotNull(result.Customer);
