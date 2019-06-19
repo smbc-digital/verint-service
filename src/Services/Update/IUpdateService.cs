@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
-using verint_service.Models;
+using StockportGovUK.NetStandard.Models.Models.Verint.Update;
 using VerintWebService;
 
 namespace verint_service.Services.Update
 {
     public interface IUpdateService
     {
-       Task<writeCaseEformDataResponse> UpdateIntegrationFormFields(IntegrationFormFieldsUpdateEntity updateEntity);
+       Task<writeCaseEformDataResponse> UpdateIntegrationFormFields(IntegrationFormFieldsUpdateModel updateEntity);
     }
 }

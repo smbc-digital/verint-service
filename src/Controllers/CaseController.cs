@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
+using StockportGovUK.NetStandard.Models.Models.Verint.Update;
 using verint_service.Services.Case;
-using verint_service.Models;
 using verint_service.Services.Update;
 
 namespace verint_service.Controllers
@@ -52,7 +52,7 @@ namespace verint_service.Controllers
 
         [HttpPatch]
         [Route("integration-form-fields")]
-        public async Task<IActionResult> UpdateIntegrationFormFields(IntegrationFormFieldsUpdateEntity updateEntity)
+        public async Task<IActionResult> UpdateIntegrationFormFields(IntegrationFormFieldsUpdateModel updateEntity)
         {
             try
             {

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
+using StockportGovUK.NetStandard.Models.Models.Verint;
+using StockportGovUK.NetStandard.Models.Models.Verint.Update;
 using verint_service.Helpers.VerintConnection;
-using verint_service.Models;
 using verint_service.Services.Update;
 using VerintWebService;
 using Xunit;
@@ -29,7 +30,7 @@ namespace verint_service_tests.Services
         public async Task UpdateIntegrationFormField_ShouldCallVerintConnection()
         {
             // Arrange
-            var entity = new IntegrationFormFieldsUpdateEntity();
+            var entity = new IntegrationFormFieldsUpdateModel();
 
             // Act
             await _service.UpdateIntegrationFormFields(entity);
@@ -43,7 +44,7 @@ namespace verint_service_tests.Services
         public async Task UpdateIntegrationFormField_ShouldReturnError()
         {
             // Arrange
-            var entity = new IntegrationFormFieldsUpdateEntity();
+            var entity = new IntegrationFormFieldsUpdateModel();
             _mockClient
                 .Setup(_ => _.writeCaseEformDataAsync(It.IsAny<FWTCaseEformData>()))
                 .ThrowsAsync(new Exception());
@@ -60,7 +61,7 @@ namespace verint_service_tests.Services
         {
             // Arrange
             var writeCasecallback = new FWTCaseEformData();
-            var entity = new IntegrationFormFieldsUpdateEntity
+            var entity = new IntegrationFormFieldsUpdateModel
             {
                 CaseReference = "12344",
                 IntegrationFormFields = new List<IntegrationFormField>

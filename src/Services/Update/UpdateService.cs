@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using StockportGovUK.NetStandard.Models.Models.Verint.Update;
 using verint_service.Helpers.VerintConnection;
-using verint_service.Models;
 using VerintWebService;
 
 namespace verint_service.Services.Update
@@ -16,7 +16,7 @@ namespace verint_service.Services.Update
             _verintConnection = verint.Client();
         }
 
-        public async Task<writeCaseEformDataResponse> UpdateIntegrationFormFields(IntegrationFormFieldsUpdateEntity updateEntity)
+        public async Task<writeCaseEformDataResponse> UpdateIntegrationFormFields(IntegrationFormFieldsUpdateModel updateEntity)
         {
             var eformData = new FWTCaseEformData();
             var formFields = new FWTEformField[0];
