@@ -52,8 +52,13 @@ namespace verint_service.Controllers
 
         [HttpPatch]
         [Route("integration-form-fields")]
-        public async Task<IActionResult> UpdateIntegrationFormFields(IntegrationFormFieldsUpdateModel updateEntity)
+        public async Task<IActionResult> UpdateIntegrationFormFields([FromBody]IntegrationFormFieldsUpdateModel updateEntity)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             try
             {
                 await _updateService.UpdateIntegrationFormFields(updateEntity);

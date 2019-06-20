@@ -27,22 +27,17 @@ namespace verint_service.Services.Update
                 EformName = updateEntity.IntegrationFormName
             };
 
-            // Enquiry Details Panel
             if (updateEntity.IntegrationFormFields != null && updateEntity.IntegrationFormFields.Any())
             {
                 formFields = new FWTEformField[updateEntity.IntegrationFormFields.Count];
-                var count = 0;
-
-                foreach (var field in updateEntity.IntegrationFormFields)
+                for (int i = 0; i < updateEntity.IntegrationFormFields.Count; i++)
                 {
                     var caseFormField = new FWTEformField
                     {
-                        FieldValue = field.FormFieldValue ?? string.Empty,
-                        FieldName = field.FormFieldName
+                        FieldName = updateEntity.IntegrationFormFields[i].FormFieldName,
+                        FieldValue = updateEntity.IntegrationFormFields[i].FormFieldValue ?? string.Empty
                     };
-                    // If value is null, set to empty string
-                    formFields[count] = caseFormField;
-                    count = count + 1;
+                    formFields[i] = caseFormField;
                 }
             }
 
@@ -55,7 +50,7 @@ namespace verint_service.Services.Update
             }
             catch (Exception e)
             {
-                throw new Exception($"UpdateService: UpdateIntegrationFormField threw and exception while attempting to update EForm Data, Exception: {e}");
+                throw new Exception($"UpdateService: UpdateIntegrationFormField threw an exception while attempting to update EForm Data for case {updateEntity.CaseReference}, Exception: {e}");
             }
         }
     }
