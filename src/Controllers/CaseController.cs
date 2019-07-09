@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Models.Verint.Update;
 using verint_service.Services.Case;
@@ -17,16 +18,19 @@ namespace verint_service.Controllers
     {
         private readonly ICaseService _caseService;
         private readonly IUpdateService _updateService;
+        private readonly ILogger<CaseController> _logger;
 
-        public CaseController(ICaseService caseService, IUpdateService updateService)
+        public CaseController(ICaseService caseService, IUpdateService updateService, ILogger<CaseController> logger)
         {
             _caseService = caseService;
             _updateService = updateService;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery]string caseId)
         {
+            _logger.LogWarning($"**DEBUG: CaseController:GetCase, Makeing rrquest to getCase with caseId {caseId}");
             var verintCase = await _caseService.GetCase(caseId);
 
             return Ok(verintCase);
