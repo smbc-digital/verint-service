@@ -8,6 +8,7 @@ using Xunit;
 using System.Threading.Tasks;
 using StockportGovUK.NetStandard.Models.Models.Verint.Update;
 using VerintWebService;
+using Microsoft.Extensions.Logging;
 
 namespace verint_service_tests.Controllers
 {
@@ -16,10 +17,11 @@ namespace verint_service_tests.Controllers
         private readonly CaseController _caseController;
         private readonly Mock<ICaseService> _mockCaseService = new Mock<ICaseService>();
         private readonly  Mock<IUpdateService> _mockUpdateService = new Mock<IUpdateService>();
+        private readonly Mock<ILogger<CaseController>> _mockLogger = new Mock<ILogger<CaseController>>();
 
         public CaseControllerTests()
         {
-            _caseController = new CaseController(_mockCaseService.Object,_mockUpdateService.Object);
+            _caseController = new CaseController(_mockCaseService.Object,_mockUpdateService.Object, _mockLogger.Object);
         }
 
         [Fact]

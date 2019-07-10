@@ -1,6 +1,8 @@
 ﻿using Moq;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using verint_service.Controllers;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Models;
 using verint_service.Services.Case;
@@ -14,6 +16,7 @@ namespace verint_service_tests.Services
     {
         private readonly Mock<IVerintClient> _mockClient = new Mock<IVerintClient>();
         private readonly Mock<IVerintConnection> _mockConnection = new Mock<IVerintConnection>();
+        private readonly Mock<ILogger<CaseService>> _mockLogger = new Mock<ILogger<CaseService>>();
         private readonly CaseService _caseService;
         private readonly UpdateService __updateService;
 
@@ -23,7 +26,7 @@ namespace verint_service_tests.Services
                 .Setup(_ => _.Client())
                 .Returns(_mockClient.Object);
 
-            _caseService = new CaseService(_mockConnection.Object);
+            _caseService = new CaseService(_mockConnection.Object, _mockLogger.Object);
         }
 
         [Theory]
