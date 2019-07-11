@@ -12,19 +12,13 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "swagger/index.html",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "local"
-      }
+      "launchUrl": "swagger/index.html"
     },
     "verint-service": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/values",
-      "applicationUrl": "https://localhost:6000;http://localhost:6001",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "local"
-      }
+      "launchUrl": "swagger/index.html",
+      "applicationUrl": "https://localhost:6000;http://localhost:6001"
     }
   }
 }
