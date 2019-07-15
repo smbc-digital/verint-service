@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Net;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +28,12 @@ namespace verint_service
                 .ReadFrom.Configuration(Configuration)
                 .WriteToElasticsearchAws(Configuration)
                 .CreateLogger();
+
+            var proxy = new WebProxy("127.0.0.1", 8888)
+            {
+                Credentials = CredentialCache.DefaultCredentials
+            };
+            WebRequest.DefaultWebProxy = proxy;
 
             BuildWebHost(args).Run();
         }
