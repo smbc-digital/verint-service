@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,12 +20,14 @@ namespace verint_service.Controllers
         private readonly ICaseService _caseService;
         private readonly IUpdateService _updateService;
         private readonly ILogger<CaseController> _logger;
+        private readonly HttpClient _httpClient;
 
         public CaseController(ICaseService caseService, IUpdateService updateService, ILogger<CaseController> logger)
         {
             _caseService = caseService;
             _updateService = updateService;
             _logger = logger;
+            _httpClient = new HttpClient();
         }
 
         [HttpGet]
@@ -72,6 +75,14 @@ namespace verint_service.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
+        }
+
+        [HttpGet]
+        [Route("test")]
+        public async Task<IActionResult> TestHttps()
+        {
+            var result = await _httpClient.GetAsync("https://google.com");
+            return Ok(result);
         }
     }
 }
