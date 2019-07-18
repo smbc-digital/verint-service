@@ -29,11 +29,11 @@ namespace verint_service
                 .WriteToElasticsearchAws(Configuration)
                 .CreateLogger();
 
-            var proxy = new WebProxy("http://127.0.0.1:8888", false)
-            {
-                Credentials = CredentialCache.DefaultCredentials
-            };
-            WebRequest.DefaultWebProxy = proxy;
+            // var proxy = new WebProxy("http://127.0.0.1:8888", false)
+            // {
+            //     Credentials = CredentialCache.DefaultCredentials
+            // };
+            // WebRequest.DefaultWebProxy = proxy;
 
             BuildWebHost(args).Run();
         }

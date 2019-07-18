@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -27,7 +28,17 @@ namespace verint_service.Controllers
             _caseService = caseService;
             _updateService = updateService;
             _logger = logger;
-            _httpClient = new HttpClient();
+
+            var webProxy = new WebProxy(
+	            new Uri("http://172.16.0.126:8080"), 
+	            BypassOnLocal: false);
+
+            var proxyHttpClientHandler = new HttpClientHandler {
+	            Proxy = webProxy,
+	            UseProxy = true,
+            };
+
+            _httpClient = new HttpClient(proxyHttpClientHandler);
         }
 
         [HttpGet]
@@ -78,11 +89,31 @@ namespace verint_service.Controllers
         }
 
         [HttpGet]
-        [Route("test")]
+        [Route("testhttps")]
         public async Task<IActionResult> TestHttps()
         {
-            var result = await _httpClient.GetAsync("https://google.com");
-            return Ok(result);
+            try{
+                var result = await _httpClient.GetAsync("https://google.com");
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return Ok(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("testhttp")]
+        public async Task<IActionResult> TestHttp()
+        {
+            try{
+                var result = await _httpClient.GetAsync("http://google.com");
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return Ok(ex);
+            }
         }
     }
 }
