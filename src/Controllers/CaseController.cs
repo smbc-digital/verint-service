@@ -29,12 +29,8 @@ namespace verint_service.Controllers
             _updateService = updateService;
             _logger = logger;
 
-            var webProxy = new WebProxy(
-	            new Uri("http://172.16.0.126:8080"), 
-	            BypassOnLocal: false);
-
             var proxyHttpClientHandler = new HttpClientHandler {
-	            Proxy = webProxy,
+	            Proxy = new WebProxy(new Uri("http://172.16.0.126:8080"), BypassOnLocal: false),
 	            UseProxy = true,
             };
 
