@@ -5,17 +5,20 @@ using System.ServiceModel.Dispatcher;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using StockportGovUK.AspNetCore.Middleware;
 using StockportGovUK.AspNetCore.Availability;
 using StockportGovUK.AspNetCore.Availability.Middleware;
+using StockportGovUK.AspNetCore.Gateways;
+using StockportGovUK.AspNetCore.Gateways.InthubGateway;
+using StockportGovUK.AspNetCore.Polly;
 using Swashbuckle.AspNetCore.Swagger;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Models.Config;
-using verint_service.Services;
 using verint_service.Services.Case;
+using verint_service.Services.Event;
 using verint_service.Services.Update;
 
 namespace verint_service
@@ -33,15 +36,23 @@ namespace verint_service
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<VerintConnectionConfiguration>(Configuration.GetSection("VerintConnectionConfiguration"));
+            services.Configure<EventCaseConfiguration>(Configuration.GetSection("EventCaseConfiguration"));
 
             services.AddTransient<ICaseService, CaseService>();
             services.AddTransient<IUpdateService, UpdateService>();
             services.AddSingleton<IVerintConnection, VerintConnection>();
             services.AddTransient<IClientMessageInspector, RequestInspector>();
             services.AddTransient<IEndpointBehavior, RequestBehavior>();
-            
+            services.AddTransient<IEventService, EventService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSingleton<IInthubGateway, InthubGateway>();
+            services.AddHttpClients<IGateway, Gateway>(Configuration);
+
+            services
+                .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddXmlSerializerFormatters()
+                .AddXmlDataContractSerializerFormatters();
 
             services.AddSwaggerGen(c =>
             {

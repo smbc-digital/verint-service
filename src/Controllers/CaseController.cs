@@ -7,7 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Models.Verint.Update;
+using verint_service.ModelBinders;
+using verint_service.Models;
 using verint_service.Services.Case;
+using verint_service.Services.Event;
 using verint_service.Services.Update;
 
 namespace verint_service.Controllers
@@ -22,16 +25,18 @@ namespace verint_service.Controllers
         private readonly IUpdateService _updateService;
         private readonly ILogger<CaseController> _logger;
         private readonly HttpClient _httpClient;
+        private readonly IEventService _eventService;
 
-        public CaseController(ICaseService caseService, IUpdateService updateService, ILogger<CaseController> logger)
+        public CaseController(ICaseService caseService, IUpdateService updateService, ILogger<CaseController> logger, IEventService eventService)
         {
             _caseService = caseService;
             _updateService = updateService;
             _logger = logger;
+            _eventService = eventService;
 
             var proxyHttpClientHandler = new HttpClientHandler {
 	            Proxy = new WebProxy(new Uri("http://172.16.0.126:8080"), BypassOnLocal: false),
-	            UseProxy = true,
+	            UseProxy = true
             };
 
             _httpClient = new HttpClient(proxyHttpClientHandler);
@@ -110,6 +115,13 @@ namespace verint_service.Controllers
             {
                 return Ok(ex);
             }
+        }
+
+        [HttpPost]
+        [Route("event")]
+        public void CaseEventHandler([ModelBinder(typeof(CaseEventModelBinder))]CaseEventModel model)
+        {
+            _eventService.HandleCaseEvent(model);
         }
     }
 }

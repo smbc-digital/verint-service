@@ -2,11 +2,9 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using verint_service.Controllers;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Models;
 using verint_service.Services.Case;
-using verint_service.Services.Update;
 using VerintWebService;
 using Xunit;
 
@@ -18,7 +16,6 @@ namespace verint_service_tests.Services
         private readonly Mock<IVerintConnection> _mockConnection = new Mock<IVerintConnection>();
         private readonly Mock<ILogger<CaseService>> _mockLogger = new Mock<ILogger<CaseService>>();
         private readonly CaseService _caseService;
-        private readonly UpdateService __updateService;
 
         public CaseServiceTests()
         {

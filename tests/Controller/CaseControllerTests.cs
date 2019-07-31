@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using StockportGovUK.NetStandard.Models.Models.Verint.Update;
 using VerintWebService;
 using Microsoft.Extensions.Logging;
+using verint_service.Models;
+using verint_service.Services.Event;
 
 namespace verint_service_tests.Controllers
 {
@@ -18,10 +20,12 @@ namespace verint_service_tests.Controllers
         private readonly Mock<ICaseService> _mockCaseService = new Mock<ICaseService>();
         private readonly  Mock<IUpdateService> _mockUpdateService = new Mock<IUpdateService>();
         private readonly Mock<ILogger<CaseController>> _mockLogger = new Mock<ILogger<CaseController>>();
+        private readonly Mock<IEventService> _mockEventService = new Mock<IEventService> ();
+
 
         public CaseControllerTests()
         {
-            _caseController = new CaseController(_mockCaseService.Object,_mockUpdateService.Object, _mockLogger.Object);
+            _caseController = new CaseController(_mockCaseService.Object,_mockUpdateService.Object, _mockLogger.Object, _mockEventService.Object);
         }
 
         [Fact]
@@ -93,6 +97,19 @@ namespace verint_service_tests.Controllers
             // Assert
             _mockUpdateService.Verify(_ => _.UpdateIntegrationFormFields(It.IsAny<IntegrationFormFieldsUpdateModel>()), Times.Once);
             Assert.IsType<StatusCodeResult>(result);
+        }
+
+        [Fact]
+        public void CaseEventHandler_ShouldCall_HandleCaseEvent()
+        {
+            // Arrange
+            var model = new CaseEventModel();
+
+            // Act
+            _caseController.CaseEventHandler(model);
+
+            // Assert
+            _mockEventService.Verify(_ => _.HandleCaseEvent(It.IsAny<CaseEventModel>()));
         }
     }
 }
