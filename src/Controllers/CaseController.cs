@@ -130,8 +130,12 @@ namespace verint_service.Controllers
         [Route("event-test")]
         public async Task CaseEventHandler()
         {
+            _logger.LogWarning("**DEBUG: Started request.");
+
             using (var requestReader = new StreamReader(Request.Body, Encoding.UTF8))
             {
+                _logger.LogWarning("**DEBUG: Started parsing request.");
+                Request.Body.Position = 0;
                 var body = await requestReader.ReadToEndAsync();
 
                 _logger.LogWarning($"**DEBUG: {body}");
