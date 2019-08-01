@@ -131,26 +131,6 @@ namespace verint_service.Controllers
         public void CaseEventHandler()
         {
             _logger.LogWarning("**DEBUG: Started request.");
-
-            using (var mem = new MemoryStream())
-            {
-                using (var reader = new StreamReader(mem))
-                {
-                    _logger.LogWarning("**DEBUG: Started parsing request.");
-                    Request.Body.CopyTo(mem);
-
-                    var body = reader.ReadToEnd();
-
-                    // Do something
-
-                    mem.Seek(0, SeekOrigin.Begin);
-
-                    body = reader.ReadToEnd();
-
-                    _logger.LogWarning($"**DEBUG: {body}");
-                }
-            }
-
         }
     }
 }
