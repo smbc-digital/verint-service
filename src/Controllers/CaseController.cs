@@ -123,7 +123,7 @@ namespace verint_service.Controllers
         [Route("event")]
         public void CaseEventHandler([ModelBinder(typeof(CaseEventModelBinder))]CaseEventModel model)
         {
-        _eventService.HandleCaseEvent(model);
+            _eventService.HandleCaseEvent(model);
         }
 
         [HttpPost]
@@ -131,16 +131,26 @@ namespace verint_service.Controllers
         public void CaseEventHandler()
         {
             _logger.LogWarning("**DEBUG: Started request.");
-            Request.EnableRewind();
-            Request.Body.Position = 0;
 
-            using (var requestReader = new StreamReader(Request.Body))
+            using (var mem = new MemoryStream())
             {
-                _logger.LogWarning("**DEBUG: Started parsing request.");
-                var body = requestReader.ReadToEnd();
+                using (var reader = new StreamReader(mem))
+                {
+                    _logger.LogWarning("**DEBUG: Started parsing request.");
+                    Request.Body.CopyTo(mem);
 
-                _logger.LogWarning($"**DEBUG: {body}");
+                    var body = reader.ReadToEnd();
+
+                    // Do something
+
+                    mem.Seek(0, SeekOrigin.Begin);
+
+                    body = reader.ReadToEnd();
+
+                    _logger.LogWarning($"**DEBUG: {body}");
+                }
             }
+
         }
     }
 }
