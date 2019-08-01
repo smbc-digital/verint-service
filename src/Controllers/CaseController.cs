@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -127,11 +128,11 @@ namespace verint_service.Controllers
 
         [HttpPost]
         [Route("event-test")]
-        public void CaseEventHandler()
+        public async Task CaseEventHandler()
         {
-            using (var requestReader = new StreamReader(Request.Body))
+            using (var requestReader = new StreamReader(Request.Body, Encoding.UTF8))
             {
-                var body = requestReader.ReadToEnd();
+                var body = await requestReader.ReadToEndAsync();
 
                 _logger.LogWarning($"**DEBUG: {body}");
             }
