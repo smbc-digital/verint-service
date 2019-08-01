@@ -34,7 +34,7 @@ namespace verint_service.ModelBinders
                     throw new Exception("EventType not configured");
                 }
 
-                var serializedCase = xDocument.Root?.FirstNode.ToString();
+                var serializedCase = xDocument.Root?.FirstNode?.ToString();
                 if (serializedCase == null)
                 {
                     throw new Exception("Unable to serialize case from xml response");
