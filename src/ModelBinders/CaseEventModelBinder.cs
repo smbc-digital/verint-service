@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
 using verint_service.Models;
 
 namespace verint_service.ModelBinders
@@ -12,11 +13,14 @@ namespace verint_service.ModelBinders
     {
         public Task BindModelAsync(ModelBindingContext context)
         {
+            var logger = (ILogger<CaseEventModelBinder>)context.HttpContext.RequestServices.GetService(typeof(ILogger<CaseEventModelBinder>));
+
             var request = context.HttpContext.Request.Body;
 
             using (var requestReader = new StreamReader(request))
             {
                 var body = requestReader.ReadToEnd();
+                logger.LogWarning($"**DEBUG: {body}");
 
                 XDocument xDocument;
                 try

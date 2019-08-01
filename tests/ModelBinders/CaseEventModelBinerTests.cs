@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
 using Moq;
 using verint_service.ModelBinders;
 using verint_service.Models;
@@ -25,6 +26,15 @@ namespace verint_service_tests.ModelBinders
             mockHttpContext
                 .Setup(_ => _.Request)
                 .Returns(_mockHttpRequest.Object);
+            var mockServiceProvider = new Mock<IServiceProvider>();
+
+            mockServiceProvider
+                    .Setup(_ => _.GetService(typeof(ILogger<CaseEventModelBinder>)))
+                    .Returns(Mock.Of<ILogger<CaseEventModelBinder>>());
+
+            mockHttpContext
+                .Setup(_ => _.RequestServices)
+                .Returns(mockServiceProvider.Object);
 
             _mockModelBindingContext
                 .SetupGet(_ => _.HttpContext)
