@@ -122,17 +122,21 @@ namespace verint_service.Controllers
 
         [HttpPost]
         [Route("event")]
-        public void CaseEventHandler([ModelBinder(typeof(CaseEventModelBinder))]CaseEventModel model)
+        public IActionResult CaseEventHandler([ModelBinder(typeof(CaseEventModelBinder))]CaseEventModel model)
         {
             _eventService.HandleCaseEvent(model);
+
+            return Ok();
         }
 
         [HttpPost]
         [Route("event-test")]
-        public void CaseEventHandler()
+        public IActionResult CaseEventHandler()
         {
             Debug.WriteLine("**DEBUG: Started request - from Debug.");
             _logger.LogWarning("**DEBUG: Started request.");
+
+            return Ok();
         }
     }
 }
