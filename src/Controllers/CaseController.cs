@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -25,7 +26,7 @@ namespace verint_service.Controllers
     {
         private readonly ICaseService _caseService;
         private readonly IUpdateService _updateService;
-        private readonly ILogger<CaseController> _logger;
+        private readonly ILogger _logger;
         private readonly HttpClient _httpClient;
         private readonly IEventService _eventService;
 
@@ -130,6 +131,7 @@ namespace verint_service.Controllers
         [Route("event-test")]
         public void CaseEventHandler()
         {
+            Debug.WriteLine("**DEBUG: Started request - from Debug.");
             _logger.LogWarning("**DEBUG: Started request.");
         }
     }
