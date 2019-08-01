@@ -2,9 +2,9 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
@@ -128,15 +128,16 @@ namespace verint_service.Controllers
 
         [HttpPost]
         [Route("event-test")]
-        public async Task CaseEventHandler()
+        public void CaseEventHandler()
         {
             _logger.LogWarning("**DEBUG: Started request.");
+            Request.EnableRewind();
+            Request.Body.Position = 0;
 
-            using (var requestReader = new StreamReader(Request.Body, Encoding.UTF8))
+            using (var requestReader = new StreamReader(Request.Body))
             {
                 _logger.LogWarning("**DEBUG: Started parsing request.");
-                Request.Body.Position = 0;
-                var body = await requestReader.ReadToEndAsync();
+                var body = requestReader.ReadToEnd();
 
                 _logger.LogWarning($"**DEBUG: {body}");
             }
