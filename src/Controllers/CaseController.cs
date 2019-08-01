@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -121,7 +122,19 @@ namespace verint_service.Controllers
         [Route("event")]
         public void CaseEventHandler([ModelBinder(typeof(CaseEventModelBinder))]CaseEventModel model)
         {
-            _eventService.HandleCaseEvent(model);
+        _eventService.HandleCaseEvent(model);
+        }
+
+        [HttpPost]
+        [Route("event-test")]
+        public void CaseEventHandler()
+        {
+            using (var requestReader = new StreamReader(Request.Body))
+            {
+                var body = requestReader.ReadToEnd();
+
+                _logger.LogWarning($"**DEBUG: {body}");
+            }
         }
     }
 }
