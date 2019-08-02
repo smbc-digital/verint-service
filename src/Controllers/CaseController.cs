@@ -1,12 +1,13 @@
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Models.Verint.Update;
@@ -21,7 +22,7 @@ namespace verint_service.Controllers
     [Produces("application/json")]
     [Route("api/v1/[Controller]")]
     [ApiController]
-    [TokenAuthentication]
+    [TokenAuthentication(IgnoredRoutes = new []{"/api/v1/case/event"})]
     public class CaseController : ControllerBase
     {
         private readonly ICaseService _caseService;
@@ -125,16 +126,6 @@ namespace verint_service.Controllers
         public IActionResult CaseEventHandler([ModelBinder(typeof(CaseEventModelBinder))]CaseEventModel model)
         {
             _eventService.HandleCaseEvent(model);
-
-            return Ok();
-        }
-
-        [HttpPost]
-        [Route("event-test")]
-        public IActionResult CaseEventHandler()
-        {
-            Debug.WriteLine("**DEBUG: Started request - from Debug.");
-            _logger.LogWarning("**DEBUG: Started request.");
 
             return Ok();
         }
