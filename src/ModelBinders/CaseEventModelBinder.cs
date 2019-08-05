@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -9,7 +10,7 @@ using verint_service.Models;
 
 namespace verint_service.ModelBinders
 {
-    public class CaseEventModelBinder : IModelBinder
+    public class CaseEventModelBinder : RequiredAttribute, IModelBinder
     {
         public Task BindModelAsync(ModelBindingContext context)
         {
@@ -20,7 +21,6 @@ namespace verint_service.ModelBinders
             using (var requestReader = new StreamReader(request))
             {
                 var body = requestReader.ReadToEnd();
-                logger.LogWarning($"**DEBUG: {body}");
 
                 XDocument xDocument;
                 try
@@ -29,19 +29,25 @@ namespace verint_service.ModelBinders
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Unable to parse request body", ex.InnerException);
+                    logger.LogInformation("Unable to parse request body", ex.InnerException);
+                    context.Result = ModelBindingResult.Success(null);
+                    return Task.CompletedTask;
                 }
 
                 var eventCaseTypeSuccess = Enum.TryParse(xDocument.Root?.Name.LocalName, out EventCaseType caseEventType);
                 if (!eventCaseTypeSuccess)
                 {
-                    throw new Exception("EventType not configured");
+                    logger.LogInformation("EventType not configured");
+                    context.Result = ModelBindingResult.Success(null);
+                    return Task.CompletedTask;
                 }
 
                 var serializedCase = xDocument.Root?.FirstNode?.ToString();
                 if (serializedCase == null)
                 {
-                    throw new Exception("Unable to serialize case from xml response");
+                    logger.LogInformation("Unable to serialize case from xml response");
+                    context.Result = ModelBindingResult.Success(null);
+                    return Task.CompletedTask;
                 }
 
                 var serializer = new XmlSerializer(typeof(EventCase));
@@ -54,7 +60,9 @@ namespace verint_service.ModelBinders
                     }
                     catch (Exception ex)
                     {
-                        throw new Exception("Unable to parse serialized case into EventCase", ex.InnerException);
+                        logger.LogInformation("Unable to parse serialized case into EventCase", ex.InnerException);
+                        context.Result = ModelBindingResult.Success(null);
+                        return Task.CompletedTask;
                     }
 
                     context.Result = ModelBindingResult.Success(new CaseEventModel{

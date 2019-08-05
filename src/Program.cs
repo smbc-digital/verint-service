@@ -31,7 +31,6 @@ namespace verint_service
 
             var proxy = new WebProxy("http://172.16.0.126:8080", false);
             WebRequest.DefaultWebProxy = proxy;
-
             BuildWebHost(args).Run();
         }
 

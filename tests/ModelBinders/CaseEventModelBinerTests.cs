@@ -3,8 +3,6 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -19,6 +17,7 @@ namespace verint_service_tests.ModelBinders
         private readonly CaseEventModelBinder _modelBinder = new CaseEventModelBinder();
         private readonly Mock<ModelBindingContext> _mockModelBindingContext = new Mock<ModelBindingContext>();
         private readonly Mock<HttpRequest> _mockHttpRequest = new Mock<HttpRequest>();
+        private readonly Mock<ILogger<CaseEventModelBinder>> _mockLogger = new Mock<ILogger<CaseEventModelBinder>>();
 
         public CaseEventModelBinderTests()
         {
@@ -30,7 +29,7 @@ namespace verint_service_tests.ModelBinders
 
             mockServiceProvider
                     .Setup(_ => _.GetService(typeof(ILogger<CaseEventModelBinder>)))
-                    .Returns(Mock.Of<ILogger<CaseEventModelBinder>>());
+                    .Returns(_mockLogger.Object);
 
             mockHttpContext
                 .Setup(_ => _.RequestServices)
@@ -43,16 +42,20 @@ namespace verint_service_tests.ModelBinders
 
 
         [Fact]
-        public async Task BindModelAsync_ShouldThrowUnableToParseRequestBodyException()
+        public void BindModelAsync_ShouldThrowUnableToParseRequestBodyException()
         {
             // Arrange
             _mockHttpRequest
                 .SetupGet(_ => _.Body)
                 .Returns(new MemoryStream(Encoding.UTF8.GetBytes("")));
 
-            // Act & Assert
-            var ex = await Assert.ThrowsAsync<Exception>(() => _modelBinder.BindModelAsync(_mockModelBindingContext.Object));
-            Assert.Equal("Unable to parse request body", ex.Message);
+            // Act
+            var result = _modelBinder.BindModelAsync(_mockModelBindingContext.Object);
+
+            // Assert
+            Assert.True(result.IsCompleted);
+            _mockModelBindingContext
+                .VerifySet(_ => _.Result = ModelBindingResult.Success(null), Times.Once);
         }
 
         [Fact]
@@ -63,10 +66,14 @@ namespace verint_service_tests.ModelBinders
                 .SetupGet(_ => _.Body)
                 .Returns(new MemoryStream(Encoding.UTF8.GetBytes("<Test></Test>")));
 
-            // Act & Assert
-            var ex = await Assert.ThrowsAsync<Exception>(() => _modelBinder.BindModelAsync(_mockModelBindingContext.Object));
-            Assert.Equal("EventType not configured", ex.Message);
-        }
+            // Act
+            var result = _modelBinder.BindModelAsync(_mockModelBindingContext.Object);
+
+            // Assert
+            Assert.True(result.IsCompleted);
+            _mockModelBindingContext
+                .VerifySet(_ => _.Result = ModelBindingResult.Success(null), Times.Once);
+            }
 
         [Fact]
         public async Task BindModelAsync_ShouldThrowUnableToSerializeException()
@@ -77,9 +84,13 @@ namespace verint_service_tests.ModelBinders
                 .SetupGet(_ => _.Body)
                 .Returns(new MemoryStream(Encoding.UTF8.GetBytes($"<{eventType}></{eventType}>")));
 
-            // Act & Assert
-            var ex = await Assert.ThrowsAsync<Exception>(() => _modelBinder.BindModelAsync(_mockModelBindingContext.Object));
-            Assert.Equal("Unable to serialize case from xml response", ex.Message);
+            // Act
+            var result = _modelBinder.BindModelAsync(_mockModelBindingContext.Object);
+
+            // Assert
+            Assert.True(result.IsCompleted);
+            _mockModelBindingContext
+                .VerifySet(_ => _.Result = ModelBindingResult.Success(null), Times.Once);
         }
 
         [Fact]
@@ -91,9 +102,13 @@ namespace verint_service_tests.ModelBinders
                 .SetupGet(_ => _.Body)
                 .Returns(new MemoryStream(Encoding.UTF8.GetBytes($"<{eventType}><case></case></{eventType}>")));
 
-            // Act & Assert
-            var ex = await Assert.ThrowsAsync<Exception>(() => _modelBinder.BindModelAsync(_mockModelBindingContext.Object));
-            Assert.Equal("Unable to parse serialized case into EventCase", ex.Message);
+            // Act
+            var result = _modelBinder.BindModelAsync(_mockModelBindingContext.Object);
+
+            // Assert
+            Assert.True(result.IsCompleted);
+            _mockModelBindingContext
+                .VerifySet(_ => _.Result = ModelBindingResult.Success(null), Times.Once);
         }
 
         [Fact]

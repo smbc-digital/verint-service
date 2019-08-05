@@ -14,6 +14,11 @@ namespace verint_service.Services.Event
 
         public void HandleCaseEvent(CaseEventModel model)
         {
+            if (model == null)
+            {
+                return;
+            }
+
             switch (model.EventType)
             {
                 case EventCaseType.PopulatedCloseCaseEvent:

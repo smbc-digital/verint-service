@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -123,11 +124,9 @@ namespace verint_service.Controllers
 
         [HttpPost]
         [Route("event")]
-        public IActionResult CaseEventHandler([ModelBinder(typeof(CaseEventModelBinder))]CaseEventModel model)
+        public void CaseEventHandler([ModelBinder(typeof(CaseEventModelBinder))]CaseEventModel model)
         {
             _eventService.HandleCaseEvent(model);
-
-            return Ok();
         }
     }
 }
