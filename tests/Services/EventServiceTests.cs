@@ -60,6 +60,16 @@ namespace verint_service_tests.Services
             // Assert
             _mockIntGateway.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void HandleCaseEvent_ShouldDoNothing()
+        {
+            // Act & Arrange
+            _eventService.HandleCaseEvent(null);
+
+            // Assert
+            _mockIntGateway.VerifyNoOtherCalls();
+        }
     }
 }
 
