@@ -37,7 +37,7 @@ namespace verint_service.ModelBinders
                 var eventCaseTypeSuccess = Enum.TryParse(xDocument.Root?.Name.LocalName, out EventCaseType caseEventType);
                 if (!eventCaseTypeSuccess)
                 {
-                    logger.LogInformation("EventType not configured");
+                    logger.LogInformation($"EventType: {xDocument.Root?.Name.LocalName} not configured");
                     context.Result = ModelBindingResult.Success(null);
                     return Task.CompletedTask;
                 }
