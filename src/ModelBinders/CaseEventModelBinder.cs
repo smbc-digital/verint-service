@@ -38,6 +38,7 @@ namespace verint_service.ModelBinders
                 if (!eventCaseTypeSuccess)
                 {
                     logger.LogInformation($"EventType: {xDocument.Root?.Name.LocalName} not configured");
+                    logger.LogInformation($"EventBody: {body}");
                     context.Result = ModelBindingResult.Success(null);
                     return Task.CompletedTask;
                 }
