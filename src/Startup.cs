@@ -10,11 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using StockportGovUK.AspNetCore.Middleware;
 using StockportGovUK.AspNetCore.Availability;
 using StockportGovUK.AspNetCore.Availability.Middleware;
-using StockportGovUK.AspNetCore.Gateways;
-using StockportGovUK.AspNetCore.Gateways.InthubGateway;
-using StockportGovUK.AspNetCore.Polly;
 using Swashbuckle.AspNetCore.Swagger;
+using verint_service.Config;
 using verint_service.Helpers.VerintConnection;
+using verint_service.HttpClients;
 using verint_service.Models.Config;
 using verint_service.Services.Case;
 using verint_service.Services.Event;
@@ -35,7 +34,7 @@ namespace verint_service
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<VerintConnectionConfiguration>(Configuration.GetSection("VerintConnectionConfiguration"));
-            services.Configure<EventCaseConfiguration>(Configuration.GetSection("EventCaseConfiguration"));
+            services.Configure<EventTypeConfiguration>(Configuration.GetSection("EventTypeConfiguration"));
 
             services.AddTransient<ICaseService, CaseService>();
             services.AddTransient<IUpdateService, UpdateService>();
@@ -44,8 +43,7 @@ namespace verint_service
             services.AddTransient<IEndpointBehavior, RequestBehavior>();
             services.AddTransient<IEventService, EventService>();
 
-            services.AddSingleton<IInthubGateway, InthubGateway>();
-            services.AddHttpClients<IGateway, Gateway>(Configuration);
+            services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();
 
             services
                 .AddMvc()
