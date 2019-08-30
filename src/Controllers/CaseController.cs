@@ -4,12 +4,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Models.Verint.Update;
 using verint_service.ModelBinders;
 using verint_service.Models;
 using verint_service.Services.Case;
+using verint_service.Services.Create;
 using verint_service.Services.Event;
 using verint_service.Services.Update;
 
@@ -23,16 +25,18 @@ namespace verint_service.Controllers
     {
         private readonly ICaseService _caseService;
         private readonly IUpdateService _updateService;
+        private readonly ICreateService _createService;
         private readonly ILogger _logger;
         private readonly HttpClient _httpClient;
         private readonly IEventService _eventService;
 
-        public CaseController(ICaseService caseService, IUpdateService updateService, ILogger<CaseController> logger, IEventService eventService)
+        public CaseController(ICaseService caseService, IUpdateService updateService, ILogger<CaseController> logger, IEventService eventService, ICreateService createService)
         {
             _caseService = caseService;
             _updateService = updateService;
             _logger = logger;
             _eventService = eventService;
+            _createService = createService;
 
             var proxyHttpClientHandler = new HttpClientHandler {
 	            Proxy = new WebProxy(new Uri("http://172.16.0.126:8080"), BypassOnLocal: false),
@@ -57,9 +61,17 @@ namespace verint_service.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create()
+        public async Task<IActionResult> Create(Case crmCase)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = await _createService.CreateCase(crmCase);
+                return Ok(response);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpDelete]

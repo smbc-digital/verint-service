@@ -17,6 +17,8 @@ namespace VerintWebService
         Task<writeCaseEformDataResponse> writeCaseEformDataAsync(FWTCaseEformData eformData);
 
         Task<updateCaseResponse> updateCaseAsync(FWTCaseUpdate FWTCaseUpdate);
+
+        Task<createCaseResponse> createCaseAsync(FWTCaseCreate crmCase);
     }
 
     public partial class FLWebInterfaceClient : IVerintClient

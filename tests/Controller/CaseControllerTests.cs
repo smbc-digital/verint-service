@@ -10,6 +10,7 @@ using StockportGovUK.NetStandard.Models.Models.Verint.Update;
 using VerintWebService;
 using Microsoft.Extensions.Logging;
 using verint_service.Models;
+using verint_service.Services.Create;
 using verint_service.Services.Event;
 
 namespace verint_service_tests.Controllers
@@ -21,11 +22,12 @@ namespace verint_service_tests.Controllers
         private readonly  Mock<IUpdateService> _mockUpdateService = new Mock<IUpdateService>();
         private readonly Mock<ILogger<CaseController>> _mockLogger = new Mock<ILogger<CaseController>>();
         private readonly Mock<IEventService> _mockEventService = new Mock<IEventService> ();
+        private readonly Mock<ICreateService> _mockCreateService = new Mock<ICreateService>();
 
 
         public CaseControllerTests()
         {
-            _caseController = new CaseController(_mockCaseService.Object,_mockUpdateService.Object, _mockLogger.Object, _mockEventService.Object);
+            _caseController = new CaseController(_mockCaseService.Object,_mockUpdateService.Object, _mockLogger.Object, _mockEventService.Object, _mockCreateService.Object);
         }
 
         [Fact]
@@ -54,6 +56,23 @@ namespace verint_service_tests.Controllers
             Assert.IsAssignableFrom<OkObjectResult>(response);
         }
 
+        [Fact]
+        public async Task Create_ShouldCallCreateService()
+        {
+            // Arrange
+            var caseDetails = new Case
+            {
+                EventCode = 1234567,
+                EventTitle = "test title",
+                Description = "test description"
+            };
+
+            // Act
+            await _caseController.Create(caseDetails);
+
+            // Assert
+            _mockCreateService.Verify(service => service.CreateCase(caseDetails), Times.Once);
+        }
 
         [Fact]
         public async Task UpdateIntegrationFormField_shouldCallUpdateService()
