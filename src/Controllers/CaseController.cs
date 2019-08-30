@@ -45,7 +45,6 @@ namespace verint_service.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery]string caseId)
         {
-            _logger.LogWarning($"**DEBUG: CaseController:GetCase, Makeing rrquest to getCase with caseId {caseId}");
             var verintCase = await _caseService.GetCase(caseId);
 
             return Ok(verintCase);
