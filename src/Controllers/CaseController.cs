@@ -61,6 +61,7 @@ namespace verint_service.Controllers
         }
 
         [HttpPost]
+        [Route("create-case")]
         public async Task<IActionResult> Create(Case crmCase)
         {
             try
