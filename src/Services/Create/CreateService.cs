@@ -18,7 +18,7 @@ namespace verint_service.Services.Create
             _verintConnection = verint.Client();
         }
 
-        public async Task<CreateCaseResponse> CreateCase(Models.Case crmCase)
+        public async Task<createCaseResponse> CreateCase(Models.Case crmCase)
         {
             var caseDetails = new FWTCaseCreate
             {
@@ -30,11 +30,8 @@ namespace verint_service.Services.Create
             try
             {
                 var result = await _verintConnection.createCaseAsync(caseDetails);
-                var response = new CreateCaseResponse
-                {
-                    CaseId = result.CaseReference
-                };
-                return response;
+
+                return result;
             }
             catch (Exception ex)
             {

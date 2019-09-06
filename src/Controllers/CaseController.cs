@@ -67,7 +67,11 @@ namespace verint_service.Controllers
             try
             {
                 var response = await _createService.CreateCase(crmCase);
-                return Ok(response);
+                var result = new CreateCaseResponse
+                {
+                    CaseId = response.CaseReference
+                };
+                return Ok(result);
             }
             catch (Exception)
             {

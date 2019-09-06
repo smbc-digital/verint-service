@@ -9,6 +9,6 @@ namespace verint_service.Services.Create
 {
     public interface ICreateService
     {
-        Task<CreateCaseResponse> CreateCase(Models.Case crmCase);
+        Task<createCaseResponse> CreateCase(Models.Case crmCase);
     }
 }
