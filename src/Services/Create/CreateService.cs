@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages.Internal;
 using verint_service.Helpers.VerintConnection;
+using verint_service.Models;
 using VerintWebService;
 
 namespace verint_service.Services.Create
@@ -17,7 +18,7 @@ namespace verint_service.Services.Create
             _verintConnection = verint.Client();
         }
 
-        public async Task<createCaseResponse> CreateCase(Models.Case crmCase)
+        public async Task<CreateCaseResponse> CreateCase(Models.Case crmCase)
         {
             var caseDetails = new FWTCaseCreate
             {
@@ -26,16 +27,14 @@ namespace verint_service.Services.Create
                 Description = crmCase.Description
             };
 
-            //if (crmCase.CaseForm == null && !string.IsNullOrEmpty(crmCase.FormName))
-            //{
-            //    crmCase.CaseForm = CreateCaseForm(crmCase);
-            //}
-
-            //caseDetails.Form = crmCase.CaseForm;
-
             try
             {
-                return await _verintConnection.createCaseAsync(caseDetails);
+                var result = await _verintConnection.createCaseAsync(caseDetails);
+                var response = new CreateCaseResponse
+                {
+                    CaseId = result.CaseReference
+                };
+                return response;
             }
             catch (Exception ex)
             {
