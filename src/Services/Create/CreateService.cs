@@ -18,6 +18,11 @@ namespace verint_service.Services.Create
             _verintConnection = verint.Client();
         }
 
+        /**
+         * Verint Docs available : http://scnverinttest.stockport.gov.uk:8080/lagan/schema/FLService.wsdl#op.idp167663632
+         *
+         * TODO: Add functionality to work with existing forms
+         */
         public async Task<createCaseResponse> CreateCase(Models.Case crmCase)
         {
             var caseDetails = new FWTCaseCreate
