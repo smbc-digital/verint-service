@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Models.Verint.Update;
@@ -61,7 +60,6 @@ namespace verint_service.Controllers
         }
 
         [HttpPost]
-        [Route("create-case")]
         public async Task<IActionResult> Create(Case crmCase)
         {
             try
@@ -102,34 +100,6 @@ namespace verint_service.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
-
-        [HttpGet]
-        [Route("testhttps")]
-        public async Task<IActionResult> TestHttps()
-        {
-            try{
-                var result = await _httpClient.GetAsync("https://google.com");
-                return Ok(result);
-            }
-            catch(Exception ex)
-            {
-                return Ok(ex);
-            }
-        }
-
-        [HttpGet]
-        [Route("testhttp")]
-        public async Task<IActionResult> TestHttp()
-        {
-            try{
-                var result = await _httpClient.GetAsync("http://google.com");
-                return Ok(result);
-            }
-            catch(Exception ex)
-            {
-                return Ok(ex);
             }
         }
 
