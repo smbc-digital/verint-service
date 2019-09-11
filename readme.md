@@ -41,7 +41,7 @@ Service to interact with our Case Management System
 ## Table of Contents
 - [Requirments](#requirments)
 - [Installation](#installation)
-- [Server Integration](#Server\ Integration)
+- [Server Integration](#server_integration)
 
 ## Requirments
 - dotnet core 2.2
@@ -57,7 +57,7 @@ $ git-crypt unlock
 $ dotnet run
 ```
 
-## Server Integration
+## Server_Integration
 
 [For server integration documentation please go to our internal git](https://git.stockport.gov.uk/devs/dts-documentation/wikis/Verint-Service-Integration)
 
