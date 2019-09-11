@@ -50,7 +50,7 @@ Service to interact with our Case Management System
 
 
 ## Installation
-```bash
+```console
 $ git clone git@github.com:smbc-digital/verint-service.git
 $ cd verint-service/src
 $ git-crypt unlock
