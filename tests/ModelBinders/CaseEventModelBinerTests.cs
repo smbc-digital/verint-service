@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -59,7 +58,7 @@ namespace verint_service_tests.ModelBinders
         }
 
         [Fact]
-        public async Task BindModelAsync_ShouldThrowEventTypeNotConfiguredException()
+        public void BindModelAsync_ShouldThrowEventTypeNotConfiguredException()
         {
             // Arrange
             _mockHttpRequest
@@ -76,7 +75,7 @@ namespace verint_service_tests.ModelBinders
             }
 
         [Fact]
-        public async Task BindModelAsync_ShouldThrowUnableToSerializeException()
+        public void BindModelAsync_ShouldThrowUnableToSerializeException()
         {
             // Arrange
             var eventType = EventCaseType.PopulatedCloseCaseEvent.ToString();
@@ -94,7 +93,7 @@ namespace verint_service_tests.ModelBinders
         }
 
         [Fact]
-        public async Task BindModelAsync_ShouldThrowUnableToParseToEventCaseException()
+        public void BindModelAsync_ShouldThrowUnableToParseToEventCaseException()
         {
             // Arrange
             var eventType = EventCaseType.PopulatedCloseCaseEvent.ToString();

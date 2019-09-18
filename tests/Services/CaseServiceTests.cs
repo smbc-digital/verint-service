@@ -7,6 +7,7 @@ using verint_service.Models;
 using verint_service.Services.Case;
 using VerintWebService;
 using Xunit;
+using verint_service.Services;
 
 namespace verint_service_tests.Services
 {
@@ -23,7 +24,7 @@ namespace verint_service_tests.Services
                 .Setup(_ => _.Client())
                 .Returns(_mockClient.Object);
 
-            _caseService = new CaseService(_mockConnection.Object, _mockLogger.Object);
+            _caseService = new CaseService(_mockConnection.Object, _mockLogger.Object, new IndividualService(_mockConnection.Object), new InteractionService(_mockConnection.Object));
         }
 
         [Theory]
@@ -217,6 +218,50 @@ namespace verint_service_tests.Services
 
             // Assert
             Assert.NotNull(result.Customer);
+        }
+
+        [Fact]
+        public async Task CreateCase_ShouldCall_Verint_createCaseDetailsAsync()
+        {
+            // Arrange
+            var caseDetails = new Case
+            {
+                EventCode = 1234567,
+                EventTitle = "test title",
+                Description = "test description"
+            };
+
+            _mockClient
+                .Setup(client => client.createCaseAsync(It.IsAny<FWTCaseCreate>()))
+                .ReturnsAsync(It.IsAny<createCaseResponse>());
+
+            // Act
+            await _caseService.CreateCase(caseDetails);
+
+            // Assert
+            _mockClient.Verify(client => client.createCaseAsync(It.IsAny<FWTCaseCreate>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task CreateCase_ShouldThrowError()
+        {
+            // Arrange
+            var caseDetails = new Case
+            {
+                EventCode = 1234567,
+                EventTitle = "test title",
+                Description = "test description"
+            };
+
+            _mockClient
+                .Setup(client => client.createCaseAsync(It.IsAny<FWTCaseCreate>()))
+                .Throws(new Exception());
+
+            // Act
+            await Assert.ThrowsAsync<Exception>(() => _caseService.CreateCase(caseDetails));
+
+            // Assert
+            _mockClient.Verify(_ => _.createCaseAsync(It.IsAny<FWTCaseCreate>()), Times.Once);
         }
 
         private FWTCaseFullDetails CreateBaseCase()
