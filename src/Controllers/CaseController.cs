@@ -10,7 +10,6 @@ using StockportGovUK.NetStandard.Models.Models.Verint.Update;
 using verint_service.ModelBinders;
 using verint_service.Models;
 using verint_service.Services.Case;
-using verint_service.Services.Create;
 using verint_service.Services.Event;
 using verint_service.Services.Update;
 

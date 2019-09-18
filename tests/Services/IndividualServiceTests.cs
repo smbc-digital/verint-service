@@ -1,16 +1,12 @@
-using System;
 using System.Threading.Tasks;
 using Moq;
 using verint_service.Helpers.VerintConnection;
-using verint_service.Models;
 using verint_service.Services;
-using verint_service.Services.Create;
 using VerintWebService;
 using Xunit;
 
 namespace verint_service_tests.Services
 {
-
     public class IndividualServiceTests
     {
         private readonly Mock<IVerintConnection> _mockConnection = new Mock<IVerintConnection>();
@@ -26,7 +22,7 @@ namespace verint_service_tests.Services
         }
 
         [Fact]
-        public async Task FirstTest()
+        public void FirstTest()
         {
             // // Arrange
             // var objectId = new FWTObjectID();

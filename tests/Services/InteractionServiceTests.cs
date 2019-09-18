@@ -2,9 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Moq;
 using verint_service.Helpers.VerintConnection;
-using verint_service.Models;
 using verint_service.Services;
-using verint_service.Services.Create;
 using VerintWebService;
 using Xunit;
 

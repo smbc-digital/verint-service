@@ -17,7 +17,6 @@ using verint_service.HttpClients;
 using verint_service.Models.Config;
 using verint_service.Services;
 using verint_service.Services.Case;
-using verint_service.Services.Create;
 using verint_service.Services.Event;
 using verint_service.Services.Update;
 
