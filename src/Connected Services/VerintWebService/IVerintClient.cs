@@ -19,6 +19,12 @@ namespace VerintWebService
         Task<updateCaseResponse> updateCaseAsync(FWTCaseUpdate FWTCaseUpdate);
 
         Task<createCaseResponse> createCaseAsync(FWTCaseCreate crmCase);
+
+        Task<createInteractionResponse> createInteractionAsync(FWTInteractionCreate interaction);
+
+        Task<createIndividualResponse> createIndividualAsync(FWTIndividual individual);
+
+        Task<searchForPartyResponse> searchForPartyAsync(FWTPartySearch searchCriteria);
     }
 
     public partial class FLWebInterfaceClient : IVerintClient

@@ -24,18 +24,16 @@ namespace verint_service.Controllers
     {
         private readonly ICaseService _caseService;
         private readonly IUpdateService _updateService;
-        private readonly ICreateService _createService;
         private readonly ILogger _logger;
         private readonly HttpClient _httpClient;
         private readonly IEventService _eventService;
 
-        public CaseController(ICaseService caseService, IUpdateService updateService, ILogger<CaseController> logger, IEventService eventService, ICreateService createService)
+        public CaseController(ICaseService caseService, IUpdateService updateService, ILogger<CaseController> logger, IEventService eventService)
         {
             _caseService = caseService;
             _updateService = updateService;
             _logger = logger;
             _eventService = eventService;
-            _createService = createService;
 
             var proxyHttpClientHandler = new HttpClientHandler {
 	            Proxy = new WebProxy(new Uri("http://172.16.0.126:8080"), BypassOnLocal: false),
@@ -64,9 +62,12 @@ namespace verint_service.Controllers
         {
             try
             {
-                var response = await _createService.CreateCase(crmCase);
-
-                return CreatedAtAction("Create", response);
+                var response = await _caseService.CreateCase(crmCase);
+                var result = new CreateCaseResponse
+                {
+                    CaseId = response
+                };
+                return CreatedAtAction("Create", result);
             }
             catch (Exception)
             {

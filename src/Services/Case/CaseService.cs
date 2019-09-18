@@ -11,9 +11,14 @@ namespace verint_service.Services.Case
     public class CaseService : ICaseService
     {
         private readonly ILogger<CaseService> _logger;
-        private readonly IVerintClient _verintConnection;
 
-        public CaseService(IVerintConnection verint, ILogger<CaseService> logger)
+        private readonly IVerintClient _verintConnection;
+        
+        private readonly IInteractionService _interactionService;
+
+        private readonly IIndividualService _individualService;
+
+        public CaseService(IVerintConnection verint, ILogger<CaseService> logger, IInteractionService interactionService, IIndividualService individualService)
         {
             _logger = logger;
             _verintConnection = verint.Client();
@@ -70,5 +75,75 @@ namespace verint_service.Services.Case
 
             return caseDetails;
         }
+        
+        public async Task<string> CreateCase(Models.Case crmCase)
+        {
+            var caseDetails = new FWTCaseCreate
+            {
+                ClassificationEventCode = crmCase.EventCode,
+                Title = crmCase.EventTitle,
+                Description = crmCase.Description,
+            };
+
+            if(crmCase.Customer != null)
+            {
+                var individual = await _individualService.ResolveIndividual(crmCase.Customer);
+                var interactionReference = await _interactionService.CreateInteractionForIndividual(individual);
+                crmCase.InteractionReference = interactionReference;
+            }
+
+            var associatedObjectBriefDetails = GetAssociatedObject(crmCase);
+            if (associatedObjectBriefDetails != null)
+            {
+                caseDetails.AssociatedObject = associatedObjectBriefDetails;
+            }
+
+            try
+            {
+                var result = await _verintConnection.createCaseAsync(caseDetails);
+                return result.CaseReference;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        private FWTObjectBriefDetails GetAssociatedObject(Models.Case crmCase)
+        {
+            var associatedObject = new FWTObjectID();
+            var associatedObjectBriefDetails = new FWTObjectBriefDetails();
+
+            if (crmCase.Property != null && crmCase.Property.Reference != null)
+            {
+                associatedObject.ObjectType = Common.PropertyObjectType;
+                associatedObject.ObjectReference = new[] { crmCase.Property.Reference };
+            }
+            else if (crmCase.Street != null && crmCase.Street.Reference != null)
+            {
+                associatedObject.ObjectType = Common.StreetObjectType;
+                associatedObject.ObjectReference = new[] { crmCase.Street.Reference };
+            }
+            else if (crmCase.Organisation != null && crmCase.Organisation.Reference != null)
+            {
+                associatedObject.ObjectType = Common.OrganisationObjectType;
+                associatedObject.ObjectReference = new[] { crmCase.Organisation.Reference };
+                associatedObjectBriefDetails.Details = crmCase.Organisation.Name;
+            }
+            else if (crmCase.Customer != null && crmCase.Customer.CustomerReference != null)
+            {
+                associatedObject.ObjectType = Common.IndividualObjectType;
+                associatedObject.ObjectReference = new[] { crmCase.Customer.CustomerReference };
+                associatedObjectBriefDetails.Details = crmCase.Customer.FullName;
+            }
+            else
+            {
+                return null;
+            }
+
+            associatedObjectBriefDetails.ObjectID = associatedObject;
+            return associatedObjectBriefDetails;
+        }
+
     }
 }

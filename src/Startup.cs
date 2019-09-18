@@ -15,6 +15,7 @@ using verint_service.Config;
 using verint_service.Helpers.VerintConnection;
 using verint_service.HttpClients;
 using verint_service.Models.Config;
+using verint_service.Services;
 using verint_service.Services.Case;
 using verint_service.Services.Create;
 using verint_service.Services.Event;
@@ -39,11 +40,12 @@ namespace verint_service
 
             services.AddTransient<ICaseService, CaseService>();
             services.AddTransient<IUpdateService, UpdateService>();
-            services.AddTransient<ICreateService, CreateService>();
             services.AddSingleton<IVerintConnection, VerintConnection>();
             services.AddTransient<IClientMessageInspector, RequestInspector>();
             services.AddTransient<IEndpointBehavior, RequestBehavior>();
             services.AddTransient<IEventService, EventService>();
+            services.AddTransient<IIndividualService, IndividualService>();
+            services.AddTransient<IInteractionService, InteractionService>();
 
             services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();
 
