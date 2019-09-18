@@ -13,15 +13,17 @@ namespace verint_service.Services.Case
         private readonly ILogger<CaseService> _logger;
 
         private readonly IVerintClient _verintConnection;
-        
-        private readonly IInteractionService _interactionService;
 
-        private readonly IIndividualService _individualService;
+        private IIndividualService _individualService;
 
-        public CaseService(IVerintConnection verint, ILogger<CaseService> logger, IInteractionService interactionService, IIndividualService individualService)
+        private IInteractionService _interactionService;
+
+        public CaseService(IVerintConnection verint, ILogger<CaseService> logger, IIndividualService individualService, IInteractionService interactionService)
         {
             _logger = logger;
             _verintConnection = verint.Client();
+            _individualService = individualService;
+            _interactionService = interactionService;
         }
 
         public async Task<Models.Case> GetCase(string caseId)
@@ -144,6 +146,5 @@ namespace verint_service.Services.Case
             associatedObjectBriefDetails.ObjectID = associatedObject;
             return associatedObjectBriefDetails;
         }
-
     }
 }
