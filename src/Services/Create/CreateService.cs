@@ -23,7 +23,7 @@ namespace verint_service.Services.Create
          *
          * TODO: Add functionality to work with existing forms
          */
-        public async Task<createCaseResponse> CreateCase(Models.Case crmCase)
+        public async Task<string> CreateCase(Models.Case crmCase)
         {
             var caseDetails = new FWTCaseCreate
             {
@@ -36,7 +36,7 @@ namespace verint_service.Services.Create
             {
                 var result = await _verintConnection.createCaseAsync(caseDetails);
 
-                return result;
+                return result.ToString();
             }
             catch (Exception ex)
             {

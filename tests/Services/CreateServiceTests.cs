@@ -41,7 +41,10 @@ namespace verint_service_tests.Services
 
             _mockClient
                 .Setup(client => client.createCaseAsync(It.IsAny<FWTCaseCreate>()))
-                .ReturnsAsync(It.IsAny<createCaseResponse>());
+                .ReturnsAsync(new createCaseResponse
+                {
+                    CaseReference = "123456"
+                });
 
             // Act
             await _service.CreateCase(caseDetails);
