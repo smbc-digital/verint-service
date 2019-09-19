@@ -36,7 +36,7 @@ namespace verint_service.Services.Create
             {
                 var result = await _verintConnection.createCaseAsync(caseDetails);
 
-                return result.ToString();
+                return result.CaseReference;
             }
             catch (Exception ex)
             {
