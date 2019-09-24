@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using verint_service.Builders;
+using verint_service.Helpers;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Mappers;
 using verint_service.Models;
@@ -18,12 +20,23 @@ namespace verint_service.Services.Case
 
         private IInteractionService _interactionService;
 
-        public CaseService(IVerintConnection verint, ILogger<CaseService> logger, IIndividualService individualService, IInteractionService interactionService)
+        private IAssociatedObjectHelper _associatedObjectHelper;
+
+        private ICaseFormBuilder _caseFormBuilder;
+
+        public CaseService(IVerintConnection verint,
+                            ILogger<CaseService> logger,
+                            IIndividualService individualService,
+                            IInteractionService interactionService,
+                            IAssociatedObjectHelper associatedObjectHelper,
+                            ICaseFormBuilder caseFormBuilder)
         {
             _logger = logger;
             _verintConnection = verint.Client();
             _individualService = individualService;
             _interactionService = interactionService;
+            _associatedObjectHelper = associatedObjectHelper;
+            _caseFormBuilder = caseFormBuilder;
         }
 
         public async Task<Models.Case> GetCase(string caseId)
@@ -94,10 +107,15 @@ namespace verint_service.Services.Case
                 crmCase.InteractionReference = interactionReference;
             }
 
-            var associatedObjectBriefDetails = GetAssociatedObject(crmCase);
+            var associatedObjectBriefDetails = _associatedObjectHelper.GetAssociatedObject(crmCase);
             if (associatedObjectBriefDetails != null)
             {
                 caseDetails.AssociatedObject = associatedObjectBriefDetails;
+            }
+
+            if (crmCase.CaseForm == null && !string.IsNullOrWhiteSpace(crmCase.FormName))
+            {
+                caseDetails.Form = _caseFormBuilder.Build(crmCase);
             }
 
             try
@@ -109,42 +127,6 @@ namespace verint_service.Services.Case
             {
                 throw new Exception(ex.Message);
             }
-        }
-
-        private FWTObjectBriefDetails GetAssociatedObject(Models.Case crmCase)
-        {
-            var associatedObject = new FWTObjectID();
-            var associatedObjectBriefDetails = new FWTObjectBriefDetails();
-
-            if (crmCase.Property != null && crmCase.Property.Reference != null)
-            {
-                associatedObject.ObjectType = Common.PropertyObjectType;
-                associatedObject.ObjectReference = new[] { crmCase.Property.Reference };
-            }
-            else if (crmCase.Street != null && crmCase.Street.Reference != null)
-            {
-                associatedObject.ObjectType = Common.StreetObjectType;
-                associatedObject.ObjectReference = new[] { crmCase.Street.Reference };
-            }
-            else if (crmCase.Organisation != null && crmCase.Organisation.Reference != null)
-            {
-                associatedObject.ObjectType = Common.OrganisationObjectType;
-                associatedObject.ObjectReference = new[] { crmCase.Organisation.Reference };
-                associatedObjectBriefDetails.Details = crmCase.Organisation.Name;
-            }
-            else if (crmCase.Customer != null && crmCase.Customer.CustomerReference != null)
-            {
-                associatedObject.ObjectType = Common.IndividualObjectType;
-                associatedObject.ObjectReference = new[] { crmCase.Customer.CustomerReference };
-                associatedObjectBriefDetails.Details = crmCase.Customer.FullName;
-            }
-            else
-            {
-                return null;
-            }
-
-            associatedObjectBriefDetails.ObjectID = associatedObject;
-            return associatedObjectBriefDetails;
         }
     }
 }

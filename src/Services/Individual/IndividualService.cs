@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages.Internal;
+using verint_service.Extensions;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Models;
 using VerintWebService;
 
 namespace verint_service.Services
 {
-    public interface IIndividualService
-    {
-        Task<FWTObjectID> ResolveIndividual(Customer customer);
-    }
 
     public class IndividualService : IIndividualService
     {
@@ -309,13 +306,24 @@ namespace verint_service.Services
 
             if (bestMatch != null && bestMatchScore >= 5)
             {
-                // UpdateIndividual(bestMatch, customer); - Check whether there is still an update required
+                await UpdateIndividual(bestMatch, customer);
                 return bestMatch.BriefDetails.ObjectID;
             }
             else
             {
                 return null;
             }
+        }
+
+        public async Task UpdateIndividual(FWTIndividual individual, Customer customer)
+        {
+            var update = new FWTIndividualUpdate();
+
+            var individualResponse = await _verintConnection.retrieveIndividualAsync(individual.BriefDetails.ObjectID);
+            individual = individualResponse.FWTIndividual;
+            update.BriefDetails = individual.BriefDetails;
+            update.AddAnyRequiredUpdates(individual, customer);
+            await _verintConnection.updateIndividualAsync(update); 
         }
     }
 }

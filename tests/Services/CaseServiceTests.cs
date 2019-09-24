@@ -8,6 +8,8 @@ using verint_service.Services.Case;
 using VerintWebService;
 using Xunit;
 using verint_service.Services;
+using verint_service.Helpers;
+using verint_service.Builders;
 
 namespace verint_service_tests.Services
 {
@@ -16,7 +18,10 @@ namespace verint_service_tests.Services
         private readonly Mock<IVerintClient> _mockClient = new Mock<IVerintClient>();
         private readonly Mock<IVerintConnection> _mockConnection = new Mock<IVerintConnection>();
         private readonly Mock<ILogger<CaseService>> _mockLogger = new Mock<ILogger<CaseService>>();
+
         private readonly CaseService _caseService;
+
+        public Mock<IAssociatedObjectHelper> _mockAssociatedObjectHelper = new Mock<IAssociatedObjectHelper>();
 
         public CaseServiceTests()
         {
@@ -24,7 +29,7 @@ namespace verint_service_tests.Services
                 .Setup(_ => _.Client())
                 .Returns(_mockClient.Object);
 
-            _caseService = new CaseService(_mockConnection.Object, _mockLogger.Object, new IndividualService(_mockConnection.Object), new InteractionService(_mockConnection.Object));
+            _caseService = new CaseService(_mockConnection.Object, _mockLogger.Object, new IndividualService(_mockConnection.Object), new InteractionService(_mockConnection.Object), _mockAssociatedObjectHelper.Object, new CaseFormBuilder());
         }
 
         [Theory]
@@ -132,7 +137,7 @@ namespace verint_service_tests.Services
         }
 
         [Fact]
-        public async Task GetCase_ShouldCall_Verint_retrieveIndividualAsync()
+        public async Task GetCase_WithCustomer_ShouldCall_Verint_retrieveIndividualAsync()
         {
             // Arrange
             var caseDetails = new retrieveCaseDetailsResponse
@@ -164,6 +169,36 @@ namespace verint_service_tests.Services
 
             // Assert
             _mockClient.Verify(client => client.retrieveIndividualAsync(It.IsAny<FWTObjectID>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task CreateCase_WithAssociatedStreet_ShouldCall_AssociatedObjectHelper()
+        {
+            // Arrange
+            var testCase = new verint_service.Models.Case()
+            {
+                Street = new Street(){
+                    USRN = "38102548",
+                    Reference = "38102548",
+                    Description = "Hibbert Lane"
+                }
+            };
+
+            _mockAssociatedObjectHelper
+                .Setup(helper => helper.GetAssociatedObject(It.IsAny<verint_service.Models.Case>()))
+                .Returns(It.IsAny<FWTObjectBriefDetails>());
+
+            _mockClient
+                .Setup(client => client.createCaseAsync(It.IsAny<FWTCaseCreate>()))
+                .ReturnsAsync(new createCaseResponse{
+                    CaseReference = "1223456"
+                });
+
+            // Act
+            await _caseService.CreateCase(testCase);
+
+            // Assert
+            _mockAssociatedObjectHelper.Verify(helper => helper.GetAssociatedObject(It.IsAny<verint_service.Models.Case>()), Times.Once);  
         }
 
         [Fact]

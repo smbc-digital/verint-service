@@ -25,6 +25,8 @@ namespace VerintWebService
         Task<createIndividualResponse> createIndividualAsync(FWTIndividual individual);
 
         Task<searchForPartyResponse> searchForPartyAsync(FWTPartySearch searchCriteria);
+
+        Task<updateIndividualResponse> updateIndividualAsync(FWTIndividualUpdate individualUpdate);
     }
 
     public partial class FLWebInterfaceClient : IVerintClient
