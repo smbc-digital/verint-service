@@ -33,14 +33,33 @@ namespace verint_service.Extensions
 
         private static bool RequiresAddressUpdate(this FWTIndividual individual, Customer customer)
         {
-            return (customer.Address != null && individual.ContactPostals == null) ||
-                    (customer.Address != null && individual.ContactPostals != null && !individual.ContactPostals.Any(x => x.Postcode.Trim().ToUpper() == customer.Address.Postcode.Trim().ToUpper()))  ||
-                    (customer.Address != null && !string.IsNullOrWhiteSpace(customer.Address.UPRN) && individual.ContactPostals != null &&
-                        !individual.ContactPostals.Where(x => !string.IsNullOrWhiteSpace(x.UPRN) && x.UPRN.Trim() == customer.Address.UPRN.Trim()).Any());
+            if (individual.ContactPostals == null)
+            {
+                return true;
+            }
+
+            if (individual.ContactPostals != null && !individual.ContactPostals.Any(x =>
+                    x.Postcode.Trim().ToUpper() == customer.Address.Postcode.Trim().ToUpper()))
+            {
+                return true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(customer.Address.UPRN) && individual.ContactPostals != null &&
+                        !individual.ContactPostals.Where(x => !string.IsNullOrWhiteSpace(x.UPRN) && x.UPRN.Trim() == customer.Address.UPRN.Trim()).Any())
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private static void AddAddressUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
         {
+            if (customer.Address == null)
+            {
+                return;
+            }
+
             if (individual.RequiresAddressUpdate(customer)) 
             {
                 var newAddress = new FWTContactPostal
@@ -57,10 +76,10 @@ namespace verint_service.Extensions
                 update.ContactPostals = new[] { new FWTContactPostalUpdate { PostalDetails = newAddress, ListItemUpdateType = "Insert" }};
                 return;
             }
-
-            if (customer.Address != null && !string.IsNullOrWhiteSpace(customer.Address.UPRN) && individual.ContactPostals != null)
+            else if (!string.IsNullOrWhiteSpace(customer.Address.UPRN) && individual.ContactPostals != null)
             {
-                FWTContactPostal preferredContact = individual.ContactPostals.FirstOrDefault(x => x.Preferred);
+                // TODO : Review preferences being dependent on UPRNs only
+                var preferredContact = individual.ContactPostals.FirstOrDefault(x => x.Preferred);
                 if (preferredContact != null && customer.Address.UPRN.Trim() != preferredContact.UPRN.Trim())
                 {
                     var contactPostal = individual.ContactPostals.FirstOrDefault(_ => _.UPRN.Trim() == customer.Address.UPRN.Trim());
