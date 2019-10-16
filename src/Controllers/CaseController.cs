@@ -65,8 +65,9 @@ namespace verint_service.Controllers
 
                 return CreatedAtAction("Create", response);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError("CaseController.Create: Failed to create crm case", ex.InnerException);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -91,8 +92,9 @@ namespace verint_service.Controllers
                 await _updateService.UpdateIntegrationFormFields(updateEntity);
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError("CaseController.UpdateIntegrationFormFields: Failed to update crm fields case", ex.InnerException);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
