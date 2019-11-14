@@ -7,6 +7,9 @@ using verint_service.Services.Property;
 
 namespace verint_service.Controllers
 {
+    [Produces("application/json")]
+    [Route("api/v1/[Controller]")]
+    [ApiController]
     public class PropertyController : BaseController
     {
         private readonly ILogger _logger;
