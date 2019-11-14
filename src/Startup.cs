@@ -21,6 +21,7 @@ using verint_service.Services.Event;
 using verint_service.Services.Update;
 using verint_service.Helpers;
 using verint_service.Builders;
+using verint_service.Services.Property;
 
 namespace verint_service
 {
@@ -47,6 +48,7 @@ namespace verint_service
             services.AddTransient<IEventService, EventService>();
             services.AddTransient<IIndividualService, IndividualService>();
             services.AddTransient<IInteractionService, InteractionService>();
+            services.AddTransient<IPropertyService, PropertyService>();
             services.AddTransient<ICaseFormBuilder, CaseFormBuilder>();
 
             services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();

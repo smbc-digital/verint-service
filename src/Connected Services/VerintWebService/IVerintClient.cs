@@ -27,7 +27,10 @@ namespace VerintWebService
         Task<searchForPartyResponse> searchForPartyAsync(FWTPartySearch searchCriteria);
 
         Task<updateIndividualResponse> updateIndividualAsync(FWTIndividualUpdate individualUpdate);
+
+        Task<searchForPropertyResponse> searchForPropertyAsync(FWTPropertySearch propertySearch);
     }
+
 
     public partial class FLWebInterfaceClient : IVerintClient
     {
