@@ -22,7 +22,7 @@ namespace verint_service.Controllers
         }
 
         [HttpGet]
-        [Route("/search/{postcode}")]
+        [Route("search/{postcode}")]
         public async Task<IEnumerable<AddressSearchResult>> Search(string postcode)
         {
             return await _propertyService.SearchByPostcodeAsync(postcode);
