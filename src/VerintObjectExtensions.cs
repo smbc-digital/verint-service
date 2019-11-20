@@ -99,35 +99,53 @@ namespace verint_service.Extensions
             }
         }
 
-        private static bool RequiresEmailUpdate(this FWTIndividual individual, Customer customer)
+
+        private static bool HasMatchingAddresses(this FWTContactEmail[] contactEmails, Customer customer)
+        {            
+            return contactEmails.Any(x => x.EmailAddress.Trim().ToUpper() == customer.Email.Trim().ToUpper());
+        }
+
+        private static bool HasMatchingPreferredAddresses(this FWTContactEmail[] contactEmails, Customer customer)
+        {            
+            return contactEmails.Any(x => x.EmailAddress.Trim().ToUpper() == customer.Email.Trim().ToUpper() && x.Preferred == true);
+        }
+
+        private static bool RequiresNewEmailUpdate(this FWTIndividual individual, Customer customer)
+        {            
+            if(individual.ContactEmails == null)
+            {
+                return true;
+            }
+
+            return !individual.ContactEmails.HasMatchingAddresses(customer);
+        }
+
+        private static bool RequiresPreferredEmailUpdate(this FWTIndividual individual, Customer customer)
         {
-            return (!string.IsNullOrWhiteSpace(customer.Email) && individual.ContactEmails == null) ||
-                    (!string.IsNullOrWhiteSpace(customer.Email) && individual.ContactEmails != null &&
-                    !individual.ContactEmails.Where(x => x.EmailAddress.Trim().ToUpper() == customer.Email.Trim().ToUpper()).Any());
+            if(individual.ContactEmails == null)
+            {
+                return false;
+            }
+
+            return !individual.ContactEmails.HasMatchingPreferredAddresses(customer);
         }
 
         private static void AddEmailUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
         {
-            if (individual.RequiresEmailUpdate(customer))
+            if(string.IsNullOrWhiteSpace(customer.Email))
             {
-                var emailUpdate = new FWTContactEmailUpdate 
-                { 
-                    EmailDetails = new FWTContactEmail { EmailAddress = customer.Email, Preferred = true }, 
-                    ListItemUpdateType = "Insert" 
-                };
-
-                update.ContactEmails = new[] { emailUpdate };
+                return;
             }
-    
-            if (!string.IsNullOrWhiteSpace(customer.Email) && individual.ContactEmails != null && 
-                individual.ContactEmails.Where(x => x.EmailAddress.Trim().ToUpper() == customer.Email.Trim().ToUpper() && x.Preferred == false).Count() > 0)
+
+            if (individual.RequiresNewEmailUpdate(customer))
             {
-                var email = individual.ContactEmails.FirstOrDefault(x => x.EmailAddress.Trim().ToUpper() == customer.Email.Trim().ToUpper());
-                if (email != null)
-                {
-                    email.Preferred = true;
-                    update.ContactEmails = new[] {  new FWTContactEmailUpdate { EmailDetails = email, ListItemUpdateType = "Update" } };
-                }
+                update.ContactEmails = new[] { new FWTContactEmailUpdate {  EmailDetails = new FWTContactEmail { EmailAddress = customer.Email, Preferred = true }, ListItemUpdateType = "Insert" } };
+            }
+            else if (individual.RequiresPreferredEmailUpdate(customer))
+            {
+                var email = individual.ContactEmails.First(x => x.EmailAddress.Trim().ToUpper() == customer.Email.Trim().ToUpper());
+                email.Preferred = true;
+                update.ContactEmails = new[] {  new FWTContactEmailUpdate { EmailDetails = email, ListItemUpdateType = "Update" } };
             }
         }
 
