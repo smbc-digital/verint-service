@@ -27,5 +27,12 @@ namespace verint_service.Controllers
         {
             return await _propertyService.SearchByPostcodeAsync(postcode);
         }
+
+        [HttpGet]
+        [Route("streetsearch/{street}")]
+        public async Task<IEnumerable<AddressSearchResult>> StreetSearch(string street)
+        {
+            return await _propertyService.SearchByStreetAsync(street);
+        }
     }
 }

@@ -33,12 +33,23 @@ namespace verint_service.Services.Property
             return await DoPropertySearch(propertySearch);
         }
 
+        public async Task<IEnumerable<AddressSearchResult>> SearchByStreetAsync(string street)
+        {
+            var streetSearch = new FWTPropertySearch
+            {
+                StreetName = street
+            };
+
+            return await DoPropertySearch(streetSearch);
+        }
+
         private async Task<IEnumerable<AddressSearchResult>> DoPropertySearch(FWTPropertySearch propertySearch)
         {
             var propertySearchResults = await _verintConnection.searchForPropertyAsync(propertySearch);
-            var addressResults = propertySearchResults.FWTObjectBriefDetailsList.Select(result => new AddressSearchResult {
-                UniqueId = result.ObjectID.ObjectReference[0], 
-                Name =  result.ObjectDescription 
+            var addressResults = propertySearchResults.FWTObjectBriefDetailsList.Select(result => new AddressSearchResult
+            {
+                UniqueId = result.ObjectID.ObjectReference[0],
+                Name = result.ObjectDescription
             });
 
             return addressResults;
