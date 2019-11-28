@@ -41,11 +41,8 @@ namespace verint_service.Services.Case
 
         public async Task<Models.Case> GetCase(string caseId)
         {
-            _logger.LogWarning($"**DEBUG: CaseService: GetCase() caseId: {caseId}");
-
             if (string.IsNullOrWhiteSpace(caseId))
             {
-                _logger.LogWarning($"**DEBUG: CaseService: GetCase(). Null or empty references are not allowed {caseId}");
                 throw new Exception("Null or empty references are not allowed");
             }
 
@@ -55,11 +52,7 @@ namespace verint_service.Services.Case
                 Option = new[] { "all" }
             };
 
-            _logger.LogWarning("**DEBUG: CaseService: GetCase(). Making call to Verint");
-
             var response = await _verintConnection.retrieveCaseDetailsAsync(caseRequest);
-            _logger.LogWarning("**DEBUG: CaseService: GetCase(). Retrieved case response from Verint");
-
 
             var caseDetails = response.FWTCaseFullDetails.MapToCase();
 
