@@ -34,7 +34,7 @@ namespace verint_service.Services.Street
         private async Task<IEnumerable<Models.Street>> DoStreetSearch(FWTStreetSearch streetSearch)
         {
             var streetSearchResults = await _verintConnection.searchForStreetAsync(streetSearch);
-            var streetResults = streetSearchResults.FWTObjectBriefDetailsList.Select(result => new Models.Street
+            var streetResults = streetSearchResults.FWTObjectBriefDetailsList.OrderBy(street => street.ObjectDescription).Select(result => new Models.Street
             {
                 USRN = result.ObjectID.ObjectReference[0],
                 Description = result.ObjectDescription
