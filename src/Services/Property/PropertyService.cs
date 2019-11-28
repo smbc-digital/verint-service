@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using StockportGovUK.NetStandard.Models.Addresses;
 using StockportGovUK.NetStandard.Models.Models.Fostering;
+using StockportGovUK.NetStandard.Models.Models.Verint;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,16 +32,6 @@ namespace verint_service.Services.Property
             };
 
             return await DoPropertySearch(propertySearch);
-        }
-
-        public async Task<IEnumerable<AddressSearchResult>> SearchByStreetAsync(string street)
-        {
-            var streetSearch = new FWTPropertySearch
-            {
-                StreetName = street
-            };
-
-            return await DoPropertySearch(streetSearch);
         }
 
         private async Task<IEnumerable<AddressSearchResult>> DoPropertySearch(FWTPropertySearch propertySearch)

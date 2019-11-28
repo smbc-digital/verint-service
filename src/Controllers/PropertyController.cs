@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StockportGovUK.NetStandard.Models.Addresses;
+using StockportGovUK.NetStandard.Models.Models.Verint;
 using verint_service.Services.Property;
 
 namespace verint_service.Controllers
@@ -26,13 +27,6 @@ namespace verint_service.Controllers
         public async Task<IEnumerable<AddressSearchResult>> Search(string postcode)
         {
             return await _propertyService.SearchByPostcodeAsync(postcode);
-        }
-
-        [HttpGet]
-        [Route("streetsearch/{street}")]
-        public async Task<IEnumerable<AddressSearchResult>> StreetSearch(string street)
-        {
-            return await _propertyService.SearchByStreetAsync(street);
         }
     }
 }

@@ -22,6 +22,7 @@ using verint_service.Services.Update;
 using verint_service.Helpers;
 using verint_service.Builders;
 using verint_service.Services.Property;
+using verint_service.Services.Street;
 
 namespace verint_service
 {
@@ -49,6 +50,7 @@ namespace verint_service
             services.AddTransient<IIndividualService, IndividualService>();
             services.AddTransient<IInteractionService, InteractionService>();
             services.AddTransient<IPropertyService, PropertyService>();
+            services.AddTransient<IStreetService, StreetService>();
             services.AddTransient<ICaseFormBuilder, CaseFormBuilder>();
 
             services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();

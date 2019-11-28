@@ -29,6 +29,8 @@ namespace VerintWebService
         Task<updateIndividualResponse> updateIndividualAsync(FWTIndividualUpdate individualUpdate);
 
         Task<searchForPropertyResponse> searchForPropertyAsync(FWTPropertySearch propertySearch);
+
+        Task<searchForStreetResponse> searchForStreetAsync(FWTStreetSearch streetSearch);
     }
 
 
