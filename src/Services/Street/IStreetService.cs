@@ -6,6 +6,6 @@ namespace verint_service.Services.Street
 {
     public interface IStreetService
     {
-        Task<IEnumerable<StreetX>> SearchByStreetAsync(string reference);
+        Task<IEnumerable<Models.Street>> SearchByStreetAsync(string reference);
     }
 }

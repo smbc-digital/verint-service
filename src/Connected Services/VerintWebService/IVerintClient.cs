@@ -33,7 +33,6 @@ namespace VerintWebService
         Task<searchForStreetResponse> searchForStreetAsync(FWTStreetSearch streetSearch);
     }
 
-
     public partial class FLWebInterfaceClient : IVerintClient
     {
 

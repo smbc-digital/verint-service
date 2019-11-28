@@ -23,17 +23,9 @@ namespace verint_service.Controllers
 
         [HttpGet]
         [Route("streetsearch/{street}")]
-        public async Task<IEnumerable<StreetX>> StreetSearch(string street)
+        public async Task<IEnumerable<Models.Street>> StreetSearch(string street)
         {
             return await _streetService.SearchByStreetAsync(street);
         }
     }
-
-    public class StreetX
-    {
-        public string Reference { get; set; }
-        public string Description { get; set; }
-        public string USRN { get; set; }
-    }
-
 }
