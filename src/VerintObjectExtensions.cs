@@ -66,7 +66,7 @@ namespace verint_service.Extensions
                 {
                     AddressID = -1,
                     AddressNumber = customer.Address.Number,
-                    AddressLine = new[] { customer.Address.AddressLine1, customer.Address.AddressLine2 + string.Empty, customer.Address.AddressLine3 },
+                    AddressLine = new[] { customer.Address.AddressLine1, customer.Address.AddressLine2 + string.Empty, customer.Address.AddressLine3, customer.Address.City },
                     City = customer.Address.City + string.Empty,
                     Postcode = customer.Address.Postcode + string.Empty,
                     UPRN = customer.Address.UPRN + string.Empty,
