@@ -44,6 +44,13 @@ namespace verint_service.Extensions
                 return true;
             }
 
+            var foundAddress = individual.ContactPostals.Where(x => x.Postcode.Trim().ToUpper() == customer.Address.Postcode.Trim().ToUpper());
+            if (foundAddress != null && 
+                !foundAddress.Any(_ => _.AddressLine[0] == customer.Address.AddressLine1 && _.AddressLine[1] == (string.IsNullOrEmpty(customer.Address.AddressLine2) ? "" : customer.Address.AddressLine2) && _.City == customer.Address.City))
+            {
+                return true;
+            }
+
             if (!string.IsNullOrWhiteSpace(customer.Address.UPRN) && individual.ContactPostals != null &&
                         !individual.ContactPostals.Where(x => !string.IsNullOrWhiteSpace(x.UPRN) && x.UPRN.Trim() == customer.Address.UPRN.Trim()).Any())
             {
