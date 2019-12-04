@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using verint_service.Models;
+using StockportGovUK.NetStandard.Models.Addresses;
 using verint_service.Services.Street;
 
 namespace verint_service.Controllers
@@ -23,7 +23,7 @@ namespace verint_service.Controllers
 
         [HttpGet]
         [Route("streetsearch/{street}")]
-        public async Task<IEnumerable<Models.Street>> StreetSearch(string street)
+        public async Task<IEnumerable<AddressSearchResult>> StreetSearch(string street)
         {
             return await _streetService.SearchByStreetAsync(street);
         }

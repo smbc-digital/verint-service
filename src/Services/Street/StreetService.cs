@@ -3,7 +3,6 @@ using StockportGovUK.NetStandard.Models.Addresses;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using StockportGovUK.NetStandard.Models.Models.Verint;
 using verint_service.Helpers.VerintConnection;
 using VerintWebService;
 
@@ -21,7 +20,7 @@ namespace verint_service.Services.Street
             _verintConnection = verint.Client();
         }
 
-        public async Task<IEnumerable<Models.Street>> SearchByStreetAsync(string reference)
+        public async Task<IEnumerable<AddressSearchResult>> SearchByStreetAsync(string reference)
         {
             var streetSearch = new FWTStreetSearch
             {
@@ -31,13 +30,13 @@ namespace verint_service.Services.Street
             return await DoStreetSearch(streetSearch);
         }
 
-        private async Task<IEnumerable<Models.Street>> DoStreetSearch(FWTStreetSearch streetSearch)
+        private async Task<IEnumerable<AddressSearchResult>> DoStreetSearch(FWTStreetSearch streetSearch)
         {
             var streetSearchResults = await _verintConnection.searchForStreetAsync(streetSearch);
-            var streetResults = streetSearchResults.FWTObjectBriefDetailsList.OrderBy(street => street.ObjectDescription).Select(result => new Models.Street
+            var streetResults = streetSearchResults.FWTObjectBriefDetailsList.OrderBy(street => street.ObjectDescription).Select(result => new AddressSearchResult
             {
-                USRN = result.ObjectID.ObjectReference[0],
-                Description = result.ObjectDescription
+                UniqueId = result.ObjectID.ObjectReference[0],
+                Name = result.ObjectDescription
             });
 
             return streetResults;
