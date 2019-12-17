@@ -43,6 +43,7 @@ namespace verint_service.Helpers
             }
 
             associatedObjectBriefDetails.ObjectID = associatedObject;
+            
             return associatedObjectBriefDetails;
         }
     }

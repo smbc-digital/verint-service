@@ -96,9 +96,11 @@ namespace verint_service.Services.Case
             if(crmCase.Customer != null)
             {
                 var individual = await _individualService.ResolveIndividual(crmCase.Customer);
-                crmCase.Customer.CustomerReference = individual.ObjectReference[0];
                 var interactionReference = await _interactionService.CreateInteractionForIndividual(individual);
-                crmCase.InteractionReference = interactionReference;
+
+                crmCase.Customer.CustomerReference = individual.ObjectReference[0];
+                caseDetails.InteractionID = interactionReference;
+                caseDetails.InteractionIDSpecified = true;
             }
 
             var associatedObjectBriefDetails = _associatedObjectHelper.GetAssociatedObject(crmCase);

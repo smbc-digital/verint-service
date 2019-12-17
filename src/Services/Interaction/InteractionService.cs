@@ -28,6 +28,7 @@ namespace verint_service.Services
             };
 
             var createInteractionResult = await _verintConnection.createInteractionAsync(interactionDetails);
+
             return createInteractionResult.InteractionID;
         }
     }
