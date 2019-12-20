@@ -255,22 +255,22 @@ namespace verint_service.Services
                         score += 3;
                     }
 
-                    if (!string.IsNullOrEmpty(customer.Address.Postcode) &&
-                        
-                        individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.Postcode) && string.Equals(x.Postcode.Trim().Replace(" ", string.Empty), customer.Address.Postcode.Trim().Replace(" ", string.Empty), StringComparison.CurrentCultureIgnoreCase)))
-                    {
-                        score += 1;
-                    }
-
-                    if (!string.IsNullOrEmpty(customer.Address.Number) &&
-                        individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressNumber) && string.Equals(x.AddressNumber.Trim(), customer.Address.Number.ToString(), StringComparison.CurrentCultureIgnoreCase)))
-                    {
-                        score += 1;
-                    }
-
                     //No Uprn, customer used manual address
                     if (string.IsNullOrEmpty(customer.Address.UPRN))
                     {
+
+                        if (!string.IsNullOrEmpty(customer.Address.Postcode) &&    
+                            individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.Postcode) && string.Equals(x.Postcode.Trim().Replace(" ", string.Empty), customer.Address.Postcode.Trim().Replace(" ", string.Empty), StringComparison.CurrentCultureIgnoreCase)))
+                        {
+                            score += 1;
+                        }
+
+                        if (!string.IsNullOrEmpty(customer.Address.Number) &&
+                            individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressNumber) && string.Equals(x.AddressNumber.Trim(), customer.Address.Number.ToString(), StringComparison.CurrentCultureIgnoreCase)))
+                        {
+                            score += 1;
+                        }
+
                         if (!string.IsNullOrEmpty(customer.Address.AddressLine1) &&
                             individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressLine[0]) && string.Equals(x.AddressLine[0].Trim(), customer.Address.AddressLine1.ToString(), StringComparison.CurrentCultureIgnoreCase)))
                         {
