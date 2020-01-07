@@ -23,6 +23,7 @@ using verint_service.Helpers;
 using verint_service.Builders;
 using verint_service.Services.Property;
 using verint_service.Services.Street;
+using verint_service.Services.Organisation;
 
 namespace verint_service
 {
@@ -52,6 +53,7 @@ namespace verint_service
             services.AddTransient<IPropertyService, PropertyService>();
             services.AddTransient<IStreetService, StreetService>();
             services.AddTransient<ICaseFormBuilder, CaseFormBuilder>();
+            services.AddTransient<IOrganisationService, OrganisationService>();
 
             services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();
             services.AddTransient<IAssociatedObjectHelper, AssociatedObjectHelper>();
