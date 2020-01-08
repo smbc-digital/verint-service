@@ -18,7 +18,7 @@ namespace verint_service_tests.Controllers
     {
         private readonly CaseController _caseController;
         private readonly Mock<ICaseService> _mockCaseService = new Mock<ICaseService>();
-        private readonly  Mock<IUpdateService> _mockUpdateService = new Mock<IUpdateService>();
+        private readonly Mock<IUpdateService> _mockUpdateService = new Mock<IUpdateService>();
         private readonly Mock<ILogger<CaseController>> _mockLogger = new Mock<ILogger<CaseController>>();
         private readonly Mock<IEventService> _mockEventService = new Mock<IEventService> ();
 

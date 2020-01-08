@@ -20,7 +20,7 @@ namespace verint_service.Controllers
         private readonly ILogger _logger;
         private readonly IOrganisationService _organisationService;
 
-        public OrganisationController(ILogger<CaseController> logger, IOrganisationService organisationService) : base()
+        public OrganisationController(ILogger<OrganisationController> logger, IOrganisationService organisationService) : base()
         {
             _logger = logger;
             _organisationService = organisationService;
