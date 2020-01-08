@@ -1,17 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
-using StockportGovUK.NetStandard.Models.Models.Verint.Update;
-using verint_service.ModelBinders;
-using verint_service.Models;
-using verint_service.Services.Case;
-using verint_service.Services.Event;
-using verint_service.Services.Update;
 
 namespace verint_service.Controllers
 {
@@ -29,7 +19,5 @@ namespace verint_service.Controllers
 
             _httpClient = new HttpClient(proxyHttpClientHandler);
         }
-
-
     }
 }

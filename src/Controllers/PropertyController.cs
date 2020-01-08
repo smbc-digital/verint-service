@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Addresses;
-using StockportGovUK.NetStandard.Models.Models.Verint;
 using verint_service.Services.Property;
 
 namespace verint_service.Controllers
@@ -11,6 +11,7 @@ namespace verint_service.Controllers
     [Produces("application/json")]
     [Route("api/v1/[Controller]")]
     [ApiController]
+    [TokenAuthentication]
     public class PropertyController : BaseController
     {
         private readonly ILogger _logger;
