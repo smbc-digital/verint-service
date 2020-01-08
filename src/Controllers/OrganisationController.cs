@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@ namespace verint_service.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Organisation>> Get()
+        public async Task<ActionResult<Organisation>> Get([Required][FromQuery]string organisation)
         {
             throw new NotImplementedException();
         }
