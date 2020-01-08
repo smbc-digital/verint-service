@@ -33,7 +33,7 @@ namespace verint_service.Services.Organisation
         private async Task<IEnumerable<Models.Organisation>> DoOrganisationSearch(FWTPartySearch orgSearch)
         {
             var orgSearchResults = await _verintConnection.searchForPartyAsync(orgSearch);
-            var orgResults = orgSearchResults.FWTObjectBriefDetailsList.OrderBy(street => street.ObjectDescription).Select(result => new Models.Organisation
+            var orgResults = orgSearchResults.FWTObjectBriefDetailsList.Select(result => new Models.Organisation
             {
                 Reference = result.ObjectID.ObjectReference[0],       
                 Name = result.ObjectDescription
