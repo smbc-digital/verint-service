@@ -26,7 +26,7 @@ namespace verint_service.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Organisation>> Get()
+        public async Task<IEnumerable<Organisation>> Get([FromQuery]string organisation)
         {
             throw new NotImplementedException();
         }
