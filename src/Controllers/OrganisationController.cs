@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
+using StockportGovUK.NetStandard.Models.Models.Verint.Lookup;
 using verint_service.Models;
 using verint_service.Services.Organisation;
 
@@ -42,7 +43,7 @@ namespace verint_service.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Route("search/{organisation}")]
-        public async Task<ActionResult<IEnumerable<Organisation>>> Search(string organisation)
+        public async Task<ActionResult<IEnumerable<OrganisationSearchResult>>> Search(string organisation)
         {
             try
             {

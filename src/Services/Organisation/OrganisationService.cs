@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using verint_service.Helpers.VerintConnection;
 using VerintWebService;
+using StockportGovUK.NetStandard.Models.Models.Verint.Lookup;
 
 namespace verint_service.Services.Organisation
 {
@@ -19,7 +19,7 @@ namespace verint_service.Services.Organisation
             _verintConnection = verint.Client();
         }
 
-        public async Task<IEnumerable<Models.Organisation>> SearchByOrganisationAsync(string organisationName)
+        public async Task<IEnumerable<OrganisationSearchResult>> SearchByOrganisationAsync(string organisationName)
         {
             var orgSearch = new FWTPartySearch
             {
@@ -30,13 +30,14 @@ namespace verint_service.Services.Organisation
             return await DoOrganisationSearch(orgSearch);
         }
 
-        private async Task<IEnumerable<Models.Organisation>> DoOrganisationSearch(FWTPartySearch orgSearch)
+        private async Task<IEnumerable<OrganisationSearchResult>> DoOrganisationSearch(FWTPartySearch orgSearch)
         {
             var orgSearchResults = await _verintConnection.searchForPartyAsync(orgSearch);
-            var orgResults = orgSearchResults.FWTObjectBriefDetailsList.Select(result => new Models.Organisation
+            var orgResults = orgSearchResults.FWTObjectBriefDetailsList.Select(result => new OrganisationSearchResult
             {
-                Reference = result.ObjectID.ObjectReference[0],       
-                Name = result.ObjectDescription
+                Reference = result.ObjectID.ObjectReference[0],
+                Name = result.ObjectDescription,
+                Address = result.Details
             });
 
             return orgResults;
