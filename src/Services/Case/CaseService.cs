@@ -2,12 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using verint_service.Builders;
-using verint_service.Helpers;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Mappers;
-using verint_service.Models;
 using VerintWebService;
+using StockportGovUK.NetStandard.Models.Verint;
 
 namespace verint_service.Services.Case
 {
@@ -17,30 +15,23 @@ namespace verint_service.Services.Case
 
         private readonly IVerintClient _verintConnection;
 
-        private IIndividualService _individualService;
-
         private IInteractionService _interactionService;
 
-        private IAssociatedObjectHelper _associatedObjectHelper;
-
-        private ICaseFormBuilder _caseFormBuilder;
+        private CaseToFWTCaseCreateMapper _caseToFWTCaseCreateMapper;
 
         public CaseService(IVerintConnection verint,
                             ILogger<CaseService> logger,
-                            IIndividualService individualService,
                             IInteractionService interactionService,
-                            IAssociatedObjectHelper associatedObjectHelper,
-                            ICaseFormBuilder caseFormBuilder)
+                            CaseToFWTCaseCreateMapper caseToFWTCaseCreateMapper
+                            )
         {
             _logger = logger;
             _verintConnection = verint.Client();
-            _individualService = individualService;
             _interactionService = interactionService;
-            _associatedObjectHelper = associatedObjectHelper;
-            _caseFormBuilder = caseFormBuilder;
+            _caseToFWTCaseCreateMapper = caseToFWTCaseCreateMapper;
         }
 
-        public async Task<Models.Case> GetCase(string caseId)
+        public async Task<StockportGovUK.NetStandard.Models.Verint.Case> GetCase(string caseId)
         {
             if (string.IsNullOrWhiteSpace(caseId))
             {
@@ -54,7 +45,6 @@ namespace verint_service.Services.Case
             };
 
             var response = await _verintConnection.retrieveCaseDetailsAsync(caseRequest);
-
             var caseDetails = response.FWTCaseFullDetails.MapToCase();
 
             if (response.FWTCaseFullDetails.CoreDetails.AssociatedObject != null)
@@ -63,7 +53,6 @@ namespace verint_service.Services.Case
                     Common.OrganisationObjectType)
                 {
                     var organisation = await _verintConnection.retrieveOrganisationAsync(response.FWTCaseFullDetails.CoreDetails.AssociatedObject.ObjectID);
-
                     if (organisation != null)
                     {
                         caseDetails.Organisation = organisation.FWTOrganisation.MapToOrganisation();
@@ -85,45 +74,12 @@ namespace verint_service.Services.Case
             return caseDetails;
         }
 
-        public async Task<string> CreateCase(Models.Case crmCase)
+        
+        public async Task<string> CreateCase(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
-            var caseDetails = new FWTCaseCreate
-            {
-                ClassificationEventCode = crmCase.EventCode,
-                Title = crmCase.EventTitle,
-                Description = crmCase.Description,
-            };
-
-            if(crmCase.Customer != null)
-            {
-                var individual = await _individualService.ResolveIndividual(crmCase.Customer);
-                var interactionReference = await _interactionService.CreateInteractionForIndividual(individual);
-
-                crmCase.Customer.CustomerReference = individual.ObjectReference[0];
-                caseDetails.InteractionID = interactionReference;
-                caseDetails.InteractionIDSpecified = true;
-            }
-
-            var associatedObjectBriefDetails = _associatedObjectHelper.GetAssociatedObject(crmCase);
-            if (associatedObjectBriefDetails != null)
-            {
-                caseDetails.AssociatedObject = associatedObjectBriefDetails;
-            }
-
-            if (crmCase.CaseForm == null && !string.IsNullOrWhiteSpace(crmCase.FormName))
-            {
-                caseDetails.Form = _caseFormBuilder.Build(crmCase);
-            }
-
-            try
-            {
-                var result = await _verintConnection.createCaseAsync(caseDetails);
-                return result.CaseReference;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            crmCase.InteractionReference = await _interactionService.CreateInteraction(crmCase);                
+            var caseDetails = _caseToFWTCaseCreateMapper.Map(crmCase);
+            return _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;            
         }
 
         public async Task<int> UpdateCaseDescription(Models.Case crmCase)

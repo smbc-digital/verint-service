@@ -1,21 +1,43 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using verint_service.Models;
+using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 
 namespace verint_service.Extensions
 {
     public static class VerintObjectExtensions
     {
-        public static void AddAnyRequiredUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
+        public static bool AddAnyRequiredUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
         {
-            update.AddNameUpdates(individual, customer);
-            update.AddAddressUpdates(individual, customer);
-            update.AddEmailUpdates(individual, customer);
-            update.AddPhoneUpdates(individual, customer);
-            update.AddSocialContactUpdates(individual, customer);
+            var nameUpdate = update.AddNameUpdates(individual, customer);
+            var addressUpdate = update.AddAddressUpdates(individual, customer);
+            var emailUpdate = update.AddEmailUpdates(individual, customer);
+            var phoneUpdate = update.AddPhoneUpdates(individual, customer);
+            var socialUpdate = update.AddSocialContactUpdates(individual, customer);
+            var dobUpdate = update.AddDateOfBirth(individual, customer);
+
+            return nameUpdate || addressUpdate || emailUpdate || phoneUpdate || socialUpdate || dobUpdate;
+
         }
-        private static void AddNameUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
+        private static bool AddDateOfBirth(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
+        {
+            if(customer.DateOfBirth != null && customer.DateOfBirth != DateTime.MinValue &&  !individual.DateOfBirthSpecified)
+            {
+                update.DateOfBirthUpdate = new FWTDateOfBirthUpdate
+                {
+                    DateOfBirth = customer.DateOfBirth,
+                    DateOfBirthSpecified = true,
+                    UpdateType = "Insert"
+                };
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool AddNameUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
         {
             if (!string.IsNullOrWhiteSpace(customer.Surname) && individual.Name == null)
             {
@@ -28,7 +50,10 @@ namespace verint_service.Extensions
                 };
 
                 update.Name = new[] { new FWTIndividualNameUpdate { IndividualNameDetails = newName, ListItemUpdateType = "Insert" }};
+                return true;
             }
+
+            return false;
         }
 
         private static bool RequiresAddressUpdate(this FWTIndividual individual, Customer customer)
@@ -60,11 +85,11 @@ namespace verint_service.Extensions
             return false;
         }
 
-        private static void AddAddressUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
+        private static bool AddAddressUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
         {
             if (customer.Address == null)
             {
-                return;
+                return false;
             }
 
             if (individual.RequiresAddressUpdate(customer)) 
@@ -81,11 +106,10 @@ namespace verint_service.Extensions
                 };
 
                 update.ContactPostals = new[] { new FWTContactPostalUpdate { PostalDetails = newAddress, ListItemUpdateType = "Insert" }};
-                return;
+                return true;
             }
             else if (!string.IsNullOrWhiteSpace(customer.Address.UPRN) && individual.ContactPostals != null)
             {
-                // TODO : Review preferences being dependent on UPRNs only
                 var preferredContact = individual.ContactPostals.FirstOrDefault(x => x.Preferred);
                 if (preferredContact != null && customer.Address.UPRN.Trim() != preferredContact.UPRN.Trim())
                 {
@@ -94,9 +118,12 @@ namespace verint_service.Extensions
                     {
                         contactPostal.Preferred = true;
                         update.ContactPostals = new[] { new FWTContactPostalUpdate { PostalDetails = contactPostal, ListItemUpdateType = "Update" }};
+                        return true;
                     }
                 }
             }
+
+            return false;
         }
 
 
@@ -130,23 +157,27 @@ namespace verint_service.Extensions
             return !individual.ContactEmails.HasMatchingPreferredAddresses(customer);
         }
 
-        private static void AddEmailUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
+        private static bool AddEmailUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
         {
             if(string.IsNullOrWhiteSpace(customer.Email))
             {
-                return;
+                return false;
             }
 
             if (individual.RequiresNewEmailUpdate(customer))
             {
                 update.ContactEmails = new[] { new FWTContactEmailUpdate {  EmailDetails = new FWTContactEmail { EmailAddress = customer.Email, Preferred = true }, ListItemUpdateType = "Insert" } };
+                return true;
             }
             else if (individual.RequiresPreferredEmailUpdate(customer))
             {
                 var email = individual.ContactEmails.First(x => x.EmailAddress.Trim().ToUpper() == customer.Email.Trim().ToUpper());
                 email.Preferred = true;
                 update.ContactEmails = new[] {  new FWTContactEmailUpdate { EmailDetails = email, ListItemUpdateType = "Update" } };
+                return true;
             }
+
+            return false;
         }
 
         private static bool RequiresPhoneUpdate(this FWTIndividual individual, Customer customer)
@@ -157,13 +188,13 @@ namespace verint_service.Extensions
                     !individual.ContactPhones.Where(x => x.Number.Replace(" ", "").Replace("-", "").Equals(customer.Telephone.Replace(" ", "").Replace("-", ""))).Any());
         }
 
-        private static void AddPhoneUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
+        private static bool AddPhoneUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
         {
             if (individual.RequiresPhoneUpdate(customer))
             {
                 var newPhone = new FWTContactPhone { Number = customer.Telephone, Preferred = true, DeviceType = "unknown" };
                 update.ContactPhones = new[] { new FWTContactPhoneUpdate { PhoneDetails = newPhone, ListItemUpdateType = "Insert" } };
-                return;
+                return true;
             }
 
             if ((!string.IsNullOrWhiteSpace(customer.Telephone) && individual.ContactPhones != null) &&
@@ -174,12 +205,14 @@ namespace verint_service.Extensions
                 {
                     updatePhone.Preferred = true;
                     update.ContactPhones = new[] { new FWTContactPhoneUpdate { PhoneDetails = updatePhone, ListItemUpdateType = "Update" } };
+                    return true;
                 }
-            
             }
+
+            return false;
         }
 
-        private static void AddSocialContactUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
+        private static bool AddSocialContactUpdates(this FWTIndividualUpdate update, FWTIndividual individual, Customer customer)
         {
             var newSocialContacts = new List<SocialContact>();
             if (customer.SocialContacts != null && individual.SocialContacts == null)
@@ -201,10 +234,13 @@ namespace verint_service.Extensions
                 for (int i = 0; i < socialContacts.Length; i++)
                 {
                     socialContactUpdate[i] = new FWTSocialContactUpdate { SocialContacts = socialContacts[i], ListItemUpdateType = "Insert" };
+                    return true;
                 }
                 
                 update.SocialContacts = socialContactUpdate;
             }
+
+            return false;
         }
 
         private static FWTSocialContact[] CreateSocialContacts(SocialContact[] socialContacts)

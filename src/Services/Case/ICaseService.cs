@@ -1,17 +1,19 @@
 using System.Threading.Tasks;
-using verint_service.Models;
-using VerintWebService;
+using StockportGovUK.NetStandard.Models.Verint;
 
 namespace verint_service.Services.Case
 {
     public interface ICaseService
     {
-        Task<Models.Case> GetCase(string caseId);
+        Task<StockportGovUK.NetStandard.Models.Verint.Case> GetCase(string caseId);
 
-        Task<string> CreateCase(Models.Case crmCase);
+        Task<string> CreateCase(Case crmCase);
 
-        Task<int> UpdateCaseDescription(Models.Case crmCase);
+        Task<int> UpdateCaseDescription(Case crmCase);
 
         Task CreateNotesWithAttachment(NoteWithAttachments note);
+
+        Task<string> CreateCase(StockportGovUK.NetStandard.Models.Verint.Case crmCase);
+
     }
 }

@@ -1,4 +1,4 @@
-﻿using StockportGovUK.NetStandard.Models.Models.Verint;
+﻿using StockportGovUK.NetStandard.Models.Verint;
 
 namespace verint_service.Models
 {
@@ -12,7 +12,9 @@ namespace verint_service.Models
     public enum EventCaseType
     {
         None,
+
         PopulatedCloseCaseEvent,
+        
         ReclassifyCaseEvent
     }
 }

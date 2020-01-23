@@ -1,5 +1,5 @@
 using System.Linq;
-using verint_service.Models;
+using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 
 namespace verint_service.Builders
@@ -8,6 +8,11 @@ namespace verint_service.Builders
     {
         public FWTCaseForm Build(Case crmCase)
         {
+            if (string.IsNullOrWhiteSpace(crmCase.FormName))
+            {
+                return null;
+            }
+            
             var caseForm = new FWTCaseForm { FormName = crmCase.FormName };
 
             if (crmCase.CaseFormFields == null || !crmCase.CaseFormFields.Any())

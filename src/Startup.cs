@@ -24,6 +24,7 @@ using verint_service.Builders;
 using verint_service.Services.Property;
 using verint_service.Services.Street;
 using verint_service.Services.Organisation;
+using verint_service.Mappers;
 
 namespace verint_service
 {
@@ -56,7 +57,19 @@ namespace verint_service
             services.AddTransient<IOrganisationService, OrganisationService>();
 
             services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();
-            services.AddTransient<IAssociatedObjectHelper, AssociatedObjectHelper>();
+            services.AddTransient<IAssociatedObjectResolver, AssociatedObjectResolver>();
+
+            services.AddSingleton<IIndividualWeighting, EmailWeighting>();
+            services.AddSingleton<IIndividualWeighting, DateOfBirthWeighting>();
+            services.AddSingleton<IIndividualWeighting, NameWeighting>();
+            services.AddSingleton<IIndividualWeighting, TelephoneWeighting>();
+            services.AddSingleton<IIndividualWeighting, AlternativeTelephoneWeighting>();
+            services.AddSingleton<IIndividualWeighting, UprnWeighting>();
+            services.AddSingleton<IIndividualWeighting, AddressWeighting>();
+
+            services.AddSingleton<CaseToFWTCaseCreateMapper>();
+            services.AddSingleton<ICaseFormBuilder, CaseFormBuilder>();
+
 
             services
                 .AddMvc()

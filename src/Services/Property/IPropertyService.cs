@@ -1,5 +1,5 @@
 ﻿using StockportGovUK.NetStandard.Models.Addresses;
-using StockportGovUK.NetStandard.Models.Models.Verint;
+using StockportGovUK.NetStandard.Models.Verint;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

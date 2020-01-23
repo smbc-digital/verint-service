@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using StockportGovUK.NetStandard.Models.Addresses;
-using StockportGovUK.NetStandard.Models.Models.Fostering;
-using StockportGovUK.NetStandard.Models.Models.Verint;
+using StockportGovUK.NetStandard.Models.Fostering;
+using StockportGovUK.NetStandard.Models.Verint;
 using System;
 using System.Collections.Generic;
 using System.Linq;
