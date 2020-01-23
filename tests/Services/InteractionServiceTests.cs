@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
+using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Services;
 using VerintWebService;
@@ -20,14 +22,13 @@ namespace verint_service_tests.Services
             _mockConnection
                 .Setup(_ => _.Client())
                 .Returns(_mockClient.Object);
-            _service = new InteractionService(_mockConnection.Object);
+            _service = new InteractionService(_mockConnection.Object, new IndividualService(_mockConnection.Object, new List<IIndividualWeighting>()));
         }
 
         [Fact]
         public async Task CreateInteractionForIndividual_ShouldCall_Verint_createInteractionAsync()
         {
             // Arrange
-            var objectId = new FWTObjectID();
 
             _mockClient
                 .Setup(client => client.createInteractionAsync(It.IsAny<FWTInteractionCreate>()))
@@ -35,8 +36,10 @@ namespace verint_service_tests.Services
                     InteractionID = 987654321
                 });
 
+            var crmCase = new Case();
+
             // Act
-            var result =  await _service.CreateInteractionForIndividual(objectId);
+            var result =  await _service.CreateInteraction(crmCase);
 
             // Assert
             _mockClient.Verify(client => client.createInteractionAsync(It.IsAny<FWTInteractionCreate>()), Times.Once);

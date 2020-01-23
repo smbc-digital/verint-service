@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
-using StockportGovUK.NetStandard.Models.Models.Verint;
-using StockportGovUK.NetStandard.Models.Models.Verint.Update;
+using StockportGovUK.NetStandard.Models.Verint;
+using StockportGovUK.NetStandard.Models.Verint.Update;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Services.Update;
 using VerintWebService;

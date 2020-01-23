@@ -7,11 +7,12 @@ using verint_service.Services.Case;
 using verint_service.Services.Update;
 using Xunit;
 using System.Threading.Tasks;
-using StockportGovUK.NetStandard.Models.Models.Verint.Update;
+using StockportGovUK.NetStandard.Models.Verint.Update;
 using VerintWebService;
 using Microsoft.Extensions.Logging;
-using verint_service.Models;
 using verint_service.Services.Event;
+using StockportGovUK.NetStandard.Models.Verint;
+using verint_service.Models;
 
 namespace verint_service_tests.Controllers
 {

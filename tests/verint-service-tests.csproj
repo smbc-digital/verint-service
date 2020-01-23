@@ -22,6 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="StockportGovUk.NetStandard.Models">
+      <HintPath>C:\Code\Microservices\Libraries\StockportGovUk.NetStandard.Models\bin\Debug\netstandard2.0\StockportGovUK.NetStandard.Models.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\src\verint-service.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Moq;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Services;
@@ -18,7 +19,7 @@ namespace verint_service_tests.Services
             _mockConnection
                 .Setup(_ => _.Client())
                 .Returns(_mockClient.Object);
-            _service = new IndividualService(_mockConnection.Object);
+            _service = new IndividualService(_mockConnection.Object, new List<IIndividualWeighting>());
         }
 
         [Fact]

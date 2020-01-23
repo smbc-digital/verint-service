@@ -1,24 +1,17 @@
-using System;
-using System.IO;
-using System.Text;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.Logging;
-using Moq;
+﻿using StockportGovUK.NetStandard.Models.Verint;
+using verint_service;
 using verint_service.Helpers;
-using verint_service.ModelBinders;
-using verint_service.Models;
 using Xunit;
 
 namespace verint_service_tests.ModelBinders
 {
-    public class AssociatedObjectHelperTests
+    public class AssociatedObjectResolverTests
     {
         [Fact]
-        public void AssociatedObjectHelper_returns_streetobjectcode_when_case_has_a_street()
+        public void AssociatedObjectResolver_returns_streetobjectcode_when_case_has_a_street()
         {
             // Arrange
-            var testCase = new verint_service.Models.Case()
+            var testCase = new Case()
             {
                 Street = new Street(){
                     USRN = "38102548",
@@ -27,10 +20,10 @@ namespace verint_service_tests.ModelBinders
                 }
             };
 
-            var helper = new AssociatedObjectHelper();
+            var helper = new AssociatedObjectResolver();
 
             // Act 
-            var result = helper.GetAssociatedObject(testCase); 
+            var result = helper.Resolve(testCase); 
 
             // Assert
             Assert.Equal(result.ObjectID.ObjectType, Common.StreetObjectType);
@@ -38,10 +31,10 @@ namespace verint_service_tests.ModelBinders
         }
 
         [Fact]
-        public void AssociatedObjectHelper_returns_property0bjectcode_when_case_has_an_property()
+        public void AssociatedObjectResolver_returns_property0bjectcode_when_case_has_an_property()
         {
             // Arrange
-            var testCase = new verint_service.Models.Case()
+            var testCase = new Case()
             {
                 Property = new Address
                 {
@@ -53,10 +46,10 @@ namespace verint_service_tests.ModelBinders
                 }
             };
 
-            var helper = new AssociatedObjectHelper();
+            var helper = new AssociatedObjectResolver();
 
             // Act 
-            var result = helper.GetAssociatedObject(testCase); 
+            var result = helper.Resolve(testCase); 
 
             // Assert
             Assert.Equal(result.ObjectID.ObjectType, Common.PropertyObjectType);
@@ -64,10 +57,10 @@ namespace verint_service_tests.ModelBinders
         }
         
         [Fact]
-        public void AssociatedObjectHelper_returns_organisationobjectcode_when_case_has_an_organisation()
+        public void AssociatedObjectResolver_returns_organisationobjectcode_when_case_has_an_organisation()
         {
             // Arrange
-            var testCase = new verint_service.Models.Case()
+            var testCase = new Case()
             {
                 Organisation = new Organisation
                 {
@@ -76,10 +69,10 @@ namespace verint_service_tests.ModelBinders
                 }
             };
 
-            var helper = new AssociatedObjectHelper();
+            var helper = new AssociatedObjectResolver();
 
             // Act 
-            var result = helper.GetAssociatedObject(testCase); 
+            var result = helper.Resolve(testCase); 
 
             // Assert
             Assert.Equal(result.ObjectID.ObjectType, Common.OrganisationObjectType);
@@ -87,10 +80,10 @@ namespace verint_service_tests.ModelBinders
         }
 
         [Fact]
-        public void AssociatedObjectHelper_returns_individualobjectcode_when_case_has_a_customer()
+        public void AssociatedObjectResolver_returns_individualobjectcode_when_case_has_a_customer()
         {
             // Arrange
-            var testCase = new verint_service.Models.Case()
+            var testCase = new Case()
             {
                 Customer = new Customer
                 {
@@ -100,10 +93,10 @@ namespace verint_service_tests.ModelBinders
                 }
             };
 
-            var helper = new AssociatedObjectHelper();
+            var helper = new AssociatedObjectResolver();
 
             // Act 
-            var result = helper.GetAssociatedObject(testCase); 
+            var result = helper.Resolve(testCase); 
 
             // Assert
             Assert.Equal(result.ObjectID.ObjectType, Common.IndividualObjectType);

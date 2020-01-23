@@ -4,13 +4,15 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 using verint_service.Helpers.VerintConnection;
-using verint_service.Models;
 using verint_service.Services.Case;
 using VerintWebService;
 using Xunit;
 using verint_service.Services;
 using verint_service.Helpers;
 using verint_service.Builders;
+using verint_service.Mappers;
+using StockportGovUK.NetStandard.Models.Verint;
+using verint_service;
 
 namespace verint_service_tests.Services
 {
@@ -20,9 +22,9 @@ namespace verint_service_tests.Services
         private readonly Mock<IVerintConnection> _mockConnection = new Mock<IVerintConnection>();
         private readonly Mock<ILogger<CaseService>> _mockLogger = new Mock<ILogger<CaseService>>();
 
+        private readonly Mock<IInteractionService> _mockInteractionService = new Mock<IInteractionService>();
         private readonly CaseService _caseService;
 
-        public Mock<IAssociatedObjectHelper> _mockAssociatedObjectHelper = new Mock<IAssociatedObjectHelper>();
 
         public CaseServiceTests()
         {
@@ -30,7 +32,11 @@ namespace verint_service_tests.Services
                 .Setup(_ => _.Client())
                 .Returns(_mockClient.Object);
 
-            _caseService = new CaseService(_mockConnection.Object, _mockLogger.Object, new IndividualService(_mockConnection.Object), new InteractionService(_mockConnection.Object), _mockAssociatedObjectHelper.Object, new CaseFormBuilder());
+            _mockInteractionService
+                .Setup(_ => _.CreateInteraction(It.IsAny<Case>()))
+                .ReturnsAsync(987654321);
+            
+            _caseService = new CaseService(_mockConnection.Object, _mockLogger.Object, _mockInteractionService.Object, new CaseToFWTCaseCreateMapper(new CaseFormBuilder(), new AssociatedObjectResolver()));
         }
 
         [Theory]
@@ -173,6 +179,7 @@ namespace verint_service_tests.Services
         }
 
         [Fact]
+
         public async Task CreateCase_WithAssociatedStreet_ShouldCall_AssociatedObjectHelper()
         {
             // Arrange
@@ -203,6 +210,7 @@ namespace verint_service_tests.Services
         }
 
         [Fact]
+
         public async Task GetCase_ShouldReturnMappedIndividual()
         {
             // Arrange
