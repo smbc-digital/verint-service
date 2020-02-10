@@ -76,8 +76,10 @@ namespace verint_service.Controllers
         /// Method to append a payment status to the description
         /// </summary>
         /// <param name="crmCase">The case to be updated</param>
+        /// <param name="toBeAppended"> bool to indicate if the status should be added too or replaced</param>
         /// <returns>An int declaring the state of the update</returns>
         [HttpPost]
+        [Route("updatecasedescription")]
         public async Task<IActionResult> UpdateCaseDescription(Case crmCase, bool toBeAppended)
         {
             try
