@@ -95,7 +95,7 @@ namespace verint_service
             {
                 app.UseHsts();
             }
-            
+
             app.UseMiddleware<Availability>();
             app.UseMiddleware<ExceptionHandling>();
             app.UseHttpsRedirection();

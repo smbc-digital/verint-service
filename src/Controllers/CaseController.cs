@@ -72,12 +72,17 @@ namespace verint_service.Controllers
             }
         }
 
+        /// <summary>
+        /// Method to append a payment status to the description
+        /// </summary>
+        /// <param name="crmCase">The case to be updated</param>
+        /// <returns>An int declaring the state of the update</returns>
         [HttpPost]
-        public async Task<IActionResult> UpdateCaseDescription(Case crmCase)
+        public async Task<IActionResult> UpdateCaseDescription(Case crmCase, bool toBeAppended)
         {
             try
             {
-                var response = await _caseService.UpdateCaseDescription(crmCase);
+                var response = await _caseService.UpdateCaseDescription(crmCase, toBeAppended);
 
                 return CreatedAtAction("UpdateCaseDescription", response);
             }
