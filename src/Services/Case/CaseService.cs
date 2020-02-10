@@ -83,7 +83,7 @@ namespace verint_service.Services.Case
 
             return caseDetails;
         }
-        
+
         public async Task<string> CreateCase(Models.Case crmCase)
         {
             var caseDetails = new FWTCaseCreate
@@ -122,6 +122,26 @@ namespace verint_service.Services.Case
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<int> UpdateCaseDescription(Models.Case crmCase)
+        {
+            var caseDetails = new FWTCaseUpdate
+            {
+                CaseReference = crmCase.CaseReference,
+                Description = crmCase.Description
+            };
+
+            try
+            {
+                var result = await _verintConnection.updateCaseAsync(caseDetails);
+                return result.FWTCaseUpdateResponse;
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, "Error when updating Description field");
+                throw;
             }
         }
     }

@@ -8,5 +8,7 @@ namespace verint_service.Services.Case
         Task<Models.Case> GetCase(string caseId);
 
         Task<string> CreateCase(Models.Case crmCase);
+
+        Task<int> UpdateCaseDescription(Models.Case crmCase);
     }
 }

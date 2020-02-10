@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using verint_service.Controllers;
 using Moq;
@@ -127,6 +128,35 @@ namespace verint_service_tests.Controllers
 
             // Assert
             _mockEventService.Verify(_ => _.HandleCaseEvent(It.IsAny<CaseEventModel>()));
+        }
+
+        [Fact]
+        public void UpdateCaseDescription_HappyPath()
+        {
+            var model = new Case
+            {
+                CaseReference = "1234",
+                Description = "another test"
+            };
+
+            _caseController.UpdateCaseDescription(model);
+
+            _mockCaseService.Verify(service => service.UpdateCaseDescription(model), Times.Once);
+
+        }
+
+        [Fact]
+        public void UpdateCaseDescription_ExceptionOccurs()
+        {
+            var model = new Case
+            {
+                CaseReference = "1234",
+                Description = "another test"
+            };
+            _mockCaseService.Setup(service => service.UpdateCaseDescription(model))
+                .ThrowsAsync(new Exception());
+
+            Assert.ThrowsAsync<Exception>(() => _caseController.UpdateCaseDescription(model));
         }
     }
 }

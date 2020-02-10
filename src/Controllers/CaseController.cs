@@ -72,6 +72,22 @@ namespace verint_service.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateCaseDescription(Case crmCase)
+        {
+            try
+            {
+                var response = await _caseService.UpdateCaseDescription(crmCase);
+
+                return CreatedAtAction("UpdateCaseDescription", response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CaseController.UpdateCaseDescription: Failed to update crm case description", ex.InnerException);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
         [HttpDelete]
         public IActionResult Delete([FromQuery]string caseId)
         {

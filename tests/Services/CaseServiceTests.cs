@@ -1,6 +1,7 @@
 ﻿using Moq;
 using System;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Models;
@@ -198,7 +199,7 @@ namespace verint_service_tests.Services
             await _caseService.CreateCase(testCase);
 
             // Assert
-            _mockAssociatedObjectHelper.Verify(helper => helper.GetAssociatedObject(It.IsAny<verint_service.Models.Case>()), Times.Once);  
+            _mockAssociatedObjectHelper.Verify(helper => helper.GetAssociatedObject(It.IsAny<verint_service.Models.Case>()), Times.Once);
         }
 
         [Fact]
@@ -299,6 +300,50 @@ namespace verint_service_tests.Services
 
             // Assert
             _mockClient.Verify(_ => _.createCaseAsync(It.IsAny<FWTCaseCreate>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task UpdateCaseDescription_HappyPath()
+        {
+            // Arrange
+            var caseDetails = new Case
+            {
+                EventCode = 1234567,
+                EventTitle = "test title",
+                Description = "test description",
+                CaseReference = "1234"
+            };
+
+            _mockClient
+                .Setup(client => client.updateCaseAsync(It.IsAny<FWTCaseUpdate>()))
+                .ReturnsAsync(() => new updateCaseResponse{ FWTCaseUpdateResponse = 1});
+
+            // Act
+            await _caseService.UpdateCaseDescription(caseDetails);
+
+            // Assert
+            _mockClient.Verify(client => client.updateCaseAsync(It.IsAny<FWTCaseUpdate>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task UpdateCaseDescription_ShouldThrowError()
+        {
+            // Arrange
+            var caseDetails = new Case
+            {
+                EventCode = 1234567,
+                EventTitle = "test title",
+                Description = "test description"
+            };
+
+            _mockClient
+                .Setup(client => client.updateCaseAsync(It.IsAny<FWTCaseUpdate>())).Throws(new Exception());
+
+            // Act
+            await Assert.ThrowsAsync<Exception>(() => _caseService.UpdateCaseDescription(caseDetails));
+
+            // Assert
+            _mockClient.Verify(client => client.updateCaseAsync(It.IsAny<FWTCaseUpdate>()), Times.Once);
         }
 
         private FWTCaseFullDetails CreateBaseCase()
