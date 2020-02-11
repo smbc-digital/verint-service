@@ -125,7 +125,7 @@ namespace verint_service.Services.Case
             }
         }
 
-        public async Task<int> UpdateCaseDescription(Models.Case crmCase, bool toBeAppended)
+        public async Task<int> UpdateCaseDescription(Models.Case crmCase)
         {
             var caseDetails = new FWTCaseUpdate
             {

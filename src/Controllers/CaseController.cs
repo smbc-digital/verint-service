@@ -80,11 +80,11 @@ namespace verint_service.Controllers
         /// <returns>An int declaring the state of the update</returns>
         [HttpPost]
         [Route("updatecasedescription")]
-        public async Task<IActionResult> UpdateCaseDescription(Case crmCase, bool toBeAppended)
+        public async Task<IActionResult> UpdateCaseDescription(Case crmCase)
         {
             try
             {
-                var response = await _caseService.UpdateCaseDescription(crmCase, toBeAppended);
+                var response = await _caseService.UpdateCaseDescription(crmCase);
 
                 return CreatedAtAction("UpdateCaseDescription", response);
             }

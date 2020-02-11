@@ -139,9 +139,9 @@ namespace verint_service_tests.Controllers
                 Description = "another test"
             };
 
-            _caseController.UpdateCaseDescription(model, false);
+            _caseController.UpdateCaseDescription(model);
 
-            _mockCaseService.Verify(service => service.UpdateCaseDescription(model, false), Times.Once);
+            _mockCaseService.Verify(service => service.UpdateCaseDescription(model), Times.Once);
 
         }
 
@@ -153,10 +153,10 @@ namespace verint_service_tests.Controllers
                 CaseReference = "1234",
                 Description = "another test"
             };
-            _mockCaseService.Setup(service => service.UpdateCaseDescription(model, false))
+            _mockCaseService.Setup(service => service.UpdateCaseDescription(model))
                 .ThrowsAsync(new Exception());
 
-            Assert.ThrowsAsync<Exception>(() => _caseController.UpdateCaseDescription(model, false));
+            Assert.ThrowsAsync<Exception>(() => _caseController.UpdateCaseDescription(model));
         }
     }
 }

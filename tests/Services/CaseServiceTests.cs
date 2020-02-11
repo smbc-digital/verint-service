@@ -319,7 +319,7 @@ namespace verint_service_tests.Services
                 .ReturnsAsync(() => new updateCaseResponse{ FWTCaseUpdateResponse = 1});
 
             // Act
-            await _caseService.UpdateCaseDescription(caseDetails, false);
+            await _caseService.UpdateCaseDescription(caseDetails);
 
             // Assert
             _mockClient.Verify(client => client.updateCaseAsync(It.IsAny<FWTCaseUpdate>()), Times.Once);
@@ -340,7 +340,7 @@ namespace verint_service_tests.Services
                 .Setup(client => client.updateCaseAsync(It.IsAny<FWTCaseUpdate>())).Throws(new Exception());
 
             // Act
-            await Assert.ThrowsAsync<Exception>(() => _caseService.UpdateCaseDescription(caseDetails, false));
+            await Assert.ThrowsAsync<Exception>(() => _caseService.UpdateCaseDescription(caseDetails));
 
             // Assert
             _mockClient.Verify(client => client.updateCaseAsync(It.IsAny<FWTCaseUpdate>()), Times.Once);
