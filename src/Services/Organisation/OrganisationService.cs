@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using verint_service.Helpers.VerintConnection;
 using VerintWebService;
-using StockportGovUK.NetStandard.Models.Models.Verint.Lookup;
+using StockportGovUK.NetStandard.Models.Verint.Lookup;
 
 namespace verint_service.Services.Organisation
 {

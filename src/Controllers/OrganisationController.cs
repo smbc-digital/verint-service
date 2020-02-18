@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
-using StockportGovUK.NetStandard.Models.Models.Verint.Lookup;
-using verint_service.Models;
+using StockportGovUK.NetStandard.Models.Verint;
+using StockportGovUK.NetStandard.Models.Verint.Lookup;
 using verint_service.Services.Organisation;
 
 namespace verint_service.Controllers

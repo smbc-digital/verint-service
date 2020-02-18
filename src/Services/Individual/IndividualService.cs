@@ -34,7 +34,8 @@ namespace verint_service.Services
 
         private async Task<FWTObjectID> CreateIndividual(Customer customer)
         {
-            var createIndividualResult = await _verintConnection.createIndividualAsync(customer.Map());
+            var fwtIndividual = customer.Map();
+            var createIndividualResult = await _verintConnection.createIndividualAsync(fwtIndividual);
             return createIndividualResult.FLNewIndividualID;
         }
         

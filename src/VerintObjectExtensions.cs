@@ -94,18 +94,23 @@ namespace verint_service.Extensions
 
             if (individual.RequiresAddressUpdate(customer)) 
             {
-                var newAddress = new FWTContactPostal
+                var newContactPostal = new FWTContactPostal
                 {
                     AddressID = -1,
                     AddressNumber = customer.Address.Number,
-                    AddressLine = new[] { customer.Address.AddressLine1, $"{customer.Address.AddressLine2}{string.Empty}", customer.Address.AddressLine3, customer.Address.City },
-                    City = $"{customer.Address.City}{string.Empty}",
-                    Postcode = $"{customer.Address.Postcode}{string.Empty}",
-                    UPRN = $"{customer.Address.UPRN}{string.Empty}",
+                    AddressLine = new[] { customer.Address.AddressLine1, customer.Address.AddressLine2, customer.Address.AddressLine3, customer.Address.City },
+                    City = customer.Address.City,
+                    Postcode = customer.Address.Postcode,
                     Preferred = true
                 };
 
-                update.ContactPostals = new[] { new FWTContactPostalUpdate { PostalDetails = newAddress, ListItemUpdateType = "Insert" }};
+                if (!string.IsNullOrEmpty(customer.Address.UPRN))
+                {
+                    newContactPostal.Option = new [] { Common.UseUprnForAddress,  Common.IgnoreInvalidUprn };
+                    newContactPostal.UPRN = customer.Address.UPRN.Trim();
+                }
+
+                update.ContactPostals = new[] { new FWTContactPostalUpdate { PostalDetails = newContactPostal, ListItemUpdateType = "Insert" }};
                 return true;
             }
             else if (!string.IsNullOrWhiteSpace(customer.Address.UPRN) && individual.ContactPostals != null)

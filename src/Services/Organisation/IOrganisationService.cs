@@ -1,4 +1,4 @@
-﻿using StockportGovUK.NetStandard.Models.Models.Verint.Lookup;
+﻿using StockportGovUK.NetStandard.Models.Verint.Lookup;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

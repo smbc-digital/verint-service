@@ -27,7 +27,7 @@ namespace verint_service.Mappers
             // Setup the address details
             if (customer.Address != null)
             {
-                var contactAddress = new FWTContactPostal
+                var contactPostal = new FWTContactPostal()
                 {
                     AddressNumber = customer.Address.Number,
                     AddressLine = new[] { customer.Address.AddressLine1, customer.Address.AddressLine2, customer.Address.AddressLine3, customer.Address.City },
@@ -38,10 +38,11 @@ namespace verint_service.Mappers
 
                 if (!string.IsNullOrEmpty(customer.Address.UPRN))
                 {
-                    contactAddress.UPRN = customer.Address.UPRN.Trim();
+                    contactPostal.Option = new [] { Common.UseUprnForAddress,  Common.IgnoreInvalidUprn };
+                    contactPostal.UPRN = customer.Address.UPRN.Trim();
                 }
 
-                personDetails.ContactPostals = new[] { contactAddress };
+                personDetails.ContactPostals = new[] { contactPostal };
             }
 
             // Setup the telephone contact information.

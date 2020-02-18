@@ -12,6 +12,8 @@ namespace VerintWebService
 
         Task<retrieveOrganisationResponse> retrieveOrganisationAsync(FWTObjectID FLOrganisationID);
 
+        Task<retrievePropertyResponse> retrievePropertyAsync(FWTObjectID FLPropertyID);
+
         Task<retrieveIndividualResponse> retrieveIndividualAsync(FWTObjectID FLIndividualID);
 
         Task<writeCaseEformDataResponse> writeCaseEformDataAsync(FWTCaseEformData eformData);
@@ -35,6 +37,7 @@ namespace VerintWebService
         Task<createNotesResponse> createNotesAsync(FWTCreateNoteToParent FWTNoteToParentRef);
 
         Task<addDocumentToRepositoryResponse> addDocumentToRepositoryAsync(FWTDocument FWTDocument);
+        
     }
 
     public partial class FLWebInterfaceClient : IVerintClient

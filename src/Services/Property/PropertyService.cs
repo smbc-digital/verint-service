@@ -1,13 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using StockportGovUK.NetStandard.Models.Addresses;
-using StockportGovUK.NetStandard.Models.Fostering;
 using StockportGovUK.NetStandard.Models.Verint;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using verint_service.Helpers.VerintConnection;
-using verint_service.Models;
 using VerintWebService;
 
 namespace verint_service.Services.Property
@@ -32,6 +30,29 @@ namespace verint_service.Services.Property
             };
 
             return await DoPropertySearch(propertySearch);
+        }
+
+        public async Task<StockportGovUK.NetStandard.Models.Verint.Address> GetPropertyAsync(string id)
+        {
+            var propertySearch = new FWTObjectID
+            {
+                ObjectReference = new [] { id },
+                ObjectType = Common.PropertyObjectType
+            };
+
+            var result  = await _verintConnection.retrievePropertyAsync(propertySearch);
+
+            var address = new StockportGovUK.NetStandard.Models.Verint.Address
+            {
+                UPRN = result.FWTProperty.UPRN,
+                AddressLine1 = result.FWTProperty.AddressLine1,
+                AddressLine2 = result.FWTProperty.AddressLine2,
+                City = result.FWTProperty.City,
+                Postcode = result.FWTProperty.Postcode,
+                Number = result.FWTProperty.AddressNumber
+            };
+
+            return address;
         }
 
         private async Task<IEnumerable<AddressSearchResult>> DoPropertySearch(FWTPropertySearch propertySearch)

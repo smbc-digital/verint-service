@@ -8,5 +8,8 @@ namespace verint_service.Services.Property
     public interface IPropertyService
     {
         Task<IEnumerable<AddressSearchResult>> SearchByPostcodeAsync(string postcode);
+
+        Task<StockportGovUK.NetStandard.Models.Verint.Address> GetPropertyAsync(string id);
+
     }
 }
