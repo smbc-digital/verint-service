@@ -7,6 +7,7 @@ using verint_service.Mappers;
 using VerintWebService;
 using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Models;
+using StockportGovUK.NetStandard.Models.Models.FileManagement;
 
 namespace verint_service.Services.Case
 {
@@ -131,16 +132,16 @@ namespace verint_service.Services.Case
             await _verintConnection.createNotesAsync(noteToParent);
         }
 
-        private List<FWTAttachedDocument> AddDocumentToCase(List<Attachment> attachments)
+        private List<FWTAttachedDocument> AddDocumentToCase(List<File> attachments)
         {
             var result = new List<FWTAttachedDocument>();
             attachments.ForEach(a =>
             {
                 var doc = new FWTDocument
                 {
-                    DocumentName = a.Filename,
+                    DocumentName = a.FileName,
                     DocumentType = 1,
-                    Document = a.Base64Content
+                    Document = a.Content
                 };
 
                 var docRef = _verintConnection.addDocumentToRepositoryAsync(doc);
