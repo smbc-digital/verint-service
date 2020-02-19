@@ -128,5 +128,27 @@ namespace verint_service.Controllers
         {
             _eventService.HandleCaseEvent(model);
         }
+
+
+        [HttpPost]
+        [Route ("add-note-with-attachments")]
+        public async Task<IActionResult> AddNoteWithAttachments([FromBody] NoteWithAttachments model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _caseService.CreateNotesWithAttachment(model);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CaseController.UpdateCaseDescription: Failed to update crm case description", ex.InnerException);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

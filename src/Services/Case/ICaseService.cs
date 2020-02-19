@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using verint_service.Models;
 using VerintWebService;
 
 namespace verint_service.Services.Case
@@ -10,5 +11,7 @@ namespace verint_service.Services.Case
         Task<string> CreateCase(Models.Case crmCase);
 
         Task<int> UpdateCaseDescription(Models.Case crmCase);
+
+        Task CreateNotesWithAttachment(NoteWithAttachments note);
     }
 }

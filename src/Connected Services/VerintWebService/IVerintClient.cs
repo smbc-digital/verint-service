@@ -31,6 +31,10 @@ namespace VerintWebService
         Task<searchForPropertyResponse> searchForPropertyAsync(FWTPropertySearch propertySearch);
 
         Task<searchForStreetResponse> searchForStreetAsync(FWTStreetSearch streetSearch);
+
+        Task<createNotesResponse> createNotesAsync(FWTCreateNoteToParent FWTNoteToParentRef);
+
+        Task<addDocumentToRepositoryResponse> addDocumentToRepositoryAsync(FWTDocument FWTDocument);
     }
 
     public partial class FLWebInterfaceClient : IVerintClient

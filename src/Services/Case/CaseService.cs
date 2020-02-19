@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using verint_service.Builders;
@@ -143,6 +144,58 @@ namespace verint_service.Services.Case
                 _logger.LogError(exception, "Error when updating Description field");
                 throw;
             }
+        }
+
+        public async Task CreateNotesWithAttachment(NoteWithAttachments note)
+        {
+            var result = AddDocumentToCase(note.Attachments);
+            var listA = new List<FWTNoteDetailAttachment>();
+            result.ForEach(r =>
+            {
+                listA.Add(new FWTNoteDetailAttachment
+                {
+                    AttachmentIdentifier = r.documentReference,
+                    AttachmentName = r.documentName,
+                    AttachmentTypeSpecified = false
+                });
+            });
+
+            var noteToParent = new FWTCreateNoteToParent
+            {
+                NoteDetails = new FWTCreateNoteDetail
+                {
+                    Text = note.AttachmentsDescription,
+                    NoteAttachments = listA.ToArray()
+                },
+                ParentId = note.CaseRef,
+                ParentType = note.Interaction
+            };
+           
+            await _verintConnection.createNotesAsync(noteToParent);
+        }
+
+        private List<FWTAttachedDocument> AddDocumentToCase(List<Attachment> attachments)
+        {
+            var result = new List<FWTAttachedDocument>();
+            attachments.ForEach(a =>
+            {
+                var doc = new FWTDocument
+                {
+                    DocumentName = a.Filename,
+                    DocumentType = 1,
+                    Document = a.Base64Content
+                };
+
+                var docRef = _verintConnection.addDocumentToRepositoryAsync(doc);
+                var attachedDoc = new FWTAttachedDocument
+                {
+                    documentName = doc.DocumentName,
+                    documentReference = docRef.Result.FWTDocumentRef,
+                    storageTypeSpecified = false
+                };
+                result.Add(attachedDoc);
+            });
+            return result;
         }
     }
 }
