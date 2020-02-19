@@ -6,8 +6,7 @@ using verint_service.Helpers.VerintConnection;
 using verint_service.Mappers;
 using VerintWebService;
 using StockportGovUK.NetStandard.Models.Verint;
-using verint_service.Models;
-using StockportGovUK.NetStandard.Models.Models.FileManagement;
+
 
 namespace verint_service.Services.Case
 {
@@ -132,7 +131,7 @@ namespace verint_service.Services.Case
             await _verintConnection.createNotesAsync(noteToParent);
         }
 
-        private List<FWTAttachedDocument> AddDocumentToCase(List<File> attachments)
+        private List<FWTAttachedDocument> AddDocumentToCase(List<StockportGovUK.NetStandard.Models.Models.FileManagement.File> attachments)
         {
             var result = new List<FWTAttachedDocument>();
             attachments.ForEach(a =>
