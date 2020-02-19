@@ -1,0 +1,104 @@
+{
+  "customer": {
+    "title": "Mr",
+    "forename": "Test",
+    "surname": "Test",
+    "email": "test.test@stockport.gov.uk",
+    "Telephone": "01614741234",
+    "dateOfBirth": "1980-01-01T00:00:00.000Z",
+    "Address": {
+        "UPRN": "101002265507"
+    }
+  },
+  "eventTitle": "Compliment",
+  "eventCode": "4000000",
+  "description": "Test description",
+  "raisedByBehaviour": 0,
+  "associatedWithBehaviour": 0
+}
+
+Should Match the above ----------------------------------------
+
+{
+  "customer": {
+    "title": "Mr", (1)
+    "forename": "Test", (1)
+    "surname": "Test", (1)
+    "email": "test.test@stockport.gov.uk", (2)
+    "dateOfBirth": "1980-01-01T00:00:00.000Z", (2)
+  },
+  "eventTitle": "Compliment",
+  "eventCode": "4000000",
+  "description": "Test description",
+  "raisedByBehaviour": 0,
+  "associatedWithBehaviour": 0
+}
+
+
+{
+  "customer": {
+    "forename": "Test", (1)
+    "surname": "Test",  (1)
+    "email": "test.test@stockport.gov.uk", (2)
+    "dateOfBirth": "1980-01-01T00:00:00.000Z", (2)
+  },
+  "eventTitle": "Compliment",
+  "eventCode": "4000000",
+  "description": "Test description",
+  "raisedByBehaviour": 0,
+  "associatedWithBehaviour": 0
+}
+
+{
+  "customer": {
+    "surname": "Test",
+    "email": "test.test@stockport.gov.uk",
+    "dateOfBirth": "1980-01-01T00:00:00.000Z",
+  },
+  "eventTitle": "Compliment",
+  "eventCode": "4000000",
+  "description": "Test description",
+  "raisedByBehaviour": 0,
+  "associatedWithBehaviour": 0
+}
+
+Should not match (no certainty) - Should always create a new customer -----------------------------------
+
+{
+  "customer": {
+    "forename": "Test", 
+    "surname": "Test",  
+    "email": "test.test@stockport.gov.uk", 
+  },
+  "eventTitle": "Compliment",
+  "eventCode": "4000000",
+  "description": "Test description",
+  "raisedByBehaviour": 0,
+  "associatedWithBehaviour": 0
+}
+
+{
+  "customer": {
+    "surname": "Test",
+    "forename": "Test", 
+    "dateOfBirth": "1980-01-01T00:00:00.000Z",
+  },
+  "eventTitle": "Compliment",
+  "eventCode": "4000000",
+  "description": "Test description",
+  "raisedByBehaviour": 0,
+  "associatedWithBehaviour": 0
+}
+
+{
+  "customer": {
+    "surname": "Hadle1",
+    "email": "test.test@stockport.gov.uk",
+    "dateOfBirth": "1981-01-01T00:00:00.000Z",
+  },
+  "eventTitle": "Compliment",
+  "eventCode": "4000000",
+  "description": "Test description",
+  "raisedByBehaviour": 0,
+  "associatedWithBehaviour": 0
+}

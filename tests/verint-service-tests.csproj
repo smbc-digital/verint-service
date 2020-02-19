@@ -14,18 +14,13 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="Moq" Version="4.10.1" />
     <PackageReference Include="StockportGovUK.AspNetCore.Polly" Version="0.4.0" />
-    <PackageReference Include="StockportGovUK.NetStandard.Models" Version="0.6.9-prerelease1" />
+    <PackageReference Include="StockportGovUK.NetStandard.Models" Version="0.11.0" />
     <PackageReference Include="System.Net.Http" Version="4.*" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.*" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="StockportGovUk.NetStandard.Models">
-      <HintPath>C:\Code\Microservices\Libraries\StockportGovUk.NetStandard.Models\bin\Debug\netstandard2.0\StockportGovUK.NetStandard.Models.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\src\verint-service.csproj" />

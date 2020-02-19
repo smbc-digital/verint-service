@@ -82,7 +82,7 @@ namespace verint_service.Services.Case
             return _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;            
         }
 
-        public async Task<int> UpdateCaseDescription(Models.Case crmCase)
+        public async Task<int> UpdateCaseDescription(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
             var caseDetails = new FWTCaseUpdate
             {
