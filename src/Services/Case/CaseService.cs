@@ -6,6 +6,7 @@ using verint_service.Helpers.VerintConnection;
 using verint_service.Mappers;
 using VerintWebService;
 using StockportGovUK.NetStandard.Models.Verint;
+using verint_service.Models;
 
 namespace verint_service.Services.Case
 {
