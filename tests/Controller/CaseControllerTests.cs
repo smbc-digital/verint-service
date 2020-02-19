@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using verint_service.Services.Event;
 using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Models;
+using System.Collections.Generic;
 
 namespace verint_service_tests.Controllers
 {
@@ -132,7 +133,7 @@ namespace verint_service_tests.Controllers
         }
 
         [Fact]
-        public void UpdateCaseDescription_HappyPath()
+        public async Task UpdateCaseDescription_HappyPath()
         {
             var model = new Case
             {
@@ -140,10 +141,9 @@ namespace verint_service_tests.Controllers
                 Description = "another test"
             };
 
-            _caseController.UpdateCaseDescription(model);
+            await _caseController.UpdateCaseDescription(model);
 
             _mockCaseService.Verify(service => service.UpdateCaseDescription(model), Times.Once);
-
         }
 
         [Fact]
@@ -158,6 +158,42 @@ namespace verint_service_tests.Controllers
                 .ThrowsAsync(new Exception());
 
             Assert.ThrowsAsync<Exception>(() => _caseController.UpdateCaseDescription(model));
+        }
+
+        [Fact]
+        public async Task AddNoteWithAttachments_ShouldReturnOk_OnSuccessfulServiceCall()
+        {
+            var model = new NoteWithAttachments
+            {
+                Attachments = new List<StockportGovUK.NetStandard.Models.Models.FileManagement.File>(),
+                AttachmentsDescription = "description",
+                CaseRef = 123456789123
+            };
+
+            var result = await _caseController.AddNoteWithAttachments(model);
+
+            _mockCaseService.Verify(service => service.CreateNotesWithAttachment(It.IsAny<NoteWithAttachments>()), Times.Once);
+            var okResult = Assert.IsType<OkResult>(result);
+            Assert.Equal(200, okResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task AddNoteWithAttachments_ShouldReturn500StatusCode_WhenServiceThrowsException()
+        {
+            var model = new NoteWithAttachments
+            {
+                Attachments = new List<StockportGovUK.NetStandard.Models.Models.FileManagement.File>(),
+                AttachmentsDescription = "description",
+                CaseRef = 123456789123
+            };
+
+            _mockCaseService.Setup(service => service.CreateNotesWithAttachment(It.IsAny<NoteWithAttachments>()))
+                .ThrowsAsync(new Exception());
+
+            var result = await _caseController.AddNoteWithAttachments(model);
+
+            var statusCodeResult = Assert.IsType<StatusCodeResult>(result);
+            Assert.Equal(500, statusCodeResult.StatusCode);
         }
     }
 }

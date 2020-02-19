@@ -353,6 +353,81 @@ namespace verint_service_tests.Services
             _mockClient.Verify(client => client.updateCaseAsync(It.IsAny<FWTCaseUpdate>()), Times.Once);
         }
 
+        [Fact]
+        public async Task CreateNotesWithAttachment_ShouldCallRepository_ToAddUploadedFile()
+        {
+            var file1Name = "file.txt";
+            var file1Content = "cba";
+            var file2Name = "second.txt";
+            var file2Content = "abc";
+
+            // Arrange
+            var fileRequest = new NoteWithAttachments
+            {
+                Attachments = new System.Collections.Generic.List<StockportGovUK.NetStandard.Models.Models.FileManagement.File>
+                {
+                    new StockportGovUK.NetStandard.Models.Models.FileManagement.File 
+                    {
+                        Content = file1Content,
+                        FileName = file1Name
+                    },
+                    new StockportGovUK.NetStandard.Models.Models.FileManagement.File 
+                    {
+                        Content = file2Content,
+                        FileName = file2Name
+                    },
+                },
+                AttachmentsDescription = "description",
+                CaseRef = 123456789123
+            };
+
+            _mockClient
+                .Setup(client => client.addDocumentToRepositoryAsync(It.IsAny<FWTDocument>())).ReturnsAsync(new addDocumentToRepositoryResponse{ FWTDocumentRef = "123REF" });
+
+            // Act
+            await _caseService.CreateNotesWithAttachment(fileRequest);
+
+            // Assert
+            _mockClient.Verify(client => client.addDocumentToRepositoryAsync(It.IsAny<FWTDocument>()), Times.Exactly(2));
+            _mockClient.Verify(client => client.addDocumentToRepositoryAsync(It.Is<FWTDocument>(x => x.DocumentName == file1Name && x.Document == file1Content)), Times.Once);
+            _mockClient.Verify(client => client.addDocumentToRepositoryAsync(It.Is<FWTDocument>(x => x.DocumentName == file2Name && x.Document == file2Content)), Times.Once);
+        }
+
+                [Fact]
+        public async Task CreateNotesWithAttachment_ShouldAttachDocumentToCase_AsNote()
+        {
+            var casRef = 123456789123;
+            // Arrange
+            var fileRequest = new NoteWithAttachments
+            {
+                Attachments = new System.Collections.Generic.List<StockportGovUK.NetStandard.Models.Models.FileManagement.File>
+                {
+                    new StockportGovUK.NetStandard.Models.Models.FileManagement.File 
+                    {
+                        Content = "abc",
+                        FileName = "file.txt"
+                    },
+                    new StockportGovUK.NetStandard.Models.Models.FileManagement.File 
+                    {
+                        Content = "cba",
+                        FileName = "second.txt"
+                    },
+                },
+                AttachmentsDescription = "description",
+                CaseRef = casRef
+            };
+
+            _mockClient
+                .Setup(client => client.addDocumentToRepositoryAsync(It.IsAny<FWTDocument>())).ReturnsAsync(new addDocumentToRepositoryResponse{ FWTDocumentRef = "123REF" });
+
+            // Act
+            await _caseService.CreateNotesWithAttachment(fileRequest);
+
+            // Assert
+            _mockClient.Verify(client => client.addDocumentToRepositoryAsync(It.IsAny<FWTDocument>()), Times.Exactly(2));
+            _mockClient.Verify(client => client.createNotesAsync(It.Is<FWTCreateNoteToParent>(x => x.ParentId == casRef && x.NoteDetails.NoteAttachments.Length == 2)), Times.Once);
+        }
+
         private FWTCaseFullDetails CreateBaseCase()
         {
             return new FWTCaseFullDetails
