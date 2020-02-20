@@ -105,11 +105,12 @@ namespace verint_service.Services.Case
 
         public async Task CreateNotesWithAttachment(NoteWithAttachments note)
         {
-            var result = AddDocumentToCase(note.Attachments);
-            var listA = new List<FWTNoteDetailAttachment>();
-            result.ForEach(r =>
+            var repositoryResult = await AddDocumentToRepository(note.Attachments);
+            var attachedFileReferences = new List<FWTNoteDetailAttachment>();
+
+            repositoryResult.ForEach(r =>
             {
-                listA.Add(new FWTNoteDetailAttachment
+                attachedFileReferences.Add(new FWTNoteDetailAttachment
                 {
                     AttachmentIdentifier = r.documentReference,
                     AttachmentName = r.documentName,
@@ -117,42 +118,44 @@ namespace verint_service.Services.Case
                 });
             });
 
-            var noteToParent = new FWTCreateNoteToParent
+            var noteWithAttachments = new FWTCreateNoteToParent
             {
                 NoteDetails = new FWTCreateNoteDetail
                 {
                     Text = note.AttachmentsDescription,
-                    NoteAttachments = listA.ToArray()
+                    NoteAttachments = attachedFileReferences.ToArray()
                 },
                 ParentId = note.CaseRef,
                 ParentType = note.Interaction
             };
            
-            await _verintConnection.createNotesAsync(noteToParent);
+            await _verintConnection.createNotesAsync(noteWithAttachments);
         }
 
-        private List<FWTAttachedDocument> AddDocumentToCase(List<StockportGovUK.NetStandard.Models.Models.FileManagement.File> attachments)
+        private async Task<List<FWTAttachedDocument>> AddDocumentToRepository(List<StockportGovUK.NetStandard.Models.Models.FileManagement.File> attachments)
         {
-            var result = new List<FWTAttachedDocument>();
-            attachments.ForEach(a =>
+            var attachedDocuments = new List<FWTAttachedDocument>();
+
+            foreach(var attachment in attachments)
             {
-                var doc = new FWTDocument
+                var document = new FWTDocument
                 {
-                    DocumentName = a.FileName,
+                    DocumentName = attachment.FileName,
                     DocumentType = 1,
-                    Document = a.Content
+                    Document = attachment.Content
                 };
 
-                var docRef = _verintConnection.addDocumentToRepositoryAsync(doc);
+                var docRef = await _verintConnection.addDocumentToRepositoryAsync(document);
                 var attachedDoc = new FWTAttachedDocument
                 {
-                    documentName = doc.DocumentName,
-                    documentReference = docRef.Result.FWTDocumentRef,
+                    documentName = document.DocumentName,
+                    documentReference = docRef.FWTDocumentRef,
                     storageTypeSpecified = false
                 };
-                result.Add(attachedDoc);
-            });
-            return result;
+                attachedDocuments.Add(attachedDoc);
+            }
+
+            return attachedDocuments;
         }
     }
 }
