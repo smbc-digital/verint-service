@@ -61,6 +61,6 @@ public class NameWeighting : IIndividualWeighting
                 }
             }
 
-            return score;
+            return score > 2 ? 2 : score;
     }
 }
