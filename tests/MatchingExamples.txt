@@ -102,3 +102,45 @@ Should not match (no certainty) - Should always create a new customer ----------
   "raisedByBehaviour": 0,
   "associatedWithBehaviour": 0
 }
+
+
+
+associatedWithBehaviour 
+0 = individual
+1 = organisation
+2 = street
+3 = property
+4 = non
+
+raisedByBehaviour
+0 = individual
+1 = organisation
+
+{
+  "customer": {
+    "title": "Mr",
+    "forename": "Test",
+    "surname": "Test",
+    "email": "test.test@stockport.gov.uk",
+    "Telephone": "01614741234",
+    "dateOfBirth": "1980-01-01T00:00:00.000Z",
+    "Address": {
+        "UPRN": "101002265507"
+    }
+  },
+  "organisation": {
+    "reference": "101000600841",
+  },
+  "street": {
+    "reference": "1002112104",
+  },
+  "property": {
+    "reference": "101002265507",
+  },
+  "eventTitle": "Compliment",
+  "eventCode": "4000000",
+  "description": "Test description",
+  "raisedByBehaviour": 1,
+  "associatedWithBehaviour": 2
+}
+

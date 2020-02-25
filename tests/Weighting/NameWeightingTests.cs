@@ -195,7 +195,7 @@ namespace verint_service_tests.Weighting
         }
 
         [Fact]
-        public void Calculate_Should_Return_4_If_All_Matches()
+        public void Calculate_Should_Return_Maximum_Of_2_If_All_Matches()
         {
             // Arrange 
             var weighting = new NameWeighting();
@@ -225,7 +225,7 @@ namespace verint_service_tests.Weighting
             var result = weighting.Calculate(individual, customer);
 
             // Assert
-            Assert.Equal(4, result);
+            Assert.Equal(2, result);
         }
 
         [Fact]
