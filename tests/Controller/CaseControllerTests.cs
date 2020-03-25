@@ -165,7 +165,7 @@ namespace verint_service_tests.Controllers
         {
             var model = new NoteWithAttachments
             {
-                Attachments = new List<StockportGovUK.NetStandard.Models.Models.FileManagement.File>(),
+                Attachments = new List<StockportGovUK.NetStandard.Models.FileManagement.File>(),
                 AttachmentsDescription = "description",
                 CaseRef = 123456789123
             };
@@ -182,7 +182,7 @@ namespace verint_service_tests.Controllers
         {
             var model = new NoteWithAttachments
             {
-                Attachments = new List<StockportGovUK.NetStandard.Models.Models.FileManagement.File>(),
+                Attachments = new List<StockportGovUK.NetStandard.Models.FileManagement.File>(),
                 AttachmentsDescription = "description",
                 CaseRef = 123456789123
             };

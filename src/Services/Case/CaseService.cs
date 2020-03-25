@@ -141,7 +141,7 @@ namespace verint_service.Services.Case
             }
         }
 
-        private async Task<List<FWTAttachedDocument>> AddDocumentToRepository(List<StockportGovUK.NetStandard.Models.Models.FileManagement.File> attachments)
+        private async Task<List<FWTAttachedDocument>> AddDocumentToRepository(List<StockportGovUK.NetStandard.Models.FileManagement.File> attachments)
         {
             var attachedDocuments = new List<FWTAttachedDocument>();
 
@@ -149,7 +149,7 @@ namespace verint_service.Services.Case
             {
                 var document = new FWTDocument
                 {
-                    DocumentName = attachment.FileName,
+                    DocumentName = attachment.TrustedOriginalFileName,
                     DocumentType = 1,
                     Document = attachment.Content
                 };
