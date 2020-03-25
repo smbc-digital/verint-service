@@ -75,12 +75,12 @@ namespace verint_service.Services.Case
             return caseDetails;
         }
 
-        
+
         public async Task<string> CreateCase(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
-            crmCase.InteractionReference = await _interactionService.CreateInteraction(crmCase);                
+            crmCase.InteractionReference = await _interactionService.CreateInteraction(crmCase);
             var caseDetails = _caseToFWTCaseCreateMapper.Map(crmCase);
-            return _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;            
+            return _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;
         }
 
         public async Task<int> UpdateCaseDescription(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
@@ -105,31 +105,40 @@ namespace verint_service.Services.Case
 
         public async Task CreateNotesWithAttachment(NoteWithAttachments note)
         {
-            var repositoryResult = await AddDocumentToRepository(note.Attachments);
-            var attachedFileReferences = new List<FWTNoteDetailAttachment>();
-
-            repositoryResult.ForEach(r =>
+            try
             {
-                attachedFileReferences.Add(new FWTNoteDetailAttachment
+                var repositoryResult = await AddDocumentToRepository(note.Attachments);
+                var attachedFileReferences = new List<FWTNoteDetailAttachment>();
+
+                repositoryResult.ForEach(r =>
                 {
-                    AttachmentIdentifier = r.documentReference,
-                    AttachmentName = r.documentName,
-                    AttachmentTypeSpecified = false
+                    attachedFileReferences.Add(new FWTNoteDetailAttachment
+                    {
+                        AttachmentIdentifier = r.documentReference,
+                        AttachmentName = r.documentName,
+                        AttachmentTypeSpecified = false
+                    });
                 });
-            });
 
-            var noteWithAttachments = new FWTCreateNoteToParent
-            {
-                NoteDetails = new FWTCreateNoteDetail
+                var noteWithAttachments = new FWTCreateNoteToParent
                 {
-                    Text = note.AttachmentsDescription,
-                    NoteAttachments = attachedFileReferences.ToArray()
-                },
-                ParentId = note.CaseRef,
-                ParentType = note.Interaction
-            };
-           
-            await _verintConnection.createNotesAsync(noteWithAttachments);
+                    NoteDetails = new FWTCreateNoteDetail
+                    {
+                        Text = note.AttachmentsDescription,
+                        NoteAttachments = attachedFileReferences.ToArray()
+                    },
+                    ParentId = note.CaseRef,
+                    ParentType = note.Interaction
+                };
+
+                await _verintConnection.createNotesAsync(noteWithAttachments);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                _logger.LogError(exception, "Error when adding attachment");
+                throw;
+            }
         }
 
         private async Task<List<FWTAttachedDocument>> AddDocumentToRepository(List<StockportGovUK.NetStandard.Models.Models.FileManagement.File> attachments)

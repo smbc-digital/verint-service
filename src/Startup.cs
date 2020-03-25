@@ -95,7 +95,7 @@ namespace verint_service
 
             services.AddHttpClient();
 
-            services.AddAvailability();
+            //services.AddAvailability();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -109,7 +109,7 @@ namespace verint_service
                 app.UseHsts();
             }
 
-            app.UseMiddleware<Availability>();
+            //app.UseMiddleware<Availability>();
             app.UseMiddleware<ExceptionHandling>();
             app.UseHttpsRedirection();
             app.UseSwagger();
