@@ -38,7 +38,7 @@ namespace verint_service_tests.Services
             _mockAssociatedObjectHelper
                 .Setup(helper => helper.Resolve(It.IsAny<Case>()))
                 .Returns(It.IsAny<FWTObjectBriefDetails>());
-            
+
             _caseService = new CaseService(_mockConnection.Object, _mockLogger.Object, _mockInteractionService.Object, new CaseToFWTCaseCreateMapper(new CaseFormBuilder(), _mockAssociatedObjectHelper.Object));
         }
 
@@ -364,17 +364,17 @@ namespace verint_service_tests.Services
             // Arrange
             var fileRequest = new NoteWithAttachments
             {
-                Attachments = new System.Collections.Generic.List<StockportGovUK.NetStandard.Models.Models.FileManagement.File>
+                Attachments = new System.Collections.Generic.List<StockportGovUK.NetStandard.Models.FileManagement.File>
                 {
-                    new StockportGovUK.NetStandard.Models.Models.FileManagement.File 
+                    new StockportGovUK.NetStandard.Models.FileManagement.File
                     {
                         Content = file1Content,
-                        FileName = file1Name
+                        TrustedOriginalFileName = file1Name
                     },
-                    new StockportGovUK.NetStandard.Models.Models.FileManagement.File 
+                    new StockportGovUK.NetStandard.Models.FileManagement.File
                     {
                         Content = file2Content,
-                        FileName = file2Name
+                        TrustedOriginalFileName = file2Name
                     },
                 },
                 AttachmentsDescription = "description",
@@ -400,17 +400,17 @@ namespace verint_service_tests.Services
             // Arrange
             var fileRequest = new NoteWithAttachments
             {
-                Attachments = new System.Collections.Generic.List<StockportGovUK.NetStandard.Models.Models.FileManagement.File>
+                Attachments = new System.Collections.Generic.List<StockportGovUK.NetStandard.Models.FileManagement.File>
                 {
-                    new StockportGovUK.NetStandard.Models.Models.FileManagement.File 
+                    new StockportGovUK.NetStandard.Models.FileManagement.File
                     {
                         Content = "abc",
-                        FileName = "file.txt"
+                        TrustedOriginalFileName = "file.txt"
                     },
-                    new StockportGovUK.NetStandard.Models.Models.FileManagement.File 
+                    new StockportGovUK.NetStandard.Models.FileManagement.File
                     {
                         Content = "cba",
-                        FileName = "second.txt"
+                        TrustedOriginalFileName = "second.txt"
                     },
                 },
                 AttachmentsDescription = "description",
