@@ -62,13 +62,14 @@ namespace verint_service.Controllers
         {
             try
             {
+                _logger.LogDebug($"CaseController.Create:bAttempting to create case {crmCase.EventTitle}, event code {crmCase.EventCode}");
                 var response = await _caseService.CreateCase(crmCase);
 
                 return CreatedAtAction("Create", response);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"CaseController.Create: Failed to create crm case {ex.Message} {ex.InnerException.Message}", ex.InnerException);
+                _logger.LogError($"CaseController.Create: Failed to create crm case {ex.Message}", ex.InnerException);
                 _logger.LogError(ex.StackTrace);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
