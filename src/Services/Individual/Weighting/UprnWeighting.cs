@@ -6,9 +6,17 @@ public class UprnWeighting : IIndividualWeighting
 {
     public int Calculate(FWTIndividual individual, Customer customer)
     {
-        if (customer.Address != null && 
-            individual.ContactPostals != null && 
-            individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.UPRN) && x.UPRN.Trim() == customer.Address.UPRN.Trim()))
+        if(customer.Address == null || individual.ContactPostals == null)
+        {
+            return 0;
+        }
+
+        if(string.IsNullOrEmpty(x.UPRN))
+        {
+            return 0;
+        }
+
+        if (individual.ContactPostals.Any(x => x.UPRN == customer.Address.UPRN.Trim()))
         {
                 return 2;
         }
