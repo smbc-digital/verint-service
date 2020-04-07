@@ -68,7 +68,8 @@ namespace verint_service.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("CaseController.Create: Failed to create crm case", ex.InnerException);
+                _logger.LogError($"CaseController.Create: Failed to create crm case {ex.Message} {ex.InnerException.Message}", ex.InnerException);
+                _logger.LogError(ex.StackTrace);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

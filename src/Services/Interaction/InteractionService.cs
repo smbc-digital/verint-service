@@ -39,7 +39,7 @@ namespace verint_service.Services
         {
             FWTObjectID raisedBy = null;
 
-            if(crmCase.Customer != null)
+            if(crmCase.Customer != null && crmCase.RaisedByBehaviour == RaisedByBehaviourEnum.Individual)
             {
                 var individual = await _individualService.ResolveIndividual(crmCase.Customer);
                 crmCase.Customer.CustomerReference = individual.ObjectReference[0];
@@ -48,9 +48,11 @@ namespace verint_service.Services
                 {
                     raisedBy = individual;
                 }
+
+                return raisedBy;
             }
 
-            if(crmCase.Organisation != null && crmCase.RaisedByBehaviour == RaisedByBehaviourEnum.Organisation)
+            if(crmCase.Organisation != null)
             {
                 raisedBy = new FWTObjectID()
                 {
