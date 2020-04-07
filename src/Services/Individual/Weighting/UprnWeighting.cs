@@ -11,7 +11,7 @@ public class UprnWeighting : IIndividualWeighting
             return 0;
         }
 
-        if(string.IsNullOrEmpty(x.UPRN))
+        if(string.IsNullOrEmpty(customer.Address.UPRN))
         {
             return 0;
         }
