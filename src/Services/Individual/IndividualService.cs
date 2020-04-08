@@ -16,7 +16,7 @@ namespace verint_service.Services
 
         private readonly IEnumerable<IIndividualWeighting> _individualWeightings;
 
-        private readonly IPropertyService _propertyService
+        private readonly IPropertyService _propertyService;
 
         public IndividualService(IVerintConnection verint, IEnumerable<IIndividualWeighting> individualWeightings, IPropertyService propertyService)
         {
