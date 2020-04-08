@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
+using Microsoft.Extensions.Logging;
 using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Services;
@@ -16,6 +17,7 @@ namespace verint_service_tests.Services
     {
         private readonly Mock<IVerintConnection> _mockConnection = new Mock<IVerintConnection>();
         private readonly Mock<IVerintClient> _mockClient = new Mock<IVerintClient>();
+        private readonly Mock<ILogger<IndividualService>> _mockLogger = new Mock<ILogger<IndividualService>>();
 
         private readonly Mock<IPropertyService> _mockPropertyService = new Mock<IPropertyService>();
 
@@ -27,7 +29,7 @@ namespace verint_service_tests.Services
                 .Setup(_ => _.Client())
                 .Returns(_mockClient.Object);
                 
-            _service = new InteractionService(_mockConnection.Object, new IndividualService(_mockConnection.Object, new List<IIndividualWeighting>(), _mockPropertyService.Object ));
+            _service = new InteractionService(_mockConnection.Object, new IndividualService(_mockConnection.Object, new List<IIndividualWeighting>(), _mockPropertyService.Object, _mockLogger.Object ));
         }
 
         [Fact]

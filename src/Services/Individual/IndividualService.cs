@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,11 +19,15 @@ namespace verint_service.Services
 
         private readonly IPropertyService _propertyService;
 
-        public IndividualService(IVerintConnection verint, IEnumerable<IIndividualWeighting> individualWeightings, IPropertyService propertyService)
+        private readonly ILogger<IndividualService> _logger;
+
+
+        public IndividualService(IVerintConnection verint, IEnumerable<IIndividualWeighting> individualWeightings, IPropertyService propertyService, ILogger<IndividualService> logger)
         {
             _verintConnection = verint.Client();
             _individualWeightings = individualWeightings;
             _propertyService = propertyService;
+            _logger = logger;
 
         }
 
@@ -42,7 +47,10 @@ namespace verint_service.Services
             var fwtIndividual = customer.Map();
             
             // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
-            customer.Address.UPRN = await CheckUPRNForId(customer);
+            _logger.LogWarning($"Pre-check UPRN: {customer.Address.UPRN}");
+            var uprn =await CheckUPRNForId(customer);
+            _logger.LogWarning($"Post-check UPRN: {customer.Address.UPRN}");
+            customer.Address.UPRN = uprn ;
 
             var createIndividualResult = await _verintConnection.createIndividualAsync(fwtIndividual);
             return createIndividualResult.FLNewIndividualID;
@@ -168,7 +176,10 @@ namespace verint_service.Services
             };
             
             // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
-            customer.Address.UPRN = await CheckUPRNForId(customer);
+            _logger.LogWarning($"Pre-check UPRN: {customer.Address.UPRN}");
+            var uprn =await CheckUPRNForId(customer);
+            _logger.LogWarning($"Post-check UPRN: {customer.Address.UPRN}");
+            customer.Address.UPRN = uprn ;
 
             var requiresUpdate = update.AddAnyRequiredUpdates(individual, customer);
 
