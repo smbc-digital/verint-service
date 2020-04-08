@@ -63,30 +63,35 @@ namespace verint_service.Extensions
                 return false;
             }
 
-            if (individual.ContactPostals == null)
+            if (individual.ContactPostals == null && customer.Address != null)
             {
                 return true;
             }
 
-            if (individual.ContactPostals != null 
-                && !string.IsNullOrEmpty(customer.Address.Postcode)
-                && !individual.ContactPostals.Any(x =>
-                    !string.IsNullOrEmpty(x.Postcode) &&
-                    x.Postcode.Trim().ToUpper() == customer.Address.Postcode.Trim().ToUpper()))
+            if(!string.IsNullOrWhiteSpace(customer.Address.Postcode))
             {
-                return true;
-            }
+                if (individual.ContactPostals != null                 
+                    && !individual.ContactPostals.Any(_ =>
+                        !string.IsNullOrEmpty(_.Postcode) &&
+                        _.Postcode.Trim().ToUpper() == customer.Address.Postcode.Trim().ToUpper()))
+                {
+                    return true;
+                }
 
-            var foundAddress = individual.ContactPostals.Where(x => x.Postcode.Trim().ToUpper() == customer.Address.Postcode.Trim().ToUpper());
-            
-            if (foundAddress != null && 
-                !foundAddress.Any(_ => _.AddressLine[0] == customer.Address.AddressLine1 && _.AddressLine[1] == (string.IsNullOrEmpty(customer.Address.AddressLine2) ? "" : customer.Address.AddressLine2) && _.City == customer.Address.City))
-            {
-                return true;
+                var foundAddresses = individual.ContactPostals.Where(_ => !string.IsNullOrEmpty(_.Postcode) 
+                                                                        && _.Postcode.Trim().ToUpper() == customer.Address.Postcode.Trim().ToUpper());
+                
+                if (foundAddresses != null && 
+                    !foundAddresses.Any(_ => (!string.IsNullOrEmpty(customer.Address.AddressLine1) && _.AddressLine[0] == customer.Address.AddressLine1)
+                                            && (!string.IsNullOrEmpty(customer.Address.AddressLine2)  && _.AddressLine[1] == customer.Address.AddressLine2)) 
+                                            && (!string.IsNullOrEmpty(customer.Address.City) && _.City == customer.Address.City))
+                {
+                    return true;
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(customer.Address.UPRN) && individual.ContactPostals != null &&
-                        !individual.ContactPostals.Where(x => !string.IsNullOrWhiteSpace(x.UPRN) && x.UPRN.Trim() == customer.Address.UPRN.Trim()).Any())
+                        !individual.ContactPostals.Where(_ => !string.IsNullOrEmpty(_.UPRN) && _.UPRN.Trim() == customer.Address.UPRN.Trim()).Any())
             {
                 return true;
             }
