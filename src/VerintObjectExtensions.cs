@@ -58,18 +58,27 @@ namespace verint_service.Extensions
 
         private static bool RequiresAddressUpdate(this FWTIndividual individual, Customer customer)
         {
+            if(customer.Address == null)
+            {
+                return false;
+            }
+
             if (individual.ContactPostals == null)
             {
                 return true;
             }
 
-            if (individual.ContactPostals != null && !individual.ContactPostals.Any(x =>
+            if (individual.ContactPostals != null 
+                && !string.IsNullOrEmpty(customer.Address.Postcode)
+                && !individual.ContactPostals.Any(x =>
+                    !string.IsNullOrEmpty(x.Postcode) &&
                     x.Postcode.Trim().ToUpper() == customer.Address.Postcode.Trim().ToUpper()))
             {
                 return true;
             }
 
             var foundAddress = individual.ContactPostals.Where(x => x.Postcode.Trim().ToUpper() == customer.Address.Postcode.Trim().ToUpper());
+            
             if (foundAddress != null && 
                 !foundAddress.Any(_ => _.AddressLine[0] == customer.Address.AddressLine1 && _.AddressLine[1] == (string.IsNullOrEmpty(customer.Address.AddressLine2) ? "" : customer.Address.AddressLine2) && _.City == customer.Address.City))
             {
