@@ -44,13 +44,12 @@ namespace verint_service.Services
 
         private async Task<FWTObjectID> CreateIndividual(Customer customer)
         {
-            var fwtIndividual = customer.Map();
-            
             // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
             _logger.LogWarning($"Pre-check UPRN: {customer.Address.UPRN}");
-            var uprn =await CheckUPRNForId(customer);
+            customer.Address.UPRN = await CheckUPRNForId(customer);
             _logger.LogWarning($"Post-check UPRN: {customer.Address.UPRN}");
-            customer.Address.UPRN = uprn ;
+
+            var fwtIndividual = customer.Map();
 
             var createIndividualResult = await _verintConnection.createIndividualAsync(fwtIndividual);
             return createIndividualResult.FLNewIndividualID;
@@ -176,10 +175,7 @@ namespace verint_service.Services
             };
             
             // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
-            _logger.LogWarning($"Pre-check UPRN: {customer.Address.UPRN}");
-            var uprn =await CheckUPRNForId(customer);
-            _logger.LogWarning($"Post-check UPRN: {customer.Address.UPRN}");
-            customer.Address.UPRN = uprn ;
+            customer.Address.UPRN = await CheckUPRNForId(customer);
 
             var requiresUpdate = update.AddAnyRequiredUpdates(individual, customer);
 
