@@ -5,6 +5,7 @@ using Moq;
 using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Services;
+using verint_service.Services.Property;
 using VerintWebService;
 using Xunit;
 
@@ -15,6 +16,9 @@ namespace verint_service_tests.Services
     {
         private readonly Mock<IVerintConnection> _mockConnection = new Mock<IVerintConnection>();
         private readonly Mock<IVerintClient> _mockClient = new Mock<IVerintClient>();
+
+        private readonly Mock<IPropertyService> _mockPropertyService = new Mock<IPropertyService>();
+
         private readonly InteractionService _service;
 
         public InteractionServiceTests()
@@ -22,7 +26,8 @@ namespace verint_service_tests.Services
             _mockConnection
                 .Setup(_ => _.Client())
                 .Returns(_mockClient.Object);
-            _service = new InteractionService(_mockConnection.Object, new IndividualService(_mockConnection.Object, new List<IIndividualWeighting>()));
+                
+            _service = new InteractionService(_mockConnection.Object, new IndividualService(_mockConnection.Object, new List<IIndividualWeighting>(), _mockPropertyService.Object ));
         }
 
         [Fact]
