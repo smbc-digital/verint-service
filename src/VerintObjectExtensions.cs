@@ -83,8 +83,8 @@ namespace verint_service.Extensions
                 
                 if (foundAddresses != null && 
                     !foundAddresses.Any(_ => (!string.IsNullOrEmpty(customer.Address.AddressLine1) && _.AddressLine[0] == customer.Address.AddressLine1)
-                                            && (!string.IsNullOrEmpty(customer.Address.AddressLine2)  && _.AddressLine[1] == customer.Address.AddressLine2)) 
-                                            && (!string.IsNullOrEmpty(customer.Address.City) && _.City == customer.Address.City))
+                                            && (!string.IsNullOrEmpty(customer.Address.AddressLine2)  && _.AddressLine[1] == customer.Address.AddressLine2)
+                                            && (!string.IsNullOrEmpty(customer.Address.City) && _.City == customer.Address.City)))
                 {
                     return true;
                 }
