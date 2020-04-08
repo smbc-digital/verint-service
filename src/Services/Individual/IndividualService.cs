@@ -5,6 +5,7 @@ using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Extensions;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Mappers;
+using verint_service.Services.Property;
 using VerintWebService;
 
 namespace verint_service.Services
@@ -15,10 +16,14 @@ namespace verint_service.Services
 
         private readonly IEnumerable<IIndividualWeighting> _individualWeightings;
 
-        public IndividualService(IVerintConnection verint, IEnumerable<IIndividualWeighting> individualWeightings)
+        private readonly IPropertyService _propertyService
+
+        public IndividualService(IVerintConnection verint, IEnumerable<IIndividualWeighting> individualWeightings, IPropertyService propertyService)
         {
             _verintConnection = verint.Client();
             _individualWeightings = individualWeightings;
+            _propertyService = propertyService;
+
         }
 
         public async Task<FWTObjectID> ResolveIndividual(Customer customer)
@@ -35,6 +40,10 @@ namespace verint_service.Services
         private async Task<FWTObjectID> CreateIndividual(Customer customer)
         {
             var fwtIndividual = customer.Map();
+            
+            // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
+            customer.Address.UPRN = await CheckUPRNForId(customer);
+
             var createIndividualResult = await _verintConnection.createIndividualAsync(fwtIndividual);
             return createIndividualResult.FLNewIndividualID;
         }
@@ -158,12 +167,31 @@ namespace verint_service.Services
                 BriefDetails = individual.BriefDetails
             };
             
+            // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
+            customer.Address.UPRN = await CheckUPRNForId(customer);
+
             var requiresUpdate = update.AddAnyRequiredUpdates(individual, customer);
 
             if(requiresUpdate)
             {
                 await _verintConnection.updateIndividualAsync(update); 
             } 
+        }
+
+        private async Task<string> CheckUPRNForId(Customer customer)
+        {
+            // HACK: Check whether UPRN provided is actually an ID and if so lookup the real UPRN
+            // If it's a real ID it shouldn't return a property!
+            if(!string.IsNullOrEmpty(customer.Address.UPRN))
+            {
+                var propertyResult = await _propertyService.GetPropertyAsync(customer.Address.UPRN);
+                if(propertyResult != null)
+                {
+                    return propertyResult.UPRN;
+                }
+            }
+
+            return customer.Address.UPRN;
         }
     }
 }
