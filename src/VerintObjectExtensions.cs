@@ -109,7 +109,7 @@ namespace verint_service.Extensions
             if (individual.RequiresAddressUpdate(customer)) 
             {
                 var newContactPostal = new FWTContactPostal();
-                
+                newContactPostal.Preferred = true;
                 if (!string.IsNullOrEmpty(customer.Address.UPRN))
                 {
                     newContactPostal.Option = new [] { Common.UseUprnForAddress,  Common.IgnoreInvalidUprn };
@@ -121,7 +121,6 @@ namespace verint_service.Extensions
                     newContactPostal.AddressLine = new[] { customer.Address.AddressLine1, customer.Address.AddressLine2, customer.Address.AddressLine3, customer.Address.City };
                     newContactPostal.City = customer.Address.City;
                     newContactPostal.Postcode = customer.Address.Postcode;
-                    newContactPostal.Preferred = true;
                 }
 
                 update.ContactPostals = new[] { new FWTContactPostalUpdate { PostalDetails = newContactPostal, ListItemUpdateType = "Insert" }};
@@ -130,6 +129,7 @@ namespace verint_service.Extensions
             else if (!string.IsNullOrWhiteSpace(customer.Address.UPRN) && individual.ContactPostals != null)
             {
                 var preferredContact = individual.ContactPostals.FirstOrDefault(x => x.Preferred);
+                
                 if (preferredContact != null && customer.Address.UPRN.Trim() != preferredContact.UPRN.Trim())
                 {
                     var contactPostal = individual.ContactPostals.FirstOrDefault(_ => _.UPRN.Trim() == customer.Address.UPRN.Trim());
