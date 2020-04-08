@@ -195,13 +195,16 @@ namespace verint_service.Services
             // If it's a real ID it shouldn't return a property!
             if(!string.IsNullOrEmpty(customer.Address.UPRN))
             {
+                _logger.LogWarning($"Customer has uprn {customer.Address.UPRN}");
                 var propertyResult = await _propertyService.GetPropertyAsync(customer.Address.UPRN);
                 if(propertyResult != null)
                 {
+                    _logger.LogWarning($"Returning propertyResult.UPRN: {propertyResult.UPRN}, {propertyResult.Description}");
                     return propertyResult.UPRN;
                 }
             }
 
+            _logger.LogWarning($"Return original uprn {customer.Address.UPRN}");            
             return customer.Address.UPRN;
         }
     }
