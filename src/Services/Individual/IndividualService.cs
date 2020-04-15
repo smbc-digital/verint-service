@@ -45,9 +45,13 @@ namespace verint_service.Services
         private async Task<FWTObjectID> CreateIndividual(Customer customer)
         {
             // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
-            _logger.LogWarning($"Pre-check UPRN: {customer.Address.UPRN}");
-            customer.Address.UPRN = await CheckUPRNForId(customer);
-            _logger.LogWarning($"Post-check UPRN: {customer.Address.UPRN}");
+
+            if (customer.Address != null)
+            {
+                _logger.LogWarning($"Pre-check UPRN: {customer.Address.UPRN}");
+                customer.Address.UPRN = await CheckUPRNForId(customer);
+                _logger.LogWarning($"Post-check UPRN: {customer.Address.UPRN}");
+            }
 
             var fwtIndividual = customer.Map();
 
