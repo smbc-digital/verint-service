@@ -62,6 +62,7 @@ namespace verint_service
             app.UseMiddleware<Availability>();
             app.UseMiddleware<ApiExceptionHandling>();
             app.UseHttpsRedirection();
+            app.UseRouting();
 
             app.UseHealthChecks("/healthcheck", HealthCheckConfig.Options);
 
