@@ -1,8 +1,8 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace verint_service.HttpClients
 {
@@ -17,7 +17,7 @@ namespace verint_service.HttpClients
 
         public async Task<HttpResponseMessage> PostAsync(string endpoint, object content)
         {
-            var encodedContent = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
+            var encodedContent = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json");
 
             return await _client.PostAsync(endpoint, encodedContent);
         }

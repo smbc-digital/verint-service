@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using StockportGovUK.AspNetCore.Logging.Elasticsearch.Aws;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Serilog;
-using StockportGovUK.AspNetCore.Logging.Elasticsearch.Aws;
 
 namespace verint_service
 {
@@ -29,16 +29,19 @@ namespace verint_service
                 .WriteToElasticsearchAws(Configuration)
                 .CreateLogger();
 
-            var proxy = new WebProxy("http://172.16.0.126:8080", false);
+            WebProxy proxy = new WebProxy("http://172.16.0.126:8080", false);
             WebRequest.DefaultWebProxy = proxy;
-            BuildWebHost(args).Run();
+            BuildHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseConfiguration(Configuration)
-                .UseSerilog()
-                .Build();
+        public static IHost BuildHost(string[] args) =>
+          Host.CreateDefaultBuilder(args)
+              .ConfigureWebHostDefaults(webBuilder =>
+              {
+                  webBuilder.UseStartup<Startup>();
+                  webBuilder.UseConfiguration(Configuration);
+              })
+              .UseSerilog()
+              .Build();
     }
 }
