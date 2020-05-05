@@ -1,30 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.ServiceModel.Description;
-using System.ServiceModel.Dispatcher;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using StockportGovUK.AspNetCore.Middleware;
+using Microsoft.Extensions.Hosting;
 using StockportGovUK.AspNetCore.Availability;
 using StockportGovUK.AspNetCore.Availability.Middleware;
-using Swashbuckle.AspNetCore.Swagger;
-using verint_service.Config;
-using verint_service.Helpers.VerintConnection;
-using verint_service.HttpClients;
-using verint_service.Models.Config;
-using verint_service.Services;
-using verint_service.Services.Case;
-using verint_service.Services.Event;
-using verint_service.Services.Update;
-using verint_service.Helpers;
+using StockportGovUK.AspNetCore.Middleware;
+using System.Diagnostics.CodeAnalysis;
 using verint_service.Builders;
-using verint_service.Services.Property;
-using verint_service.Services.Street;
-using verint_service.Services.Organisation;
+using verint_service.Config;
+using verint_service.HttpClients;
 using verint_service.Mappers;
+using verint_service.Models.Config;
+using verint_service.Utils.HealthChecks;
+using verint_service.Utils.ServiceCollectionExtensions;
 
 namespace verint_service
 {
@@ -40,67 +29,28 @@ namespace verint_service
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services.Configure<VerintConnectionConfiguration>(Configuration.GetSection("VerintConnectionConfiguration"));
             services.Configure<EventTypeConfiguration>(Configuration.GetSection("EventTypeConfiguration"));
 
-            services.AddTransient<ICaseService, CaseService>();
-            services.AddTransient<IUpdateService, UpdateService>();
-            services.AddSingleton<IVerintConnection, VerintConnection>();
-            services.AddTransient<IClientMessageInspector, RequestInspector>();
-            services.AddTransient<IEndpointBehavior, RequestBehavior>();
-            services.AddTransient<IEventService, EventService>();
-            services.AddTransient<IIndividualService, IndividualService>();
-            services.AddTransient<IInteractionService, InteractionService>();
-            services.AddTransient<IPropertyService, PropertyService>();
-            services.AddTransient<IStreetService, StreetService>();
             services.AddTransient<ICaseFormBuilder, CaseFormBuilder>();
-            services.AddTransient<IOrganisationService, OrganisationService>();
-
             services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();
-            services.AddTransient<IAssociatedObjectResolver, AssociatedObjectResolver>();
-
-            services.AddSingleton<IIndividualWeighting, EmailWeighting>();
-            services.AddSingleton<IIndividualWeighting, DateOfBirthWeighting>();
-            services.AddSingleton<IIndividualWeighting, NameWeighting>();
-            services.AddSingleton<IIndividualWeighting, TelephoneWeighting>();
-            services.AddSingleton<IIndividualWeighting, AlternativeTelephoneWeighting>();
-            services.AddSingleton<IIndividualWeighting, UprnWeighting>();
-            services.AddSingleton<IIndividualWeighting, AddressWeighting>();
-
             services.AddSingleton<CaseToFWTCaseCreateMapper>();
             services.AddSingleton<ICaseFormBuilder, CaseFormBuilder>();
-
-
-            services
-                .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "verint_service API", Version = "v1" });
-
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
-                {
-                    Description = "Authorization using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                    Name = "Authorization",
-                    In = "header",
-                    Type = "apiKey"
-                });
-
-                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
-                {
-                    {"Bearer", new string[] { }},
-                });
-            });
-
+            services.AddSwagger();
             services.AddHttpClient();
+            services.AddAvailability();
+            services.AddHealthChecks()
+                  .AddCheck<TestHealthCheck>("TestHealthCheck");
 
-            //services.AddAvailability();
+            services.RegisterHelpers();
+            services.RegisterServices();
+            services.RegisterUtils();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsEnvironment("local"))
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -109,15 +59,17 @@ namespace verint_service
                 app.UseHsts();
             }
 
-            //app.UseMiddleware<Availability>();
-            app.UseMiddleware<ExceptionHandling>();
+            app.UseMiddleware<Availability>();
+            app.UseMiddleware<ApiExceptionHandling>();
             app.UseHttpsRedirection();
+
+            app.UseHealthChecks("/healthcheck", HealthCheckConfig.Options);
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "verint_service API");
+                c.SwaggerEndpoint($"{(env.IsEnvironment("local") ? string.Empty : "/verintservice")}/swagger/v1/swagger.json", "Verint service API");
             });
-            app.UseMvc();
         }
     }
 }
