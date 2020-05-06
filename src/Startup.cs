@@ -61,7 +61,7 @@ namespace verint_service
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint($"{(env.IsEnvironment("local") ? string.Empty : "/verintservice")}/swagger/v1/swagger.json", "Verint service API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Verint service API");
             });
         }
     }
