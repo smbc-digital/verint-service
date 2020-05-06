@@ -7,9 +7,8 @@ using System.Xml.Serialization;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using StockportGovUK.NetStandard.Models.Verint;
-using verint_service.Models;
 
-namespace verint_service.ModelBinders
+namespace verint_service.Models.CaseEvent.Binders
 {
     public class CaseEventModelBinder : RequiredAttribute, IModelBinder
     {

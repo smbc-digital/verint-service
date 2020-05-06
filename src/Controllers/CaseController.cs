@@ -1,6 +1,4 @@
 using System;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,8 +6,8 @@ using Microsoft.Extensions.Logging;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Verint;
 using StockportGovUK.NetStandard.Models.Verint.Update;
-using verint_service.ModelBinders;
-using verint_service.Models;
+using verint_service.Models.CaseEvent;
+using verint_service.Models.CaseEvent.Binders;
 using verint_service.Services.Case;
 using verint_service.Services.Event;
 using verint_service.Services.Update;
@@ -25,7 +23,6 @@ namespace verint_service.Controllers
         private readonly ICaseService _caseService;
         private readonly IUpdateService _updateService;
         private readonly ILogger _logger;
-        private readonly HttpClient _httpClient;
         private readonly IEventService _eventService;
 
         public CaseController(ICaseService caseService, IUpdateService updateService, ILogger<CaseController> logger, IEventService eventService)
@@ -34,13 +31,6 @@ namespace verint_service.Controllers
             _updateService = updateService;
             _logger = logger;
             _eventService = eventService;
-
-            var proxyHttpClientHandler = new HttpClientHandler {
-	            Proxy = new WebProxy(new Uri("http://172.16.0.126:8080"), BypassOnLocal: false),
-	            UseProxy = true
-            };
-
-            _httpClient = new HttpClient(proxyHttpClientHandler);
         }
 
         [HttpGet]
@@ -79,7 +69,6 @@ namespace verint_service.Controllers
         /// Method to append a payment status to the description
         /// </summary>
         /// <param name="crmCase">The case to be updated</param>
-        /// <param name="toBeAppended"> bool to indicate if the status should be added too or replaced</param>
         /// <returns>An int declaring the state of the update</returns>
         [HttpPost]
         [Route("updatecasedescription")]

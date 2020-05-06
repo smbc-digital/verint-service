@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Extensions.Options;
+using StockportGovUK.NetStandard.Gateways;
 using StockportGovUK.NetStandard.Models.Verint;
-using verint_service.Config;
-using verint_service.HttpClients;
-using verint_service.Models;
+using verint_service.Models.CaseEvent;
+using verint_service.Models.Config;
 
 namespace verint_service.Services.Event
 {
     public class EventService : IEventService
     {
         private readonly EventTypeConfiguration _eventTypeConfiguration;
-        private readonly IHttpClientWrapper _httpClientWrapper;
+        private readonly IGateway _gateway;
 
-        public EventService(IOptions<EventTypeConfiguration> eventTypeConfiguration, IHttpClientWrapper httpClientWrapper)
+        public EventService(IOptions<EventTypeConfiguration> eventTypeConfiguration, IGateway gateway)
         {
             _eventTypeConfiguration = eventTypeConfiguration.Value;
-            _httpClientWrapper = httpClientWrapper;
+            _gateway = gateway;
         }
 
         public void HandleCaseEvent(CaseEventModel model)
@@ -47,8 +47,8 @@ namespace verint_service.Services.Event
                 return;
             }
 
-            _httpClientWrapper.SetHttpClientSecurityHeader(selectCaseEvent.AuthToken);
-            _httpClientWrapper.PostAsync(selectCaseEvent.Endpoint, model);
+            _gateway.ChangeAuthenticationHeader(selectCaseEvent.AuthToken);
+            _gateway.PostAsync(selectCaseEvent.Endpoint, model);
         }
 
         private void HandleReclassifyCaseEvent(EventCase model)
@@ -62,8 +62,8 @@ namespace verint_service.Services.Event
                 return;
             }
 
-            _httpClientWrapper.SetHttpClientSecurityHeader(selectCaseEvent.AuthToken);
-            _httpClientWrapper.PostAsync(selectCaseEvent.Endpoint, model);
+            _gateway.ChangeAuthenticationHeader(selectCaseEvent.AuthToken);
+            _gateway.PostAsync(selectCaseEvent.Endpoint, model);
         }
     }
 }

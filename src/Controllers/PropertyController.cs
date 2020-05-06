@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Addresses;
 using verint_service.Services.Property;
@@ -12,14 +11,12 @@ namespace verint_service.Controllers
     [Route("api/v1/[Controller]")]
     [ApiController]
     [TokenAuthentication]
-    public class PropertyController : BaseController
+    public class PropertyController : ControllerBase
     {
-        private readonly ILogger _logger;
         private readonly IPropertyService _propertyService;
 
-        public PropertyController(ILogger<CaseController> logger, IPropertyService propertyService) : base()
+        public PropertyController(IPropertyService propertyService)
         {
-            _logger = logger;
             _propertyService = propertyService;
         }
 

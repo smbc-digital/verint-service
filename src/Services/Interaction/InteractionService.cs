@@ -3,6 +3,7 @@ using verint_service.Helpers.VerintConnection;
 using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 using verint_service.Models;
+using verint_service.Utils.Consts;
 
 namespace verint_service.Services
 {
@@ -21,7 +22,7 @@ namespace verint_service.Services
         public async Task<long> CreateInteraction(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
             var interactionDetails = new FWTInteractionCreate {
-                Channel = Common.Channel,
+                Channel = VerintConstants.Channel,
                 Verified = false,
             };
 
@@ -56,7 +57,7 @@ namespace verint_service.Services
             {
                 raisedBy = new FWTObjectID()
                 {
-                    ObjectType = Common.OrganisationObjectType,
+                    ObjectType = VerintConstants.OrganisationObjectType,
                     ObjectReference = new[] { crmCase.Organisation.Reference }
                 };    
             }

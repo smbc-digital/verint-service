@@ -1,12 +1,7 @@
-﻿using System;
-using System.IO;
-
-namespace verint_service
+﻿namespace verint_service.Utils.Consts
 {
-    public static class Common
+    public static class VerintConstants
     {
-        public const string AnonymousIndividualReference = "101001155391";
-
         public const string Channel = "Web";
 
         public const string IndividualObjectType = "C1";

@@ -1,16 +1,16 @@
 ﻿using StockportGovUK.NetStandard.Models.Verint;
-using verint_service.Builders;
 using verint_service.Helpers;
+using verint_service.Utils.Builders;
 using VerintWebService;
 
-namespace verint_service.Mappers
+namespace verint_service.Utils.Mappers
 {
     public class CaseToFWTCaseCreateMapper
     {
 
-        private ICaseFormBuilder _caseFormBuilder;
+        private readonly ICaseFormBuilder _caseFormBuilder;
 
-        private IAssociatedObjectResolver _associatedObjectResolver;
+        private readonly IAssociatedObjectResolver _associatedObjectResolver;
 
         public CaseToFWTCaseCreateMapper(ICaseFormBuilder caseFormBuilder, IAssociatedObjectResolver associatedObjectResolver)
         {

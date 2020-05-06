@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace verint_service.Config
+namespace verint_service.Models.Config
 {
     public class EventTypeConfiguration
     {

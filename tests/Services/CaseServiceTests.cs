@@ -8,10 +8,11 @@ using VerintWebService;
 using Xunit;
 using verint_service.Services;
 using verint_service.Helpers;
-using verint_service.Builders;
-using verint_service.Mappers;
 using StockportGovUK.NetStandard.Models.Verint;
 using verint_service;
+using verint_service.Utils.Builders;
+using verint_service.Utils.Consts;
+using verint_service.Utils.Mappers;
 
 namespace verint_service_tests.Services
 {
@@ -443,7 +444,7 @@ namespace verint_service_tests.Services
                     {
                         ObjectID = new FWTObjectID
                         {
-                            ObjectType = Common.OrganisationObjectType
+                            ObjectType = VerintConstants.OrganisationObjectType
                         }
                     }
                 },

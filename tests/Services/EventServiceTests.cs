@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 using Moq;
+using StockportGovUK.NetStandard.Gateways;
 using StockportGovUK.NetStandard.Models.Verint;
-using verint_service.Config;
-using verint_service.HttpClients;
-using verint_service.Models;
+using verint_service.Models.CaseEvent;
+using verint_service.Models.Config;
 using verint_service.Services.Event;
 using Xunit;
 
@@ -14,7 +14,7 @@ namespace verint_service_tests.Services
     {
         private readonly IEventService _eventService;
 
-        private readonly Mock<IHttpClientWrapper> _httpClientWrapper = new Mock<IHttpClientWrapper>();
+        private readonly Mock<IGateway> _mockGateway = new Mock<IGateway>();
         private readonly Mock<IOptions<EventTypeConfiguration>> _mockEventTypeConfiguration = new Mock<IOptions<EventTypeConfiguration>>();
 
         public EventServiceTests()
@@ -43,7 +43,7 @@ namespace verint_service_tests.Services
                     }
                 });
 
-            _eventService = new EventService(_mockEventTypeConfiguration.Object, _httpClientWrapper.Object);
+            _eventService = new EventService(_mockEventTypeConfiguration.Object, _mockGateway.Object);
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace verint_service_tests.Services
             _eventService.HandleCaseEvent(model);
 
             // Assert
-            _httpClientWrapper.Verify(_ => _.PostAsync(It.IsAny<string>(),model.EventCase), Times.Once);
+            _mockGateway.Verify(_ => _.PostAsync(It.IsAny<string>(),model.EventCase), Times.Once);
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace verint_service_tests.Services
             _eventService.HandleCaseEvent(model);
 
             // Assert
-            _httpClientWrapper.VerifyNoOtherCalls();
+            _mockGateway.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -94,7 +94,7 @@ namespace verint_service_tests.Services
             _eventService.HandleCaseEvent(null);
 
             // Assert
-            _httpClientWrapper.VerifyNoOtherCalls();
+            _mockGateway.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -119,8 +119,8 @@ namespace verint_service_tests.Services
             _eventService.HandleCaseEvent(model);
 
             // Assert
-            _httpClientWrapper.Verify(_ => _.SetHttpClientSecurityHeader("test"), Times.Once);
-            _httpClientWrapper.Verify(_ => _.PostAsync(It.IsAny<string>(), model.EventCase), Times.Once);
+            _mockGateway.Verify(_ => _.ChangeAuthenticationHeader("test"), Times.Once);
+            _mockGateway.Verify(_ => _.PostAsync(It.IsAny<string>(), model.EventCase), Times.Once);
         }
 
         [Fact]
@@ -145,7 +145,7 @@ namespace verint_service_tests.Services
             _eventService.HandleCaseEvent(model);
 
             // Assert
-            _httpClientWrapper.VerifyNoOtherCalls();
+            _mockGateway.VerifyNoOtherCalls();
         }
 
     }

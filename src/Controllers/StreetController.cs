@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Addresses;
 using verint_service.Services.Street;
@@ -12,14 +11,12 @@ namespace verint_service.Controllers
     [Route("api/v1/[Controller]")]
     [ApiController]
     [TokenAuthentication]
-    public class StreetController : BaseController
+    public class StreetController : ControllerBase
     {
-        private readonly ILogger _logger;
         private readonly IStreetService _streetService;
 
-        public StreetController(ILogger<CaseController> logger, IStreetService streetService) : base()
+        public StreetController(IStreetService streetService)
         {
-            _logger = logger;
             _streetService = streetService;
         }
 

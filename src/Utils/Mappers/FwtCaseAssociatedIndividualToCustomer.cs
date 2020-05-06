@@ -2,7 +2,7 @@
 using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 
-namespace verint_service.Mappers
+namespace verint_service.Utils.Mappers
 {
     public static class FwtCaseAssociatedIndividualToCustomer
     {

@@ -16,12 +16,12 @@ namespace verint_service.Controllers
     [Route("api/v1/[Controller]")]
     [ApiController]
     [TokenAuthentication]
-    public class OrganisationController : BaseController
+    public class OrganisationController : ControllerBase
     {
         private readonly ILogger _logger;
         private readonly IOrganisationService _organisationService;
 
-        public OrganisationController(ILogger<OrganisationController> logger, IOrganisationService organisationService) : base()
+        public OrganisationController(ILogger<OrganisationController> logger, IOrganisationService organisationService)
         {
             _logger = logger;
             _organisationService = organisationService;

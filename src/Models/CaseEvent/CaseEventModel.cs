@@ -1,6 +1,6 @@
 ﻿using StockportGovUK.NetStandard.Models.Verint;
 
-namespace verint_service.Models
+namespace verint_service.Models.CaseEvent
 {
     public class CaseEventModel
     {

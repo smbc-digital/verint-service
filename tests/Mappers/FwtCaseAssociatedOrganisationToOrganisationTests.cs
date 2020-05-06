@@ -1,4 +1,4 @@
-﻿using verint_service.Mappers;
+﻿using verint_service.Utils.Mappers;
 using VerintWebService;
 using Xunit;
 
