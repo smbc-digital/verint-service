@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using verint_service.Helpers.VerintConnection;
-using verint_service.Mappers;
 using VerintWebService;
 using StockportGovUK.NetStandard.Models.Verint;
+using verint_service.Utils.Consts;
+using verint_service.Utils.Mappers;
 
 
 namespace verint_service.Services.Case
@@ -51,7 +52,7 @@ namespace verint_service.Services.Case
             if (response.FWTCaseFullDetails.CoreDetails.AssociatedObject != null)
             {
                 if (response.FWTCaseFullDetails.CoreDetails.AssociatedObject.ObjectID.ObjectType ==
-                    Common.OrganisationObjectType)
+                    VerintConstants.OrganisationObjectType)
                 {
                     var organisation = await _verintConnection.retrieveOrganisationAsync(response.FWTCaseFullDetails.CoreDetails.AssociatedObject.ObjectID);
                     if (organisation != null)

@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Moq;
-using verint_service.ModelBinders;
 using verint_service.Models;
+using verint_service.Models.CaseEvent;
+using verint_service.Models.CaseEvent.Binders;
 using Xunit;
 
 namespace verint_service_tests.ModelBinders

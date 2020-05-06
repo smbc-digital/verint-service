@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using verint_service.Helpers.VerintConnection;
+using verint_service.Utils.Consts;
 using VerintWebService;
 
 namespace verint_service.Services.Property
@@ -37,7 +38,7 @@ namespace verint_service.Services.Property
             var propertySearch = new FWTObjectID
             {
                 ObjectReference = new [] { id },
-                ObjectType = Common.PropertyObjectType
+                ObjectType = VerintConstants.PropertyObjectType
             };
 
             var result  = await _verintConnection.retrievePropertyAsync(propertySearch);

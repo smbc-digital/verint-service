@@ -1,10 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
 using verint_service.Helpers;
 using verint_service.Helpers.VerintConnection;
+using verint_service.Models.Config;
 using verint_service.Services;
 using verint_service.Services.Case;
 using verint_service.Services.Event;
@@ -12,11 +14,19 @@ using verint_service.Services.Organisation;
 using verint_service.Services.Property;
 using verint_service.Services.Street;
 using verint_service.Services.Update;
+using verint_service.Utils.Builders;
+using verint_service.Utils.Mappers;
 
-namespace verint_service.Utils.ServiceCollectionExtensions
+namespace verint_service.Utils.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        public static void RegisterConfiguration(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<VerintConnectionConfiguration>(configuration.GetSection("VerintConnectionConfiguration"));
+            services.Configure<EventTypeConfiguration>(configuration.GetSection("EventTypeConfiguration"));
+        }
+
         public static void RegisterHelpers(this IServiceCollection services)
         {
             services.AddSingleton<IVerintConnection, VerintConnection>();
@@ -46,6 +56,9 @@ namespace verint_service.Utils.ServiceCollectionExtensions
             services.AddSingleton<IIndividualWeighting, AlternativeTelephoneWeighting>();
             services.AddSingleton<IIndividualWeighting, UprnWeighting>();
             services.AddSingleton<IIndividualWeighting, AddressWeighting>();
+            services.AddTransient<ICaseFormBuilder, CaseFormBuilder>();
+            services.AddSingleton<CaseToFWTCaseCreateMapper>();
+            services.AddSingleton<ICaseFormBuilder, CaseFormBuilder>();
         }
 
         public static void AddSwagger(this IServiceCollection services)

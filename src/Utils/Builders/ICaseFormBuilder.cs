@@ -1,7 +1,7 @@
 using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 
-namespace verint_service.Builders
+namespace verint_service.Utils.Builders
 {
     public interface ICaseFormBuilder
     {

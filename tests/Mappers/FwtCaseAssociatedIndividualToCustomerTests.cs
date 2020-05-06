@@ -2,8 +2,8 @@
 using System.Linq;
 using Moq;
 using verint_service.Helpers.VerintConnection;
-using verint_service.Mappers;
 using verint_service.Services;
+using verint_service.Utils.Mappers;
 using VerintWebService;
 using Xunit;
 

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using StockportGovUK.NetStandard.Models.Verint;
-using verint_service.Extensions;
 using verint_service.Helpers.VerintConnection;
-using verint_service.Mappers;
 using verint_service.Services.Property;
+using verint_service.Utils.Extensions;
+using verint_service.Utils.Mappers;
 using VerintWebService;
 
 namespace verint_service.Services
@@ -28,7 +28,6 @@ namespace verint_service.Services
             _individualWeightings = individualWeightings;
             _propertyService = propertyService;
             _logger = logger;
-
         }
 
         public async Task<FWTObjectID> ResolveIndividual(Customer customer)
@@ -45,12 +44,9 @@ namespace verint_service.Services
         private async Task<FWTObjectID> CreateIndividual(Customer customer)
         {
             // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
-
             if (customer.Address != null)
             {
-                _logger.LogWarning($"Pre-check UPRN: {customer.Address.UPRN}");
                 customer.Address.UPRN = await CheckUPRNForId(customer);
-                _logger.LogWarning($"Post-check UPRN: {customer.Address.UPRN}");
             }
 
             var fwtIndividual = customer.Map();
@@ -195,16 +191,13 @@ namespace verint_service.Services
             // If it's a real ID it shouldn't return a property!
             if(!string.IsNullOrEmpty(customer.Address.UPRN))
             {
-                _logger.LogWarning($"Customer has uprn {customer.Address.UPRN}");
                 var propertyResult = await _propertyService.GetPropertyAsync(customer.Address.UPRN);
                 if(propertyResult != null)
                 {
-                    _logger.LogWarning($"Returning propertyResult.UPRN: {propertyResult.UPRN}, {propertyResult.Description}");
                     return propertyResult.UPRN;
                 }
             }
 
-            _logger.LogWarning($"Return original uprn {customer.Address.UPRN}");            
             return customer.Address.UPRN;
         }
     }

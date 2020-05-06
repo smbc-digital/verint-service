@@ -1,6 +1,7 @@
 ﻿using StockportGovUK.NetStandard.Models.Verint;
 using verint_service;
 using verint_service.Helpers;
+using verint_service.Utils.Consts;
 using Xunit;
 
 namespace verint_service_tests.ModelBinders
@@ -26,7 +27,7 @@ namespace verint_service_tests.ModelBinders
             var result = helper.Resolve(testCase); 
 
             // Assert
-            Assert.Equal(result.ObjectID.ObjectType, Common.StreetObjectType);
+            Assert.Equal(result.ObjectID.ObjectType, VerintConstants.StreetObjectType);
             Assert.Equal("38102548", result.ObjectID.ObjectReference[0]);
         }
 
@@ -52,7 +53,7 @@ namespace verint_service_tests.ModelBinders
             var result = helper.Resolve(testCase); 
 
             // Assert
-            Assert.Equal(result.ObjectID.ObjectType, Common.PropertyObjectType);
+            Assert.Equal(result.ObjectID.ObjectType, VerintConstants.PropertyObjectType);
             Assert.Equal("1010035673111", result.ObjectID.ObjectReference[0]);
         }
         
@@ -75,7 +76,7 @@ namespace verint_service_tests.ModelBinders
             var result = helper.Resolve(testCase); 
 
             // Assert
-            Assert.Equal(result.ObjectID.ObjectType, Common.OrganisationObjectType);
+            Assert.Equal(result.ObjectID.ObjectType, VerintConstants.OrganisationObjectType);
             Assert.Equal("101002073523", result.ObjectID.ObjectReference[0]);
         }
 
@@ -99,7 +100,7 @@ namespace verint_service_tests.ModelBinders
             var result = helper.Resolve(testCase); 
 
             // Assert
-            Assert.Equal(result.ObjectID.ObjectType, Common.IndividualObjectType);
+            Assert.Equal(result.ObjectID.ObjectType, VerintConstants.IndividualObjectType);
             Assert.Equal("101003278921", result.ObjectID.ObjectReference[0]);
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,14 +7,9 @@ using Microsoft.Extensions.Hosting;
 using StockportGovUK.AspNetCore.Availability;
 using StockportGovUK.AspNetCore.Availability.Middleware;
 using StockportGovUK.AspNetCore.Middleware;
-using System.Diagnostics.CodeAnalysis;
-using verint_service.Builders;
-using verint_service.Config;
-using verint_service.HttpClients;
-using verint_service.Mappers;
-using verint_service.Models.Config;
+using StockportGovUK.NetStandard.Gateways;
+using verint_service.Utils.Extensions;
 using verint_service.Utils.HealthChecks;
-using verint_service.Utils.ServiceCollectionExtensions;
 
 namespace verint_service
 {
@@ -30,19 +26,13 @@ namespace verint_service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.Configure<VerintConnectionConfiguration>(Configuration.GetSection("VerintConnectionConfiguration"));
-            services.Configure<EventTypeConfiguration>(Configuration.GetSection("EventTypeConfiguration"));
-
-            services.AddTransient<ICaseFormBuilder, CaseFormBuilder>();
-            services.AddTransient<IHttpClientWrapper, HttpClientWrapper>();
-            services.AddSingleton<CaseToFWTCaseCreateMapper>();
-            services.AddSingleton<ICaseFormBuilder, CaseFormBuilder>();
-            services.AddSwagger();
-            services.AddHttpClient();
+            services.AddResilientHttpClients<IGateway, Gateway>(Configuration);
             services.AddAvailability();
+            services.AddSwagger();
             services.AddHealthChecks()
-                  .AddCheck<TestHealthCheck>("TestHealthCheck");
+                    .AddCheck<TestHealthCheck>("TestHealthCheck");
 
+            services.RegisterConfiguration(Configuration);
             services.RegisterHelpers();
             services.RegisterServices();
             services.RegisterUtils();
@@ -61,6 +51,7 @@ namespace verint_service
 
             app.UseMiddleware<Availability>();
             app.UseMiddleware<ApiExceptionHandling>();
+
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseEndpoints(endpoints => endpoints.MapControllers());

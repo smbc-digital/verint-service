@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using StockportGovUK.NetStandard.Models.Verint;
+using verint_service.Utils.Consts;
 using VerintWebService;
 
-namespace verint_service.Extensions
+namespace verint_service.Utils.Extensions
 {
     public static class VerintObjectExtensions
     {
@@ -112,7 +113,7 @@ namespace verint_service.Extensions
                 newContactPostal.Preferred = true;
                 if (!string.IsNullOrEmpty(customer.Address.UPRN))
                 {
-                    newContactPostal.Option = new [] { Common.UseUprnForAddress,  Common.IgnoreInvalidUprn };
+                    newContactPostal.Option = new [] { VerintConstants.UseUprnForAddress,  VerintConstants.IgnoreInvalidUprn };
                     newContactPostal.UPRN = customer.Address.UPRN.Trim();
                 }
                 else
