@@ -133,7 +133,12 @@ namespace verint_service.Utils.Extensions
 
                 if (preferredContact != null)
                 {
-                    if (string.IsNullOrEmpty(preferredContact.UPRN) || customer.Address.UPRN.Trim() != preferredContact.UPRN.Trim())
+                    if(string.IsNullOrEmpty(preferredContact.UPRN))
+                    {
+                        return false;
+                    }
+
+                    if ( customer.Address.UPRN.Trim() != preferredContact.UPRN.Trim())
                     {
                         var contactPostal = individual.ContactPostals.FirstOrDefault(_ => _.UPRN.Trim() == customer.Address.UPRN.Trim());
                         if(contactPostal != null)
