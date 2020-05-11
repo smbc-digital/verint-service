@@ -130,17 +130,21 @@ namespace verint_service.Utils.Extensions
             else if (!string.IsNullOrWhiteSpace(customer.Address.UPRN) && individual.ContactPostals != null)
             {
                 var preferredContact = individual.ContactPostals.FirstOrDefault(x => x.Preferred);
-                
-                if (preferredContact != null && customer.Address.UPRN.Trim() != preferredContact.UPRN.Trim())
+
+                if (preferredContact != null)
                 {
-                    var contactPostal = individual.ContactPostals.FirstOrDefault(_ => _.UPRN.Trim() == customer.Address.UPRN.Trim());
-                    if(contactPostal != null)
+                    if (string.IsNullOrEmpty(preferredContact.UPRN) || customer.Address.UPRN.Trim() != preferredContact.UPRN.Trim())
                     {
-                        contactPostal.Preferred = true;
-                        update.ContactPostals = new[] { new FWTContactPostalUpdate { PostalDetails = contactPostal, ListItemUpdateType = "Update" }};
-                        return true;
+                        var contactPostal = individual.ContactPostals.FirstOrDefault(_ => _.UPRN.Trim() == customer.Address.UPRN.Trim());
+                        if(contactPostal != null)
+                        {
+                            contactPostal.Preferred = true;
+                            update.ContactPostals = new[] { new FWTContactPostalUpdate { PostalDetails = contactPostal, ListItemUpdateType = "Update" }};
+                            return true;
+                        }
                     }
                 }
+                
             }
 
             return false;
