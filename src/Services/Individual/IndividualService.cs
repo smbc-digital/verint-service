@@ -8,6 +8,7 @@ using verint_service.Services.Property;
 using verint_service.Utils.Extensions;
 using verint_service.Utils.Mappers;
 using VerintWebService;
+using System;
 
 namespace verint_service.Services
 {
@@ -191,13 +192,23 @@ namespace verint_service.Services
             // If it's a real ID it shouldn't return a property!
             if(!string.IsNullOrEmpty(customer.Address.UPRN))
             {
-                var propertyResult = await _propertyService.GetPropertyAsync(customer.Address.UPRN);
-                if(propertyResult != null)
+                _logger.LogWarning($"IndividualService.CheckUPRNForId - Customer has uprn {customer.Address.UPRN}");
+
+                try{
+                    var propertyResult = await _propertyService.GetPropertyAsync(customer.Address.UPRN);
+                    if(propertyResult != null)
+                    {
+                        _logger.LogWarning($"IndividualService.CheckUPRNForId - Returning propertyResult.UPRN: {propertyResult.UPRN}, {propertyResult.Description}");
+                        return propertyResult.UPRN;
+                    }
+                }
+                catch(Exception ex)
                 {
-                    return propertyResult.UPRN;
+                    _logger.LogError($"IndividualService.CheckUPRNForId - Exception occured searching for property, assume UPRN {customer.Address.UPRN}", ex);            
                 }
             }
 
+            _logger.LogWarning($"IndividualService.CheckUPRNForId - Return original uprn {customer.Address.UPRN}");            
             return customer.Address.UPRN;
         }
     }
