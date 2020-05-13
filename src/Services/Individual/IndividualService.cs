@@ -159,10 +159,12 @@ namespace verint_service.Services
 
             if (bestMatch != null && bestMatchScore >= 5)
             {
+                _logger.LogInformation($"IndividualService.GetBestMatchingIndividual Match Found - Customer: {customer.Surname} Score: {bestMatchScore}");
                 await UpdateIndividual(bestMatch, customer);
                 return bestMatch.BriefDetails.ObjectID;
             }
             
+            _logger.LogInformation($"IndividualService.GetBestMatchingIndividual Match Not Found - Customer: {customer.Surname} Score: {bestMatchScore}");
             return null;
         }
 
