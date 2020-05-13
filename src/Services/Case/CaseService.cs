@@ -82,7 +82,7 @@ namespace verint_service.Services.Case
         public async Task<string> CreateCase(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
             // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
-            if (crmCase.Customer.Address != null)
+            if (crmCase.Customer != null && crmCase.Customer.Address != null)
             {
                 crmCase.Customer.Address.UPRN = await _individualService.CheckUPRNForId(crmCase.Customer);
             }
