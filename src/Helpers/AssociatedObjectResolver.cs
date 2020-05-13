@@ -53,7 +53,7 @@ namespace verint_service.Helpers
                     {
                         associatedObject.ObjectType = VerintConstants.IndividualObjectType;
                         associatedObject.ObjectReference = new[] { crmCase.Customer.CustomerReference };
-                        associatedObjectBriefDetails.Details = crmCase.Customer.FullName;   
+                        associatedObjectBriefDetails.Details = crmCase.Customer.FullName;
                         associatedObjectBriefDetails.ObjectID = associatedObject;
                         return associatedObjectBriefDetails;
                     }

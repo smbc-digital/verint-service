@@ -8,7 +8,6 @@ using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Utils.Consts;
 using verint_service.Utils.Mappers;
 
-
 namespace verint_service.Services.Case
 {
     public class CaseService : ICaseService
@@ -75,7 +74,6 @@ namespace verint_service.Services.Case
 
             return caseDetails;
         }
-
 
         public async Task<string> CreateCase(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {

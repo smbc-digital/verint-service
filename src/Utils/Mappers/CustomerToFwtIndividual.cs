@@ -11,10 +11,10 @@ namespace verint_service.Utils.Mappers
         {
             var contactName = new FWTIndividualName
             {
-                Title = customer.Title,
-                Forename = new[] { customer.Forename },
-                Initials = customer.Initials,
-                Surname = customer.Surname,
+                Title = customer.Title.Trim(),
+                Forename = new[] { customer.Forename.Trim() },
+                Initials = customer.Initials.Trim(),
+                Surname = customer.Surname.Trim(),
                 Preferred = true
             };
 

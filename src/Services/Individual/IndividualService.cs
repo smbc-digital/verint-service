@@ -39,7 +39,7 @@ namespace verint_service.Services
                 _logger.LogInformation($"IndividualService.ResolveIndividual: No match - Creating new inidividual - Customer {customer.Surname}");
                 return await CreateIndividual(customer);
             }
-
+ 
             return individual;
         }
 
@@ -92,8 +92,8 @@ namespace verint_service.Services
         private FWTPartySearch GetBaseSearchCriteria(Customer customer)
         {
             return new FWTPartySearch(){
-                Forename = customer.Forename,
-                Name = customer.Surname
+                Forename = customer.Forename.Trim(),
+                Name = customer.Surname.Trim()
             };
         }
 
