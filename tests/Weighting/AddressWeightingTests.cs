@@ -33,7 +33,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_0_If_ContactPostals_IsNull()
         {
             // Arrange 
-            var weighting = new AddressWeighting();
+            var weighting = new AddressWeighting(_mockLogger.Object);
             var individual = new FWTIndividual();
 
             // Act
@@ -52,7 +52,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_0_If_UprnIsNotNull()
         {
             // Arrange 
-            var weighting = new AddressWeighting();
+            var weighting = new AddressWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 ContactPostals = new FWTContactPostal[0]
@@ -76,7 +76,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_2_If_PostcodeAndNumberMatch()
         {
             // Arrange 
-            var weighting = new AddressWeighting();
+            var weighting = new AddressWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 ContactPostals = new FWTContactPostal[]
@@ -108,7 +108,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_1_If_AddressLine1Match()
         {
             // Arrange 
-            var weighting = new AddressWeighting();
+            var weighting = new AddressWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 ContactPostals = new FWTContactPostal[]
@@ -139,7 +139,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_1_If_AddressLine2Match()
         {
             // Arrange 
-            var weighting = new AddressWeighting();
+            var weighting = new AddressWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 ContactPostals = new FWTContactPostal[]
@@ -171,7 +171,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_1_If_AddressLine3Match()
         {
             // Arrange 
-            var weighting = new AddressWeighting();
+            var weighting = new AddressWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 ContactPostals = new FWTContactPostal[]
@@ -204,7 +204,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_1_If_CityMatch()
         {
             // Arrange 
-            var weighting = new AddressWeighting();
+            var weighting = new AddressWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 ContactPostals = new FWTContactPostal[]
@@ -233,7 +233,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_Max2_If_FullAddressMatch()
         {
             // Arrange 
-            var weighting = new AddressWeighting();
+            var weighting = new AddressWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 ContactPostals = new FWTContactPostal[]

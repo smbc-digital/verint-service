@@ -35,7 +35,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_1_If_Forename_Matches()
         {
             // Arrange 
-            var weighting = new NameWeighting();
+            var weighting = new NameWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 Name = new FWTIndividualName []
@@ -63,7 +63,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_Minus10_If_Forename_DoesNotMatch()
         {
             // Arrange 
-            var weighting = new NameWeighting();
+            var weighting = new NameWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 Name = new FWTIndividualName []
@@ -91,7 +91,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_1_If_Surname_Matches()
         {
             // Arrange 
-            var weighting = new NameWeighting();
+            var weighting = new NameWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 Name = new FWTIndividualName []
@@ -119,7 +119,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_Minus10_If_Surname_Does_Not_Match()
         {
             // Arrange 
-            var weighting = new NameWeighting();
+            var weighting = new NameWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 Name = new FWTIndividualName []
@@ -147,7 +147,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_1_If_Title_Matches()
         {
             // Arrange 
-            var weighting = new NameWeighting();
+            var weighting = new NameWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 Name = new FWTIndividualName []
@@ -175,7 +175,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_1_If_Initials_Matches()
         {
             // Arrange 
-            var weighting = new NameWeighting();
+            var weighting = new NameWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 Name = new FWTIndividualName []
@@ -203,7 +203,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_Maximum_Of_2_If_All_Matches()
         {
             // Arrange 
-            var weighting = new NameWeighting();
+            var weighting = new NameWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 Name = new FWTIndividualName []
@@ -237,7 +237,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_Minus20_If_No_Matches()
         {
             // Arrange 
-            var weighting = new NameWeighting();
+            var weighting = new NameWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 Name = new FWTIndividualName []

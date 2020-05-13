@@ -38,7 +38,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_0_If_IndividualContactEmails_IsNull()
         {
             // Arrange 
-            var weighting = new EmailWeighting();
+            var weighting = new EmailWeighting(_mockLogger.Object);
 
             // Act
             var customer = new Customer()
@@ -58,7 +58,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_0_If_IndividualContactEmails_IsEmpty()
         {
             // Arrange 
-            var weighting = new EmailWeighting();
+            var weighting = new EmailWeighting(_mockLogger.Object);
 
             // Act
             var customer = new Customer()
@@ -81,7 +81,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_2_If_IndividualContactEmails_IsThereIsAMatchingEmail()
         {
             // Arrange 
-            var weighting = new EmailWeighting();
+            var weighting = new EmailWeighting(_mockLogger.Object);
 
             // Act
             var customer = new Customer()

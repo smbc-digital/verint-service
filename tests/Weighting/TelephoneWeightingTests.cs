@@ -39,7 +39,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_0_If_IndividualPhones_IsNull()
         {
             // Arrange 
-            var weighting = new TelephoneWeighting();
+            var weighting = new TelephoneWeighting(_mockLogger.Object);
 
             // Act
             var customer = new Customer()
@@ -59,7 +59,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_0_If_IndividualContactPhone_IsEmpty()
         {
             // Arrange 
-            var weighting = new TelephoneWeighting();
+            var weighting = new TelephoneWeighting(_mockLogger.Object);
 
             // Act
             var customer = new Customer()
@@ -82,7 +82,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_1_If_IndividualContactPhones_ThereIsAMatchingPhones()
         {
             // Arrange 
-            var weighting = new TelephoneWeighting();
+            var weighting = new TelephoneWeighting(_mockLogger.Object);
 
             // Act
             var customer = new Customer()

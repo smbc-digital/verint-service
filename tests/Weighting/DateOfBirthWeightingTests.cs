@@ -33,7 +33,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_0_If_IndividualDateOfBirth_IsNotSpecified()
         {
             // Arrange 
-            var weighting = new DateOfBirthWeighting();
+            var weighting = new DateOfBirthWeighting(_mockLogger.Object);
 
             // Act
             var customer = new Customer()
@@ -56,7 +56,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_2_If_DateOfBirth_IsTheSame()
         {
             // Arrange 
-            var weighting = new DateOfBirthWeighting();
+            var weighting = new DateOfBirthWeighting(_mockLogger.Object);
             var customer = new Customer()
             {
                 DateOfBirth = new System.DateTime(2001, 1, 1)
@@ -78,7 +78,7 @@ namespace verint_service_tests.Weighting
         public void Calculate_Should_Return_Neg10_If_DateOfBirth_IsNotTheSame()
         {
             // Arrange 
-            var weighting = new DateOfBirthWeighting();
+            var weighting = new DateOfBirthWeighting(_mockLogger.Object);
             var customer = new Customer()
             {
                 DateOfBirth = new System.DateTime(2000, 1, 1)
