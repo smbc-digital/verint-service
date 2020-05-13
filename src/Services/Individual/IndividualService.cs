@@ -99,6 +99,7 @@ namespace verint_service.Services
 
         private async Task<FWTObjectID> SearchIndividuals(FWTPartySearch searchCriteria, Customer customer)
         {
+            _logger.LogInformation($"IndividualService.SearchIndividuals: Customer - {customer.Surname}");
             searchCriteria.SearchType = "individual";
             var matchingIndividuals = await _verintConnection.searchForPartyAsync(searchCriteria); 
 
@@ -107,6 +108,7 @@ namespace verint_service.Services
                 return await GetBestMatchingIndividual(matchingIndividuals.FWTObjectBriefDetailsList, customer);
             }
 
+            _logger.LogInformation($"IndividualService.SearchIndividuals: No Results");
             return null;
         }
 
@@ -114,11 +116,13 @@ namespace verint_service.Services
         {
             if (!string.IsNullOrWhiteSpace(customer.Email))
             {
+                _logger.LogInformation($"IndividualService.SearchByEmail: Searching by Email - {customer.Email}");
                 var searchCriteria = GetBaseSearchCriteria(customer);
                 searchCriteria.EmailAddress = customer.Email;
                 return await SearchIndividuals(searchCriteria, customer);
             }
-
+            
+            _logger.LogInformation($"IndividualService.SearchByEmail: Searching by Email, Email null");
             return null;
         }
 
@@ -126,11 +130,13 @@ namespace verint_service.Services
         {
             if (!string.IsNullOrWhiteSpace(customer.Telephone))
             {
+                _logger.LogInformation($"IndividualService.SearchByEmail: Searching by Telephone - {customer.Telephone}");
                 var searchCriteria = GetBaseSearchCriteria(customer);
                 searchCriteria.PhoneNumber = customer.Telephone;
                 return await SearchIndividuals(searchCriteria, customer);
             }
 
+            _logger.LogInformation($"IndividualService.SearchByEmail: Searching by Telephone, Telephone null");
             return null;
         }
 
@@ -138,12 +144,14 @@ namespace verint_service.Services
         {
             if (customer.Address != null && !string.IsNullOrWhiteSpace(customer.Address.Postcode))
             {
+                _logger.LogInformation($"IndividualService.SearchByEmail: Searching by Address - {customer.Address.Postcode}");
                 var searchCriteria = GetBaseSearchCriteria(customer);
                 searchCriteria.EmailAddress = null;
                 searchCriteria.Postcode = customer.Address.Postcode;
                 return await SearchIndividuals(searchCriteria, customer);
             }
 
+            _logger.LogInformation($"IndividualService.SearchByEmail: Searching by Address, Address null");
             return null;
         }
 
