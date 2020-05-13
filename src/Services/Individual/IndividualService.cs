@@ -84,6 +84,14 @@ namespace verint_service.Services
                 return individual;
             }
             
+            _logger.LogInformation($"IndividualService.FindIndividual: Searching by Name - Customer {customer.Surname}");
+            individual = await SearchByName(customer);
+            if (individual != null)
+            {
+                _logger.LogInformation($"IndividualService.FindIndividual: Searching by Name - Result found for Customer {customer.Surname}");
+                return individual;
+            }
+
             _logger.LogInformation($"IndividualService.FindIndividual: No Result found for Customer {customer.Surname}");
             return null;
         }
@@ -141,17 +149,24 @@ namespace verint_service.Services
 
         private async Task<FWTObjectID> SearchByAddress(Customer customer)
         {
-            if (customer.Address != null && !string.IsNullOrWhiteSpace(customer.Address.Postcode))
+            if (customer.Address != null && !string.IsNullOrWhiteSpace(customer.Address.Postcode)  && !string.IsNullOrWhiteSpace(customer.Address.Number))
             {
-                _logger.LogInformation($"IndividualService.SearchByEmail: Searching by Address - {customer.Address.Postcode}");
+                _logger.LogInformation($"IndividualService.SearchByAddress: Searching by Address - {customer.Address.Postcode}");
                 var searchCriteria = GetBaseSearchCriteria(customer);
-                searchCriteria.EmailAddress = null;
+                searchCriteria.AddressNumber = customer.Address.Number.Trim();
                 searchCriteria.Postcode = customer.Address.Postcode.Trim();
+
                 return await SearchIndividuals(searchCriteria, customer);
             }
 
-            _logger.LogInformation($"IndividualService.SearchByEmail: Searching by Address, Address null");
+            _logger.LogInformation($"IndividualService.SearchByAddress: Searching by Address, Address null");
             return null;
+        }
+
+        private async Task<FWTObjectID> SearchByName(Customer customer)
+        {
+            _logger.LogInformation($"IndividualService.SearchByName: Searching by Name - {customer.Forename} {customer.Surname}");
+            return await SearchIndividuals(GetBaseSearchCriteria(customer), customer);
         }
 
         private async Task<FWTObjectID> GetBestMatchingIndividual(FWTObjectBriefDetails[] individualResults, Customer customer)
