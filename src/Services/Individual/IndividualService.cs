@@ -117,7 +117,7 @@ namespace verint_service.Services
             {
                 _logger.LogInformation($"IndividualService.SearchByEmail: Searching by Email - {customer.Email}");
                 var searchCriteria = GetBaseSearchCriteria(customer);
-                searchCriteria.EmailAddress = customer.Email;
+                searchCriteria.EmailAddress = customer.Email.Trim();
                 return await SearchIndividuals(searchCriteria, customer);
             }
             
@@ -131,7 +131,7 @@ namespace verint_service.Services
             {
                 _logger.LogInformation($"IndividualService.SearchByEmail: Searching by Telephone - {customer.Telephone}");
                 var searchCriteria = GetBaseSearchCriteria(customer);
-                searchCriteria.PhoneNumber = customer.Telephone;
+                searchCriteria.PhoneNumber = customer.Telephone.Trim();
                 return await SearchIndividuals(searchCriteria, customer);
             }
 
@@ -146,7 +146,7 @@ namespace verint_service.Services
                 _logger.LogInformation($"IndividualService.SearchByEmail: Searching by Address - {customer.Address.Postcode}");
                 var searchCriteria = GetBaseSearchCriteria(customer);
                 searchCriteria.EmailAddress = null;
-                searchCriteria.Postcode = customer.Address.Postcode;
+                searchCriteria.Postcode = customer.Address.Postcode.Trim();
                 return await SearchIndividuals(searchCriteria, customer);
             }
 

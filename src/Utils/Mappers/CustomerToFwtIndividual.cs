@@ -33,7 +33,7 @@ namespace verint_service.Utils.Mappers
                     AddressNumber = customer.Address.Number,
                     AddressLine = new[] { customer.Address.AddressLine1, customer.Address.AddressLine2, customer.Address.AddressLine3, customer.Address.City },
                     City = customer.Address.City,
-                    Postcode = customer.Address.Postcode,
+                    Postcode = customer.Address.Postcode?.Trim(),
                     Preferred = true,
                 };
 
@@ -49,7 +49,7 @@ namespace verint_service.Utils.Mappers
             // Setup the telephone contact information.
             var contactPhones = new FWTContactPhone
             {
-                Number = customer.Telephone,
+                Number = customer.Telephone?.Trim(),
                 Preferred = true
             };
 
@@ -58,7 +58,7 @@ namespace verint_service.Utils.Mappers
             // Setup email address information.
             var contactEmails = new FWTContactEmail
             {
-                EmailAddress = customer.Email,
+                EmailAddress = customer.Email?.Trim(),
                 Preferred = true
             };
 
