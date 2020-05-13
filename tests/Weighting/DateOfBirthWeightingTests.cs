@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+using Moq;
 using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 using Xunit;
@@ -6,11 +8,13 @@ namespace verint_service_tests.Weighting
 {
     public class DateOfBirthWeightingTests
     {
+        private readonly Mock<ILogger<DateOfBirthWeighting>> _mockLogger = new Mock<ILogger<DateOfBirthWeighting>>();
+
         [Fact]
         public void Calculate_Should_Return_0_If_CustomeDateOfBirth_NotProvided()
         {
             // Arrange 
-            var weighting = new DateOfBirthWeighting();
+            var weighting = new DateOfBirthWeighting(_mockLogger.Object);
             var individual = new FWTIndividual
             {
                 DateOfBirthSpecified = true,

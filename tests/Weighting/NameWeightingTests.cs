@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+using Moq;
 using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 using Xunit;
@@ -6,11 +8,14 @@ namespace verint_service_tests.Weighting
 {
     public class NameWeightingTests
     {
+        private readonly Mock<ILogger<NameWeighting>> _mockLogger = new Mock<ILogger<NameWeighting>>();
+
+
         [Fact]
         public void Calculate_Should_Return_0_If_IndividualName_IsNull()
         {
             // Arrange 
-            var weighting = new NameWeighting();
+            var weighting = new NameWeighting(_mockLogger.Object);
             var individual = new FWTIndividual();
 
             // Act

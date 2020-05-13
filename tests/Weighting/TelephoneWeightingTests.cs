@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+using Moq;
 using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 using Xunit;
@@ -6,11 +8,14 @@ namespace verint_service_tests.Weighting
 {
     public class TelephoneWeightingTests
     {
+        private readonly Mock<ILogger<TelephoneWeighting>> _mockLogger = new Mock<ILogger<TelephoneWeighting>>();
+
+
         [Fact]
         public void Calculate_Should_Return_0_If_CustomerTelephone_IsNull()
         {
             // Arrange 
-            var weighting = new TelephoneWeighting();
+            var weighting = new TelephoneWeighting(_mockLogger.Object);
             var individual = new FWTIndividual
             {
                 ContactPhones = new FWTContactPhone[]

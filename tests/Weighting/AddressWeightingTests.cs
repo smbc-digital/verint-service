@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+using Moq;
 using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 using Xunit;
@@ -6,11 +8,13 @@ namespace verint_service_tests.Weighting
 {
     public class AddressWeightingTests
     {
+        private readonly Mock<ILogger<AddressWeighting>> _mockLogger = new Mock<ILogger<AddressWeighting>>();
+
         [Fact]
         public void Calculate_Should_Return_0_If_CustomerAddress_IsNull()
         {
             // Arrange 
-            var weighting = new AddressWeighting();
+            var weighting = new AddressWeighting(_mockLogger.Object);
             var individual = new FWTIndividual()
             {
                 ContactPostals = new FWTContactPostal [0]
@@ -100,7 +104,7 @@ namespace verint_service_tests.Weighting
             Assert.Equal(2, result);
         }
 
-                [Fact]
+        [Fact]
         public void Calculate_Should_Return_1_If_AddressLine1Match()
         {
             // Arrange 

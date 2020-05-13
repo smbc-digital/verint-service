@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+using Moq;
 using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 using Xunit;
@@ -6,11 +8,13 @@ namespace verint_service_tests.Weighting
 {
     public class EmailWeightingTests
     {
+        private readonly Mock<ILogger<EmailWeighting>> _mockLogger = new Mock<ILogger<EmailWeighting>>();
+
         [Fact]
         public void Calculate_Should_Return_0_If_CustomerEmail_IsNull()
         {
             // Arrange 
-            var weighting = new EmailWeighting();
+            var weighting = new EmailWeighting(_mockLogger.Object);
             var individual = new FWTIndividual
             {
                 ContactEmails = new FWTContactEmail[]

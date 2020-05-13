@@ -18,7 +18,7 @@ public class EmailWeighting : IIndividualWeighting
             individual.ContactEmails.Length == 0 || 
             string.IsNullOrEmpty(customer.Email))
         {
-            _logger.LogInformation($"EmailWeighting.Calculate, No Match, Score 0, Customer: {customer.Surname}");
+            _logger.LogInformation($"EmailWeighting.Calculate, Null, Score 0, Customer: {customer.Surname}");
             return 0;
         } 
         
@@ -28,6 +28,7 @@ public class EmailWeighting : IIndividualWeighting
             return 2;
         } 
 
+        _logger.LogInformation($"EmailWeighting.Calculate, No Match, Score 2, Customer: {customer.Surname}");
         return 0;
     }
 }
