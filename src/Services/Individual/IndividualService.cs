@@ -33,6 +33,12 @@ namespace verint_service.Services
 
         public async Task<FWTObjectID> ResolveIndividual(Customer customer)
         {
+            // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
+            if (customer.Address != null)
+            {
+                customer.Address.UPRN = await CheckUPRNForId(customer);
+            }
+
             FWTObjectID individual = await FindIndividual(customer);
             if(individual == null)
             {
@@ -46,13 +52,6 @@ namespace verint_service.Services
         private async Task<FWTObjectID> CreateIndividual(Customer customer)
         {
             _logger.LogInformation($"IndividualService.CreateIndividual -  Customer {customer.Surname}");
-
-            // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
-            if (customer.Address != null)
-            {
-                customer.Address.UPRN = await CheckUPRNForId(customer);
-            }
-
             var fwtIndividual = customer.Map();
 
             var createIndividualResult = await _verintConnection.createIndividualAsync(fwtIndividual);
@@ -198,9 +197,6 @@ namespace verint_service.Services
             var update = new FWTIndividualUpdate(){
                 BriefDetails = individual.BriefDetails
             };
-            
-            // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
-            customer.Address.UPRN = await CheckUPRNForId(customer);
 
             var requiresUpdate = update.AddAnyRequiredUpdates(individual, customer);
 

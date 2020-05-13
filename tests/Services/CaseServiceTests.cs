@@ -22,9 +22,9 @@ namespace verint_service_tests.Services
         private readonly Mock<IVerintConnection> _mockConnection = new Mock<IVerintConnection>();
         private readonly Mock<ILogger<CaseService>> _mockLogger = new Mock<ILogger<CaseService>>();
         private readonly Mock<IInteractionService> _mockInteractionService = new Mock<IInteractionService>();
+        private readonly Mock<IIndividualService> _mockIndividualService = new Mock<IIndividualService>();
         private readonly Mock<IAssociatedObjectResolver> _mockAssociatedObjectHelper = new Mock<IAssociatedObjectResolver>();
         private readonly CaseService _caseService;
-
 
         public CaseServiceTests()
         {
@@ -36,11 +36,15 @@ namespace verint_service_tests.Services
                 .Setup(_ => _.CreateInteraction(It.IsAny<Case>()))
                 .ReturnsAsync(987654321);
 
+            _mockIndividualService
+                .Setup(_ => _.CheckUPRNForId(It.IsAny<Customer>()))
+                .ReturnsAsync("101002265507");
+
             _mockAssociatedObjectHelper
                 .Setup(helper => helper.Resolve(It.IsAny<Case>()))
                 .Returns(It.IsAny<FWTObjectBriefDetails>());
 
-            _caseService = new CaseService(_mockConnection.Object, _mockLogger.Object, _mockInteractionService.Object, new CaseToFWTCaseCreateMapper(new CaseFormBuilder(), _mockAssociatedObjectHelper.Object));
+            _caseService = new CaseService(_mockConnection.Object, _mockLogger.Object, _mockInteractionService.Object, new CaseToFWTCaseCreateMapper(new CaseFormBuilder(), _mockAssociatedObjectHelper.Object), _mockIndividualService.Object);
         }
 
         [Theory]
