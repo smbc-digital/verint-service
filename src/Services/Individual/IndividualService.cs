@@ -206,7 +206,7 @@ namespace verint_service.Services
             } 
         }
 
-        private async Task<string> CheckUPRNForId(Customer customer)
+        public async Task<string> CheckUPRNForId(Customer customer)
         {
             // HACK: Check whether UPRN provided is actually an ID and if so lookup the real UPRN
             // If it's a real ID it shouldn't return a property!
