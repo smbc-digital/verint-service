@@ -44,7 +44,7 @@ Service to interact with our Case Management System
 - [Server Integration](#server_integration)
 
 ## Requirments
-- dotnet core 2.2
+- dotnet core 3.1
 - editor of your choice
 - gpg key added to accepted contributors
 
