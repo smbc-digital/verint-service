@@ -19,6 +19,9 @@ namespace verint_service_tests.Services
         private readonly Mock<IVerintClient> _mockClient = new Mock<IVerintClient>();
         private readonly Mock<ILogger<IndividualService>> _mockLogger = new Mock<ILogger<IndividualService>>();
 
+        private readonly Mock<ILogger<InteractionService>> _mockInteractionLogger = new Mock<ILogger<InteractionService>>();
+
+
         private readonly Mock<IPropertyService> _mockPropertyService = new Mock<IPropertyService>();
 
         private readonly InteractionService _service;
@@ -29,7 +32,7 @@ namespace verint_service_tests.Services
                 .Setup(_ => _.Client())
                 .Returns(_mockClient.Object);
                 
-            _service = new InteractionService(_mockConnection.Object, new IndividualService(_mockConnection.Object, new List<IIndividualWeighting>(), _mockPropertyService.Object, _mockLogger.Object ));
+            _service = new InteractionService(_mockConnection.Object, new IndividualService(_mockConnection.Object, new List<IIndividualWeighting>(), _mockPropertyService.Object, _mockLogger.Object), _mockInteractionLogger.Object);
         }
 
         [Fact]
