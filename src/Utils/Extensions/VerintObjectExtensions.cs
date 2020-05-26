@@ -140,7 +140,7 @@ namespace verint_service.Utils.Extensions
 
                     if ( customer.Address.UPRN.Trim() != preferredContact.UPRN.Trim())
                     {
-                        var contactPostal = individual.ContactPostals.FirstOrDefault(_ => _.UPRN.Trim() == customer.Address.UPRN.Trim());
+                        var contactPostal = individual.ContactPostals.Where(_ => _.UPRN != null).FirstOrDefault(_ => _.UPRN.Trim() == customer.Address.UPRN.Trim());
                         if(contactPostal != null)
                         {
                             contactPostal.Preferred = true;
