@@ -9,6 +9,7 @@ using verint_service.Utils.Extensions;
 using verint_service.Utils.Mappers;
 using VerintWebService;
 using System;
+using System.Diagnostics;
 
 namespace verint_service.Services
 {
@@ -51,49 +52,60 @@ namespace verint_service.Services
 
         private async Task<FWTObjectID> CreateIndividual(Customer customer)
         {
-            _logger.LogInformation($"IndividualService.CreateIndividual -  Customer {customer.Surname}");
-            var fwtIndividual = customer.Map();
 
+            var stopwatch = Stopwatch.StartNew();
+            _logger.LogInformation($"IndividualService.CreateIndividual -  Customer {customer.Surname}");
+            // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
+            if (customer.Address != null)
+            {
+                customer.Address.UPRN = await CheckUPRNForId(customer);
+            }
+
+            var fwtIndividual = customer.Map();
             var createIndividualResult = await _verintConnection.createIndividualAsync(fwtIndividual);
+            stopwatch.Stop();
+            _logger.LogDebug($"InteractionService: CreateIndividual - Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
+
             return createIndividualResult.FLNewIndividualID;
         }
         
         private async Task<FWTObjectID> FindIndividual(Customer customer)
         {
+            var stopwatch = Stopwatch.StartNew();
+
             _logger.LogInformation($"IndividualService.FindIndividual: Searching by Email - Customer {customer.Surname}");
             FWTObjectID individual = await SearchByEmail(customer);
-            if (individual != null)
+            
+            if (individual == null)
             {
-                _logger.LogInformation($"IndividualService.FindIndividual: Searching by Email - Result found for Customer {customer.Surname}");
-                return individual;
+                _logger.LogInformation($"IndividualService.FindIndividual: Searching by Telephone - Customer {customer.Surname}");
+                individual = await SearchByTelephone(customer);
+            }            
+            
+            if (individual == null)
+            {
+                _logger.LogInformation($"IndividualService.FindIndividual: Searching by Address - Customer {customer.Surname}");
+                individual = await SearchByAddress(customer);
             }
 
-            _logger.LogInformation($"IndividualService.FindIndividual: Searching by Telephone - Customer {customer.Surname}");
-            individual = await SearchByTelephone(customer);
-            if (individual != null)
+            if (individual == null)
             {
-                _logger.LogInformation($"IndividualService.FindIndividual: Searching by Telephone - Result found for Customer {customer.Surname}");
-                return individual;
-            }
-            
-            _logger.LogInformation($"IndividualService.FindIndividual: Searching by Address - Customer {customer.Surname}");
-            individual = await SearchByAddress(customer);
-            if (individual != null)
-            {
-                _logger.LogInformation($"IndividualService.FindIndividual: Searching by Address - Result found for Customer {customer.Surname}");
-                return individual;
-            }
-            
-            _logger.LogInformation($"IndividualService.FindIndividual: Searching by Name - Customer {customer.Surname}");
-            individual = await SearchByName(customer);
-            if (individual != null)
-            {
-                _logger.LogInformation($"IndividualService.FindIndividual: Searching by Name - Result found for Customer {customer.Surname}");
-                return individual;
+                _logger.LogInformation($"IndividualService.FindIndividual: Searching by Name - Customer {customer.Surname}");
+                individual = await SearchByName(customer);
             }
 
-            _logger.LogInformation($"IndividualService.FindIndividual: No Result found for Customer {customer.Surname}");
-            return null;
+            if (individual == null)
+            {
+                _logger.LogInformation($"IndividualService.FindIndividual: No Result found for Customer {customer.Surname}");
+            }
+            else
+            {
+                _logger.LogInformation($"IndividualService.FindIndividual: Result found for Customer {customer.Surname}");
+            }
+
+            stopwatch.Stop();
+            _logger.LogDebug($"InteractionService: FindIndividual - Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
+            return individual;
         }
 
         private FWTPartySearch GetBaseSearchCriteria(Customer customer)
@@ -106,17 +118,25 @@ namespace verint_service.Services
 
         private async Task<FWTObjectID> SearchIndividuals(FWTPartySearch searchCriteria, Customer customer)
         {
+            var stopwatch = Stopwatch.StartNew();
             _logger.LogInformation($"IndividualService.SearchIndividuals: Customer - {customer.Surname}");
             searchCriteria.SearchType = "individual";
             var matchingIndividuals = await _verintConnection.searchForPartyAsync(searchCriteria); 
 
+            FWTObjectID individual = null;
             if (matchingIndividuals.FWTObjectBriefDetailsList.Any() && matchingIndividuals != null)
             {
-                return await GetBestMatchingIndividual(matchingIndividuals.FWTObjectBriefDetailsList, customer);
+                individual =  await GetBestMatchingIndividual(matchingIndividuals.FWTObjectBriefDetailsList, customer);
+            }
+            else
+            {
+                _logger.LogInformation($"IndividualService.SearchIndividuals: No Results");
             }
 
-            _logger.LogInformation($"IndividualService.SearchIndividuals: No Results");
-            return null;
+            stopwatch.Stop();
+            _logger.LogDebug($"InteractionService: SearchIndividuals - Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
+
+            return individual;
         }
 
         private async Task<FWTObjectID> SearchByEmail(Customer customer)
@@ -171,9 +191,12 @@ namespace verint_service.Services
 
         private async Task<FWTObjectID> GetBestMatchingIndividual(FWTObjectBriefDetails[] individualResults, Customer customer)
         {
-            _logger.LogInformation($"IndividualService.GetBestMatchingIndividual Attempting to match customer: {customer.Surname}");
 
+            var stopwatch = Stopwatch.StartNew();
+
+            _logger.LogInformation($"IndividualService.GetBestMatchingIndividual Attempting to match customer: {customer.Surname}");
             FWTIndividual bestMatch = null;
+            FWTObjectID bestMatchingObjectID  = null;
             var bestMatchScore = 0;
 
             foreach (var individualResult in individualResults)
@@ -195,17 +218,23 @@ namespace verint_service.Services
             {
                 _logger.LogInformation($"IndividualService.GetBestMatchingIndividual Match Found - Customer: {customer.Surname} Score: {bestMatchScore}");
                 await UpdateIndividual(bestMatch, customer);
-                return bestMatch.BriefDetails.ObjectID;
+                bestMatchingObjectID =  bestMatch.BriefDetails.ObjectID;
             }
-            
-            _logger.LogInformation($"IndividualService.GetBestMatchingIndividual Match Not Found - Customer: {customer.Surname} Score: {bestMatchScore}");
-            return null;
+            else
+            {
+                _logger.LogInformation($"IndividualService.GetBestMatchingIndividual Match Not Found - Customer: {customer.Surname} Score: {bestMatchScore}");
+            }
+
+            stopwatch.Stop();
+            _logger.LogDebug($"InteractionService: GetBestMatchingIndividual - Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
+
+            return bestMatchingObjectID;
         }
 
         public async Task UpdateIndividual(FWTIndividual individual, Customer customer)
         {
             _logger.LogInformation($"IndividualService.UpdateIndividual - Updating Customer: {customer.Surname}");
-
+            var stopwatch = Stopwatch.StartNew();
             var individualResponse = await _verintConnection.retrieveIndividualAsync(individual.BriefDetails.ObjectID);
             individual = individualResponse.FWTIndividual;
             
@@ -219,6 +248,10 @@ namespace verint_service.Services
             {
                 await _verintConnection.updateIndividualAsync(update); 
             } 
+
+            stopwatch.Stop();
+            _logger.LogDebug($"InteractionService: UpdateIndividual - Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
+
         }
 
         public async Task<string> CheckUPRNForId(Customer customer)
