@@ -52,9 +52,6 @@ namespace verint_service.Services
 
         private async Task<FWTObjectID> CreateIndividual(Customer customer)
         {
-
-            var stopwatch = Stopwatch.StartNew();
-            _logger.LogDebug($"IndividualService.CreateIndividual -  Customer {customer.Surname}");
             // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
             if (customer.Address != null)
             {
@@ -63,8 +60,6 @@ namespace verint_service.Services
 
             var fwtIndividual = customer.Map();
             var createIndividualResult = await _verintConnection.createIndividualAsync(fwtIndividual);
-            stopwatch.Stop();
-            _logger.LogDebug($"InteractionService: CreateIndividual - Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
 
             return createIndividualResult.FLNewIndividualID;
         }
@@ -118,8 +113,6 @@ namespace verint_service.Services
 
         private async Task<FWTObjectID> SearchIndividuals(FWTPartySearch searchCriteria, Customer customer)
         {
-            var stopwatch = Stopwatch.StartNew();
-            _logger.LogDebug($"IndividualService.SearchIndividuals: Customer - {customer.Surname}");
             searchCriteria.SearchType = "individual";
             var matchingIndividuals = await _verintConnection.searchForPartyAsync(searchCriteria); 
 
@@ -128,13 +121,6 @@ namespace verint_service.Services
             {
                 individual =  await GetBestMatchingIndividual(matchingIndividuals.FWTObjectBriefDetailsList, customer);
             }
-            else
-            {
-                _logger.LogDebug($"IndividualService.SearchIndividuals: No Results");
-            }
-
-            stopwatch.Stop();
-            _logger.LogDebug($"InteractionService: SearchIndividuals - Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
 
             return individual;
         }
@@ -143,13 +129,11 @@ namespace verint_service.Services
         {
             if (!string.IsNullOrWhiteSpace(customer.Email))
             {
-                _logger.LogDebug($"IndividualService.SearchByEmail: Searching by Email - {customer.Email}");
                 var searchCriteria = GetBaseSearchCriteria(customer);
                 searchCriteria.EmailAddress = customer.Email.Trim();
                 return await SearchIndividuals(searchCriteria, customer);
             }
             
-            _logger.LogDebug($"IndividualService.SearchByEmail: Searching by Email, Email null");
             return null;
         }
 
@@ -157,13 +141,11 @@ namespace verint_service.Services
         {
             if (!string.IsNullOrWhiteSpace(customer.Telephone))
             {
-                _logger.LogDebug($"IndividualService.SearchByEmail: Searching by Telephone - {customer.Telephone}");
                 var searchCriteria = GetBaseSearchCriteria(customer);
                 searchCriteria.PhoneNumber = customer.Telephone.Trim();
                 return await SearchIndividuals(searchCriteria, customer);
             }
 
-            _logger.LogDebug($"IndividualService.SearchByEmail: Searching by Telephone, Telephone null");
             return null;
         }
 
@@ -171,7 +153,6 @@ namespace verint_service.Services
         {
             if (customer.Address != null && !string.IsNullOrWhiteSpace(customer.Address.Postcode)  && !string.IsNullOrWhiteSpace(customer.Address.Number))
             {
-                _logger.LogDebug($"IndividualService.SearchByAddress: Searching by Address - {customer.Address.Postcode}");
                 var searchCriteria = GetBaseSearchCriteria(customer);
                 searchCriteria.AddressNumber = customer.Address.Number.Trim();
                 searchCriteria.Postcode = customer.Address.Postcode.Trim();
@@ -179,21 +160,16 @@ namespace verint_service.Services
                 return await SearchIndividuals(searchCriteria, customer);
             }
 
-            _logger.LogDebug($"IndividualService.SearchByAddress: Searching by Address, Address null");
             return null;
         }
 
         private async Task<FWTObjectID> SearchByName(Customer customer)
         {
-            _logger.LogDebug($"IndividualService.SearchByName: Searching by Name - {customer.Forename} {customer.Surname}");
             return await SearchIndividuals(GetBaseSearchCriteria(customer), customer);
         }
 
         private async Task<FWTObjectID> GetBestMatchingIndividual(FWTObjectBriefDetails[] individualResults, Customer customer)
         {
-            var stopwatch = Stopwatch.StartNew();
-
-            _logger.LogDebug($"IndividualService.GetBestMatchingIndividual Attempting to match customer: {customer.Surname}");
             FWTIndividual bestMatch = null;
             FWTObjectID bestMatchingObjectID  = null;
             var bestMatchScore = 0;
@@ -229,21 +205,12 @@ namespace verint_service.Services
                 await UpdateIndividual(bestMatch, customer);
                 bestMatchingObjectID = bestMatch.BriefDetails.ObjectID;
             }
-            else
-            {
-                _logger.LogDebug($"IndividualService.GetBestMatchingIndividual Match Not Found - Customer: {customer.Surname} Score: {bestMatchScore}");
-            }
-
-            stopwatch.Stop();
-            _logger.LogDebug($"InteractionService: GetBestMatchingIndividual - Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
 
             return bestMatchingObjectID;
         }
 
         public async Task UpdateIndividual(FWTIndividual individual, Customer customer)
         {
-            _logger.LogDebug($"IndividualService.UpdateIndividual - Updating Customer: {customer.Surname}");
-            var stopwatch = Stopwatch.StartNew();
             var individualResponse = await _verintConnection.retrieveIndividualAsync(individual.BriefDetails.ObjectID);
             individual = individualResponse.FWTIndividual;
             
@@ -257,10 +224,6 @@ namespace verint_service.Services
             {
                 await _verintConnection.updateIndividualAsync(update); 
             } 
-
-            stopwatch.Stop();
-            _logger.LogDebug($"InteractionService: UpdateIndividual - Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
-
         }
 
         public async Task<string> CheckUPRNForId(Customer customer)
@@ -269,13 +232,10 @@ namespace verint_service.Services
             // If it's a real ID it shouldn't return a property!
             if(!string.IsNullOrEmpty(customer.Address.UPRN))
             {
-                _logger.LogDebug($"IndividualService.CheckUPRNForId - Customer has uprn {customer.Address.UPRN}");
-
                 try{
                     var propertyResult = await _propertyService.GetPropertyAsync(customer.Address.UPRN);
                     if(propertyResult != null)
                     {
-                        _logger.LogDebug($"IndividualService.CheckUPRNForId - Returning propertyResult.UPRN: {propertyResult.UPRN}, {propertyResult.Description}");
                         return propertyResult.UPRN;
                     }
                 }
@@ -285,7 +245,6 @@ namespace verint_service.Services
                 }
             }
 
-            _logger.LogDebug($"IndividualService.CheckUPRNForId - Return original uprn {customer.Address.UPRN}");            
             return customer.Address.UPRN;
         }
     }
