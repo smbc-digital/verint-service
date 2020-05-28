@@ -29,7 +29,7 @@ namespace verint_service.Services
         public async Task<long> CreateInteraction(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
             var stopwatch = Stopwatch.StartNew();
-            _logger.LogInformation($"InteractionService.Create:Attempting to create interaction, Event {crmCase.EventTitle}, event code {crmCase.EventCode}");
+            _logger.LogDebug($"InteractionService.Create:Attempting to create interaction, Event {crmCase.EventTitle}, event code {crmCase.EventCode}");
 
             var interactionDetails = new FWTInteractionCreate {
                 Channel = VerintConstants.Channel,
@@ -43,7 +43,7 @@ namespace verint_service.Services
             }
 
             var createInteractionResult = await _verintConnection.createInteractionAsync(interactionDetails);
-            _logger.LogInformation($"InteractionService.Create: Create interaction, Id {createInteractionResult.InteractionID} Event {crmCase.EventTitle}, event code {crmCase.EventCode}");
+            _logger.LogDebug($"InteractionService.Create: Create interaction, Id {createInteractionResult.InteractionID} Event {crmCase.EventTitle}, event code {crmCase.EventCode}");
             stopwatch.Stop();
             _logger.LogDebug($"InteractionService: CreateInteraction - Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
             return createInteractionResult.InteractionID;
@@ -57,13 +57,13 @@ namespace verint_service.Services
 
             if(crmCase.Customer != null && crmCase.RaisedByBehaviour == RaisedByBehaviourEnum.Individual)
             {
-                _logger.LogInformation($"InteractionService.GetRaisedByObject - Individual");
+                _logger.LogDebug($"InteractionService.GetRaisedByObject - Individual");
 
                 var individual = await _individualService.ResolveIndividual(crmCase.Customer);
                 crmCase.Customer.CustomerReference = individual.ObjectReference[0];
                 raisedBy = individual;
                 
-                _logger.LogInformation($"InteractionService.GetRaisedByObject - Result Individual Id: {individual.ObjectReference[0]}");
+                _logger.LogDebug($"InteractionService.GetRaisedByObject - Result Individual Id: {individual.ObjectReference[0]}");
                 
 
                 return raisedBy;
@@ -71,7 +71,7 @@ namespace verint_service.Services
 
             if(crmCase.Organisation != null)
             {
-                _logger.LogInformation($"InteractionService.GetRaisedByObject - Organisation");
+                _logger.LogDebug($"InteractionService.GetRaisedByObject - Organisation");
 
                 raisedBy = new FWTObjectID()
                 {

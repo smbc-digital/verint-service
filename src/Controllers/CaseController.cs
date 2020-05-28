@@ -52,9 +52,9 @@ namespace verint_service.Controllers
         {
             try
             {
-                _logger.LogInformation($"CaseController.Create:Attempting to create case {crmCase.EventTitle}, event code {crmCase.EventCode}");
+                _logger.LogDebug($"CaseController.Create:Attempting to create case {crmCase.EventTitle}, event code {crmCase.EventCode}");
                 var response = await _caseService.CreateCase(crmCase);
-                _logger.LogInformation($"CaseController.Create: Reference {response}, Create case {crmCase.EventTitle}, event code {crmCase.EventCode}");
+                _logger.LogDebug($"CaseController.Create: Reference {response}, Create case {crmCase.EventTitle}, event code {crmCase.EventCode}");
 
                 return CreatedAtAction("Create", response);
             }
