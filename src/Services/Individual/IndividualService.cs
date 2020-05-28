@@ -191,7 +191,6 @@ namespace verint_service.Services
 
         private async Task<FWTObjectID> GetBestMatchingIndividual(FWTObjectBriefDetails[] individualResults, Customer customer)
         {
-
             var stopwatch = Stopwatch.StartNew();
 
             _logger.LogDebug($"IndividualService.GetBestMatchingIndividual Attempting to match customer: {customer.Surname}");
@@ -199,10 +198,20 @@ namespace verint_service.Services
             FWTObjectID bestMatchingObjectID  = null;
             var bestMatchScore = 0;
 
+            var tasks = new List<Task<retrieveIndividualResponse>>();
+
             foreach (var individualResult in individualResults)
             {
-                var retrieveResult = await _verintConnection.retrieveIndividualAsync(individualResult.ObjectID);
-                var individual = retrieveResult.FWTIndividual;
+                tasks.Add(Task.Run(async () =>
+                {
+                    return await _verintConnection.retrieveIndividualAsync(individualResult.ObjectID);
+                }));
+            }
+
+            var results = await Task.WhenAll(tasks);
+            results.ToList().ForEach((result) =>
+            {
+                var individual = result.FWTIndividual;
                 var score = 0;
 
                 _individualWeightings.ToList().ForEach(_ => score += _.Calculate(individual, customer));
@@ -212,13 +221,13 @@ namespace verint_service.Services
                     bestMatchScore = score;
                     bestMatch = individual;
                 }
-            }
+            });
 
             if (bestMatch != null && bestMatchScore >= 5)
             {
                 _logger.LogDebug($"IndividualService.GetBestMatchingIndividual Match Found - Customer: {customer.Surname} Score: {bestMatchScore}");
                 await UpdateIndividual(bestMatch, customer);
-                bestMatchingObjectID =  bestMatch.BriefDetails.ObjectID;
+                bestMatchingObjectID = bestMatch.BriefDetails.ObjectID;
             }
             else
             {

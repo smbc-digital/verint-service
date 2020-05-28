@@ -64,7 +64,6 @@ namespace verint_service.Services
                 raisedBy = individual;
                 
                 _logger.LogDebug($"InteractionService.GetRaisedByObject - Result Individual Id: {individual.ObjectReference[0]}");
-                
 
                 return raisedBy;
             }
