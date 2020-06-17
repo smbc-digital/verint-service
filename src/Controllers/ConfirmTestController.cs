@@ -23,6 +23,11 @@ namespace verint_service.Controllers
             _requestBehavior = requestBehavior;
         }
 
+        /// <summary>
+        /// Gets VOF data based on confirm caseId
+        /// </summary>
+        /// <param name="caseId"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery]string caseId = "699710L5")
         {
@@ -84,8 +89,14 @@ namespace verint_service.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Creates a case with same basic data for a 'confirm_integrationform' form
+        /// 
+        /// DateTime fields threw an exception
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]CreateRequest request = null)
+        public async Task<IActionResult> Create([FromQuery]string caseId)
         {
             var endpointAddress = new EndpointAddress("http://scnverinttest.stockport.gov.uk:9081/service/service.wsdl"); //http://scnverinttest:9081/service/service.wsdl
             var _httpBinding = new BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
@@ -105,8 +116,17 @@ namespace verint_service.Controllers
             _client.Endpoint.EndpointBehaviors.Add(_requestBehavior);
 
             var baseRequest = Newtonsoft.Json.JsonConvert.DeserializeObject<CreateRequest>(jsonCreateString);
+            baseRequest.caseid = caseId;
 
-            var response = await _client.CreateAsync(request ?? baseRequest);
+            CreateResponse1 response;
+            try
+            {
+                response = await _client.CreateAsync(baseRequest);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
 
             return Ok(response);
         }
@@ -114,7 +134,6 @@ namespace verint_service.Controllers
 
         private const string jsonCreateString = @"
 {
-  ""caseid"": ""101004228027"",
   ""name"": ""confirm_integrationform"",
   ""data"": {
     ""formdata"": [
@@ -341,10 +360,6 @@ namespace verint_service.Controllers
         {
           ""name"": ""CONF_USERNAME"",
           ""item"": """"
-        },
-        {
-          ""name"": ""CONF_LOGGED_TIME"",
-          ""item"": ""2020-06-09T15:37:46.380Z""
         },
         {
           ""name"": ""CONF_EFFECTIVE_TIME"",
