@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Text;
@@ -118,6 +119,11 @@ namespace verint_service.Controllers
             var baseRequest = Newtonsoft.Json.JsonConvert.DeserializeObject<CreateRequest>(jsonCreateString);
             baseRequest.caseid = caseId;
 
+            var formdata = baseRequest.data.formdata.ToList<Field>();
+            formdata.Add(new Field { Item = "2020-06-17T16:53:46.380Z", name = "CONF_LOGGED_TIME" });
+      
+            baseRequest.data.formdata = formdata.ToArray();
+
             CreateResponse1 response;
             try
             {
@@ -130,7 +136,6 @@ namespace verint_service.Controllers
 
             return Ok(response);
         }
-
 
         private const string jsonCreateString = @"
 {
