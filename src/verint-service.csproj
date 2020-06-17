@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>verint_service</RootNamespace>
@@ -33,8 +32,5 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Connected Services\LaganLookupService\LaganLookupService\" />
   </ItemGroup>
 </Project>
