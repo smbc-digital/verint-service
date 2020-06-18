@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
+using StockportGovUK.NetStandard.Models.Verint;
 using VOFWebService;
 
 namespace verint_service.Controllers
@@ -119,9 +120,10 @@ namespace verint_service.Controllers
             var baseRequest = Newtonsoft.Json.JsonConvert.DeserializeObject<CreateRequest>(jsonCreateString);
             baseRequest.caseid = caseId;
 
-            var formdata = baseRequest.data.formdata.ToList<Field>();
-            formdata.Add(new Field { Item = "2020-06-17T16:53:46.380Z", name = "CONF_LOGGED_TIME" });
-      
+            var formdata = baseRequest.data.formdata.ToList();
+            formdata.Add(new Field { Item = "18/06/2020 07:59:36", name = "CONF_LOGGED_TIME" });
+            formdata.Add(new Field { Item = caseId, name = "CONF_CASE_ID" });
+
             baseRequest.data.formdata = formdata.ToArray();
 
             CreateResponse1 response;
@@ -137,246 +139,248 @@ namespace verint_service.Controllers
             return Ok(response);
         }
 
+
+        [HttpPatch]
+        public async Task<IActionResult> Update([FromQuery]string verintCaseId, [FromQuery]string confirmCaseId)
+        {
+            var endpointAddress = new EndpointAddress("http://scnverinttest.stockport.gov.uk:9081/service/service.wsdl"); //http://scnverinttest:9081/service/service.wsdl
+            var _httpBinding = new BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
+            {
+                Name = "VOFWebBinding",
+                MaxReceivedMessageSize = 67108864,
+                CloseTimeout = new TimeSpan(0, 10, 0),
+                OpenTimeout = new TimeSpan(0, 10, 0),
+                SendTimeout = new TimeSpan(0, 10, 0),
+                MaxBufferPoolSize = 67108864,
+                MaxBufferSize = 67108864,
+                TextEncoding = Encoding.UTF8,
+                TransferMode = TransferMode.Buffered
+            };
+            var _client = new serviceClient(_httpBinding, endpointAddress);
+
+            _client.Endpoint.EndpointBehaviors.Add(_requestBehavior);
+
+            //var baseRequest = Newtonsoft.Json.JsonConvert.DeserializeObject<CreateRequest>(jsonCreateString);
+            //baseRequest.caseid = caseId;
+
+            //var formdata = baseRequest.data.formdata.ToList();
+            //formdata.Add(new Field { Item = "18/06/2020 07:59:36", name = "CONF_LOGGED_TIME" });
+
+            //baseRequest.data.formdata = formdata.ToArray();
+            //baseRequest.completeSpecified = true;
+            //baseRequest.complete = stringBoolean.Y;
+
+            UpdateResponse1 response;
+            try
+            {
+                //response = await _client.CreateAsync(baseRequest);
+                response = await _client.UpdateAsync(new UpdateRequest
+                {
+                    caseid = verintCaseId,
+                    @ref = confirmCaseId,
+                    name = "confirm_integrationform",
+                    currentpage = "3",
+                    dataupdate = dataupdate.none
+            });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+
+            return Ok(response);
+        }
+
+
+        [HttpPatch]
+        [Route("/complete")]
+        public async Task<IActionResult> Complete([FromQuery]string verintCaseId, [FromQuery]string confirmCaseId)
+        {
+            var endpointAddress = new EndpointAddress("http://scnverinttest.stockport.gov.uk:9081/service/service.wsdl"); //http://scnverinttest:9081/service/service.wsdl
+            var _httpBinding = new BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
+            {
+                Name = "VOFWebBinding",
+                MaxReceivedMessageSize = 67108864,
+                CloseTimeout = new TimeSpan(0, 10, 0),
+                OpenTimeout = new TimeSpan(0, 10, 0),
+                SendTimeout = new TimeSpan(0, 10, 0),
+                MaxBufferPoolSize = 67108864,
+                MaxBufferSize = 67108864,
+                TextEncoding = Encoding.UTF8,
+                TransferMode = TransferMode.Buffered
+            };
+            var _client = new serviceClient(_httpBinding, endpointAddress);
+
+            _client.Endpoint.EndpointBehaviors.Add(_requestBehavior);
+
+            //var baseRequest = Newtonsoft.Json.JsonConvert.DeserializeObject<CreateRequest>(jsonCreateString);
+            //baseRequest.caseid = caseId;
+
+            //var formdata = baseRequest.data.formdata.ToList();
+            //formdata.Add(new Field { Item = "18/06/2020 07:59:36", name = "CONF_LOGGED_TIME" });
+
+            //baseRequest.data.formdata = formdata.ToArray();
+            //baseRequest.completeSpecified = true;
+            //baseRequest.complete = stringBoolean.Y;
+
+            UpdateResponse1 response;
+            try
+            {
+                //response = await _client.CreateAsync(baseRequest);
+                response = await _client.UpdateAsync(new UpdateRequest
+                {
+                    caseid = verintCaseId,
+                    @ref = confirmCaseId,
+                    name = "confirm_integrationform",
+                    dataupdate = dataupdate.none,
+                    completeSpecified = true,
+                    complete = stringBoolean.Y
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+
+            return Ok(response);
+        }
+
         private const string jsonCreateString = @"
 {
   ""name"": ""confirm_integrationform"",
   ""data"": {
     ""formdata"": [
-      {
-          ""name"": ""CONF_POC_CODE"",
-          ""item"": ""SHOT""
+        {
+            ""name"": ""CONF_POC_CODE"",
+            ""item"": ""WEB""
         },
         {
-          ""name"": ""CONF_POC_NAME"",
-          ""item"": ""Customer Service Centre""
+            ""name"": ""CONF_POC_NAME"",
+            ""item"": ""Web/Online Form""
         },
         {
-          ""name"": ""CONF_METH_CODE"",
-          ""item"": ""TELE""
+            ""name"": ""CONF_METH_CODE"",
+            ""item"": ""WEB""
         },
         {
-          ""name"": ""CONF_CUST_REF"",
-          ""item"": ""101003288162""
+            ""name"": ""CONF_METH_NAME"",
+            ""item"": ""Web/Online Form""
         },
         {
-          ""name"": ""CONF_CUST_TITLE"",
-          ""item"": ""Mrs""
+            ""name"": ""CONF_CUST_REF"",
+            ""item"": ""101003283810""
         },
         {
-          ""name"": ""CONF_CUST_SURNAME"",
-          ""item"": ""cranwell""
+            ""name"": ""CONF_CUST_TITLE"",
+            ""item"": ""Mr""
         },
         {
-          ""name"": ""CONF_CUST_PHONE"",
-          ""item"": ""07783073470""
+            ""name"": ""CONF_CUST_SURNAME"",
+            ""item"": ""Humphreys""
         },
         {
-          ""name"": ""CONF_CUST_ALT_TEL"",
-          ""item"": ""07711591291""
+            ""name"": ""CONF_CUST_FORENAME"",
+            ""item"": ""Elliott""
         },
         {
-          ""name"": ""CONF_CUST_FAX"",
-          ""item"": """"
+            ""name"": ""CONF_CUST_PHONE"",
+            ""item"": ""07388909179""
         },
         {
-          ""name"": ""CONF_CUST_EMAIL"",
-          ""item"": ""karen.cranwell@stockport.gov.uk""
+            ""name"": ""CONF_CUST_EMAIL"",
+            ""item"": ""elliott.humphreys@stockport.gov.uk""
         },
         {
-          ""name"": ""CONF_CUST_BUILDING"",
-          ""item"": """"
+            ""name"": ""CONF_CONTACT"",
+            ""item"": ""Mr Elliott Elliott Humphreys""
         },
         {
-          ""name"": ""CONF_CUST_STREETNUM"",
-          ""item"": ""26""
+            ""name"": ""CONF_CONTACT_PHONE"",
+            ""item"": ""07388909179""
         },
         {
-          ""name"": ""CONF_CUST_STREET"",
-          ""item"": ""HIGHFIELD AVENUE""
+            ""name"": ""CONF_CONTACT_EMAIL"",
+            ""item"": ""elliott.humphreys@stockport.gov.uk""
         },
         {
-          ""name"": ""CONF_CUST_LOCALITY"",
-          ""item"": """"
+            ""name"": ""CONF_CUST_BUILDING"",
+            ""item"": ""STOCKPORT DELIVERY OFFICE 1""
         },
         {
-          ""name"": ""CONF_CUST_TOWN"",
-          ""item"": """"
+            ""name"": ""CONF_CUST_STREET"",
+            ""item"": ""EXCHANGE STREET""
         },
         {
-          ""name"": ""CONF_CUST_COUNTY"",
-          ""item"": """"
+            ""name"": ""CONF_CUST_LOCALITY"",
+            ""item"": """"
         },
         {
-          ""name"": ""CONF_CUST_POSTCODE"",
-          ""item"": """"
+            ""name"": ""CONF_CUST_TOWN"",
+            ""item"": ""STOCKPORT""
         },
         {
-          ""name"": ""CONF_CUST_FORENAME"",
-          ""item"": ""karen""
+            ""name"": ""CONF_CUST_POSTCODE"",
+            ""item"": ""SK1 1AA""
         },
         {
-          ""name"": ""CONF_ADDRESS_REF"",
-          ""item"": """"
+            ""name"": ""CONF_SERVICE_CODE"",
+            ""item"": ""GREN      ""
         },
         {
-          ""name"": ""CONF_SERVICE_CODE"",
-          ""item"": ""GREN""
+            ""name"": ""CONF_SUBJECT_CODE"",
+            ""item"": ""TTPO      ""
         },
         {
-          ""name"": ""CONF_SUBJECT_CODE"",
-          ""item"": ""TPOC""
+            ""name"": ""CONF_CLASSIFICATION"",
+            ""item"": ""public_realm-greenspace-trees_request_new_tpo""
         },
         {
-          ""name"": ""le_eventcode"",
-          ""item"": ""2002569""
+            ""name"": ""CboClassCode"",
+            ""item"": ""REQU""
         },
         {
-          ""name"": ""le_queue_complete"",
-          ""item"": ""AppsConfirmQueuePending""
+            ""name"": ""FOLLOW_UP_BY"",
+            ""item"": ""10 Working Days""
         },
         {
-          ""name"": ""le_associated_obj_type"",
-          ""item"": ""D4""
+            ""name"": ""CONF_DESC"",
+            ""item"": ""(Lagan) Event Name: Request for a new Tree preservation order. \r\nEvent Name: Request for a new Tree preservation order. \r\nReason for the TPO request: test 2. \r\nFurther Location Information: test 1. \r\n""
         },
         {
-          ""name"": ""le_associated_obj_id"",
-          ""item"": ""1002109494""
+            ""name"": ""CONF_LOCATION"",
+            ""item"": ""test 1""
         },
         {
-          ""name"": ""le_description"",
-          ""item"": ""tpo""
+            ""name"": ""CONF_SITE_CODE"",
+            ""item"": ""38102548""
         },
         {
-          ""name"": ""CONF_LOCATION"",
-          ""item"": ""This is a test ""
+            ""name"": ""CONF_SITE_NAME"",
+            ""item"": ""HIBBERT LANE""
         },
         {
-          ""name"": ""CONF_DESC"",
-          ""item"": ""tpo""
+            ""name"": ""CONF_SITE_LOCALITY"",
+            ""item"": ""MARPLE""
         },
         {
-          ""name"": ""cboclasscode"",
-          ""item"": ""SERV""
+            ""name"": ""CONF_SITE_TOWN"",
+            ""item"": ""STOCKPORT""
         },
         {
-          ""name"": ""cbocustomertypecode"",
-          ""item"": ""PUBL""
+            ""name"": ""EFORM_UPDATED"",
+            ""item"": ""true""
         },
         {
-          ""name"": ""CONF_ENQ_ID"",
-          ""item"": """"
+            ""name"": ""VIEWMODE"",
+            ""item"": ""C""
         },
         {
-          ""name"": ""CONF_CLASSIFICATION"",
-          ""item"": ""public_realm-greenspace-tree_preservation_order_check""
+            ""name"": ""CboCustomerTypeCode"",
+            ""item"": ""PUBL""
         },
         {
-          ""name"": ""CONF_ENQ_REF"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_ALT_TEL"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_SITE_CODE"",
-          ""item"": ""38101939""
-        },
-        {
-          ""name"": ""CONF_SITE_LOCALITY"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_ASSET_ID"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_ASS_OFF_CODE"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_ASS_OFF_NAME"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_SITE_NAME"",
-          ""item"": ""HIGH STREET""
-        },
-        {
-          ""name"": ""CONF_SITE_TOWN"",
-          ""item"": ""STOCKPORT""
-        },
-        {
-          ""name"": ""CONF_SITE_COUNTY"",
-          ""item"": ""STOCKPORT""
-        },
-        {
-          ""name"": ""CONF_X_COORD"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_Y_COORD"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_JOB_NUM"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_ASS_OFF_PHONE"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_JOB_START"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_JOB_END"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_CONTACT"",
-          ""item"": "" cranwell""
-        },
-        {
-          ""name"": ""CONF_CONTACT_EMAIL"",
-          ""item"": ""karen.cranwell@stockport.gov.uk""
-        },
-        {
-          ""name"": ""CONF_STATUS_CODE"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_STATUS_NAME"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_CONTACT_PHONE"",
-          ""item"": ""07783073470""
-        },
-        {
-          ""name"": ""CONF_CONTACT_FAX"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_LOGGED_BY"",
-          ""item"": ""KAREN""
-        },
-        {
-          ""name"": ""CONF_USERNAME"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_EFFECTIVE_TIME"",
-          ""item"": """"
-        },
-        {
-          ""name"": ""CONF_STATUS_NOTES"",
-          ""item"": ""Logged by: KAREN""
-        },
-        {
-          ""name"": ""CONF_FOLLOW_UP_BY"",
-          ""item"": """"
+            ""name"": ""CONF_LOGGED_BY"",
+            ""item"": ""Lagan""
         }
     ]
   }
