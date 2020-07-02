@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Verint;
+using verint_service.Services.Case;
 using VOFWebService;
 
 namespace verint_service.Controllers
@@ -17,186 +18,56 @@ namespace verint_service.Controllers
     [TokenAuthentication(IgnoredRoutes = new[] { "/api/v1/case/event" })]
     public class ConfirmTestController : ControllerBase
     {
+        private readonly ICaseService _caseService;
         private readonly IEndpointBehavior _requestBehavior;
 
         public ConfirmTestController(
+            ICaseService caseService,
             IEndpointBehavior requestBehavior)
         {
+            _caseService = caseService;
             _requestBehavior = requestBehavior;
         }
 
-        /// <summary>
-        /// Gets VOF data based on confirm caseId
-        /// </summary>
-        /// <param name="caseId"></param>
-        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]string caseId = "699710L5")
-        {
-            var endpointAddress = new EndpointAddress("http://scnverinttest.stockport.gov.uk:9081/service/service.wsdl"); //http://scnverinttest:9081/service/service.wsdl
-            var _httpBinding = new BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
-            {
-                Name = "VOFWebBinding",
-                MaxReceivedMessageSize = 67108864,
-                CloseTimeout = new TimeSpan(0, 10, 0),
-                OpenTimeout = new TimeSpan(0, 10, 0),
-                SendTimeout = new TimeSpan(0, 10, 0),
-                MaxBufferPoolSize = 67108864,
-                MaxBufferSize = 67108864,
-                TextEncoding = Encoding.UTF8,
-                TransferMode = TransferMode.Buffered
-            };
-            var _client = new serviceClient(_httpBinding, endpointAddress);
+        public async Task<IActionResult> Get([FromQuery]string caseId) => Ok(await GetCase(caseId));
 
-            _client.Endpoint.EndpointBehaviors.Add(_requestBehavior);
+        /**
+         * the prefered way
+         */
+        #region Create
 
-            var response = await _client.GetAsync(new GetRequest
-            {
-                @ref = caseId
-            });
+        #endregion
 
-            return Ok(response);
-        }
-
-        /// <summary>
-        /// This should delete the VOF - but it seemingly doesn't
-        /// </summary>
-        /// <param name="caseId"></param>
-        /// <returns></returns>
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromQuery]string caseId = "699710L5")
-        {
-            var endpointAddress = new EndpointAddress("http://scnverinttest.stockport.gov.uk:9081/service/service.wsdl"); //http://scnverinttest:9081/service/service.wsdl
-            var _httpBinding = new BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
-            {
-                Name = "VOFWebBinding",
-                MaxReceivedMessageSize = 67108864,
-                CloseTimeout = new TimeSpan(0, 10, 0),
-                OpenTimeout = new TimeSpan(0, 10, 0),
-                SendTimeout = new TimeSpan(0, 10, 0),
-                MaxBufferPoolSize = 67108864,
-                MaxBufferSize = 67108864,
-                TextEncoding = Encoding.UTF8,
-                TransferMode = TransferMode.Buffered
-            };
-            var _client = new serviceClient(_httpBinding, endpointAddress);
-
-            _client.Endpoint.EndpointBehaviors.Add(_requestBehavior);
-
-            var response = await _client.DeleteAsync(new DeleteRequest
-            {
-                @ref = caseId
-            });
-
-            return Ok(response);
-        }
-
-        /// <summary>
-        /// Creates a case with same basic data for a 'confirm_integrationform' form
-        /// 
-        /// DateTime fields threw an exception
-        /// </summary>
-        /// <returns></returns>
+        /**
+         * the way that should work if there wasn't bugs with Update
+         */
+        #region Create-Update-Flow
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery]string caseId)
+        [Route("create-get-update")]
+        public async Task<IActionResult> CreateGetUpdate()
         {
-            var endpointAddress = new EndpointAddress("http://scnverinttest.stockport.gov.uk:9081/service/service.wsdl"); //http://scnverinttest:9081/service/service.wsdl
-            var _httpBinding = new BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
+            var createResponse = await CreateBasic(); // should check was successful
+
+            /**
+             * this should return the Verint Case ID - however it does, once the update is performed you can see the Verint Case ID 
+             * this could be a bug - or inteneded functionality
+             * either way it makes this method of making the case in one call with no interaction from a person redundant
+             */
+            var getCaseResponse = await GetCase(createResponse.CreateResponse.@ref); // should check was successful
+
+            var updateResponse = await UpdateBasic(getCaseResponse.GetResponse.caseid, createResponse.CreateResponse.@ref); // should check was successful
+
+            return Ok(new
             {
-                Name = "VOFWebBinding",
-                MaxReceivedMessageSize = 67108864,
-                CloseTimeout = new TimeSpan(0, 10, 0),
-                OpenTimeout = new TimeSpan(0, 10, 0),
-                SendTimeout = new TimeSpan(0, 10, 0),
-                MaxBufferPoolSize = 67108864,
-                MaxBufferSize = 67108864,
-                TextEncoding = Encoding.UTF8,
-                TransferMode = TransferMode.Buffered
-            };
-            var _client = new serviceClient(_httpBinding, endpointAddress);
-
-            _client.Endpoint.EndpointBehaviors.Add(_requestBehavior);
-
-            var baseRequest = Newtonsoft.Json.JsonConvert.DeserializeObject<CreateRequest>(jsonCreateString);
-            baseRequest.caseid = caseId;
-
-            var formdata = baseRequest.data.formdata.ToList();
-            formdata.Add(new Field { Item = "18/06/2020 07:59:36", name = "CONF_LOGGED_TIME" });
-            formdata.Add(new Field { Item = caseId, name = "CONF_CUST_REF" });
-
-            baseRequest.data.formdata = formdata.ToArray();
-
-            CreateResponse1 response;
-            try
-            {
-                response = await _client.CreateAsync(baseRequest);
-            }
-            catch(Exception ex)
-            {
-                return StatusCode(500, ex);
-            }
-
-            return Ok(response);
-        }
-
-
-        [HttpPatch]
-        public async Task<IActionResult> Update([FromQuery]string verintCaseId, [FromQuery]string confirmCaseId)
-        {
-            var endpointAddress = new EndpointAddress("http://scnverinttest.stockport.gov.uk:9081/service/service.wsdl"); //http://scnverinttest:9081/service/service.wsdl
-            var _httpBinding = new BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
-            {
-                Name = "VOFWebBinding",
-                MaxReceivedMessageSize = 67108864,
-                CloseTimeout = new TimeSpan(0, 10, 0),
-                OpenTimeout = new TimeSpan(0, 10, 0),
-                SendTimeout = new TimeSpan(0, 10, 0),
-                MaxBufferPoolSize = 67108864,
-                MaxBufferSize = 67108864,
-                TextEncoding = Encoding.UTF8,
-                TransferMode = TransferMode.Buffered
-            };
-            var _client = new serviceClient(_httpBinding, endpointAddress);
-
-            _client.Endpoint.EndpointBehaviors.Add(_requestBehavior);
-
-            //var baseRequest = Newtonsoft.Json.JsonConvert.DeserializeObject<CreateRequest>(jsonCreateString);
-            //baseRequest.caseid = caseId;
-
-            //var formdata = baseRequest.data.formdata.ToList();
-            //formdata.Add(new Field { Item = "18/06/2020 07:59:36", name = "CONF_LOGGED_TIME" });
-
-            //baseRequest.data.formdata = formdata.ToArray();
-            //baseRequest.completeSpecified = true;
-            //baseRequest.complete = stringBoolean.Y;
-
-            UpdateResponse1 response;
-            try
-            {
-                //response = await _client.CreateAsync(baseRequest);
-                response = await _client.UpdateAsync(new UpdateRequest
-                {
-                    caseid = verintCaseId,
-                    @ref = confirmCaseId,
-                    name = "confirm_integrationform",
-                    currentpage = "3",
-                    completeSpecified = true,
-                    complete = stringBoolean.Y,
-                    dataupdate = dataupdate.none
+                CaseId = getCaseResponse.GetResponse.caseid,
+                ConfirmId = createResponse.CreateResponse.@ref,
+                getCaseResponse,
+                createResponse
             });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex);
-            }
-
-            return Ok(response);
         }
 
-
-        [HttpPatch]
-        [Route("/complete")]
-        public async Task<IActionResult> Complete([FromQuery]string verintCaseId, [FromQuery]string confirmCaseId)
+        private async Task<CreateResponse1> CreateBasic()
         {
             var endpointAddress = new EndpointAddress("http://scnverinttest.stockport.gov.uk:9081/service/service.wsdl"); //http://scnverinttest:9081/service/service.wsdl
             var _httpBinding = new BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
@@ -215,37 +86,142 @@ namespace verint_service.Controllers
 
             _client.Endpoint.EndpointBehaviors.Add(_requestBehavior);
 
-            //var baseRequest = Newtonsoft.Json.JsonConvert.DeserializeObject<CreateRequest>(jsonCreateString);
-            //baseRequest.caseid = caseId;
-
-            //var formdata = baseRequest.data.formdata.ToList();
-            //formdata.Add(new Field { Item = "18/06/2020 07:59:36", name = "CONF_LOGGED_TIME" });
-
-            //baseRequest.data.formdata = formdata.ToArray();
-            //baseRequest.completeSpecified = true;
-            //baseRequest.complete = stringBoolean.Y;
-
-            UpdateResponse1 response;
-            try
-            {
-                //response = await _client.CreateAsync(baseRequest);
-                response = await _client.UpdateAsync(new UpdateRequest
+            return await _client.CreateAsync(new CreateRequest
                 {
-                    caseid = verintCaseId,
-                    @ref = confirmCaseId,
                     name = "confirm_integrationform",
-                    dataupdate = dataupdate.none,
-                    completeSpecified = true,
-                    complete = stringBoolean.Y
+                    data = new Data
+                    {
+                        formdata = requiredFields
+                    }
                 });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex);
-            }
-
-            return Ok(response);
         }
+
+        private async Task<UpdateResponse1> UpdateBasic(string verintCaseId, string confirmCaseId)
+        {
+            var endpointAddress = new EndpointAddress("http://scnverinttest.stockport.gov.uk:9081/service/service.wsdl"); //http://scnverinttest:9081/service/service.wsdl
+            var _httpBinding = new BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
+            {
+                Name = "VOFWebBinding",
+                MaxReceivedMessageSize = 67108864,
+                CloseTimeout = new TimeSpan(0, 10, 0),
+                OpenTimeout = new TimeSpan(0, 10, 0),
+                SendTimeout = new TimeSpan(0, 10, 0),
+                MaxBufferPoolSize = 67108864,
+                MaxBufferSize = 67108864,
+                TextEncoding = Encoding.UTF8,
+                TransferMode = TransferMode.Buffered
+            };
+            var _client = new serviceClient(_httpBinding, endpointAddress);
+
+            _client.Endpoint.EndpointBehaviors.Add(_requestBehavior);
+
+            var updateRequest = Newtonsoft.Json.JsonConvert.DeserializeObject<UpdateRequest>(jsonCreateString);
+
+            updateRequest.caseid = verintCaseId;
+            updateRequest.@ref = confirmCaseId;
+            updateRequest.completeSpecified = true;
+            updateRequest.complete = stringBoolean.Y;
+            updateRequest.dataupdate = dataupdate.overwrite;
+
+            var formdata = updateRequest.data.formdata.ToList();
+            formdata.Add(new Field { Item = "18/06/2020 07:59:36", name = "CONF_LOGGED_TIME" });
+
+            updateRequest.data.formdata = formdata.ToArray();
+
+            return await _client.UpdateAsync(updateRequest);
+        }
+        #endregion
+
+        /**
+         * the working work around 
+         */
+        #region CreateVerintCase-CreateVOF-Update-Flow
+        [HttpPost]
+        [Route("verint-create-vof-create-update")]
+        public async Task<IActionResult> CreateVerintCaseCreateVOFUpdate()
+        {
+            var createVerintCaseResponse = await _caseService.CreateCase(new Case
+            {
+                EventCode = 2002573
+            }); // should check was successful
+
+            var createResponse = await CreateFromBaseVerintCase(createVerintCaseResponse); // should check was successful
+
+            var updateResponse = await UpdateBasic(createVerintCaseResponse, createResponse.CreateResponse.@ref); // should check was successful
+
+            return Ok(new
+            {
+                createVerintCaseResponse,
+                createResponse,
+                updateResponse
+            });
+        }
+
+        private async Task<CreateResponse1> CreateFromBaseVerintCase(string verintCaseId)
+        {
+            var endpointAddress = new EndpointAddress("http://scnverinttest.stockport.gov.uk:9081/service/service.wsdl"); //http://scnverinttest:9081/service/service.wsdl
+            var _httpBinding = new BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
+            {
+                Name = "VOFWebBinding",
+                MaxReceivedMessageSize = 67108864,
+                CloseTimeout = new TimeSpan(0, 10, 0),
+                OpenTimeout = new TimeSpan(0, 10, 0),
+                SendTimeout = new TimeSpan(0, 10, 0),
+                MaxBufferPoolSize = 67108864,
+                MaxBufferSize = 67108864,
+                TextEncoding = Encoding.UTF8,
+                TransferMode = TransferMode.Buffered
+            };
+            var _client = new serviceClient(_httpBinding, endpointAddress);
+
+            _client.Endpoint.EndpointBehaviors.Add(_requestBehavior);
+
+            return await _client.CreateAsync(new CreateRequest
+            {
+                name = "confirm_integrationform",
+                caseid = verintCaseId,
+                data = new Data
+                {
+                    formdata = requiredFields
+                }
+            });
+        }
+        #endregion
+
+        private async Task<GetResponse1> GetCase(string caseId)
+        {
+            var endpointAddress = new EndpointAddress("http://scnverinttest.stockport.gov.uk:9081/service/service.wsdl"); //http://scnverinttest:9081/service/service.wsdl
+            var _httpBinding = new BasicHttpBinding(BasicHttpSecurityMode.TransportCredentialOnly)
+            {
+                Name = "VOFWebBinding",
+                MaxReceivedMessageSize = 67108864,
+                CloseTimeout = new TimeSpan(0, 10, 0),
+                OpenTimeout = new TimeSpan(0, 10, 0),
+                SendTimeout = new TimeSpan(0, 10, 0),
+                MaxBufferPoolSize = 67108864,
+                MaxBufferSize = 67108864,
+                TextEncoding = Encoding.UTF8,
+                TransferMode = TransferMode.Buffered
+            };
+            var _client = new serviceClient(_httpBinding, endpointAddress);
+
+            _client.Endpoint.EndpointBehaviors.Add(_requestBehavior);
+
+            return await _client.GetAsync(new GetRequest
+            {
+                @ref = caseId
+            });
+        }
+
+        // minimum required fields for a VOF case to be created
+        private Field[] requiredFields = new Field[]
+        {
+            new Field
+            {
+                name = "le_eventcode",
+                Item = "2002573"
+            }
+        };
 
         private const string jsonCreateString = @"
 {
