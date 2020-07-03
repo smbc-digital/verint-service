@@ -1,0 +1,4694 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>verint-service</name>
+    </assembly>
+    <members>
+        <member name="T:VerintAuthWebService.FWTException">
+            <remarks/>
+        </member>
+        <member name="P:VerintAuthWebService.FWTException.ErrorMessage">
+            <remarks/>
+        </member>
+        <member name="P:VerintAuthWebService.FWTException.ErrorCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintAuthWebService.FWTException.AdditionalInfo">
+            <remarks/>
+        </member>
+        <member name="T:VerintAuthWebService.FWTUser">
+            <remarks/>
+        </member>
+        <member name="P:VerintAuthWebService.FWTUser.UserID">
+            <remarks/>
+        </member>
+        <member name="P:VerintAuthWebService.FWTUser.UserName">
+            <remarks/>
+        </member>
+        <member name="T:VerintAuthWebService.FWTVerifyDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintAuthWebService.FWTVerifyDetails.User">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTException">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTException.ErrorMessage">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTException.ErrorCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTException.AdditionalInfo">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FLLinkCasesParams">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FLLinkCasesParams.CaseID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FLLinkCasesParams.TargetCaseID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FLLinkCasesParams.LinkType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseCoreDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.Status">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.Opened">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.Closed">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.ClosedSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.RaisedByUser">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.Classification">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.Title">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.AssociatedObject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.Category">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.CategoryDescription">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.CategoryNameKey">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.CategoryNameValue">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.Priority">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.Severity">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.WorkflowCase">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.Internal">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.Description">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.Queue">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.DueDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.DueDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.CurrentHandler">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.XCoord">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.YCoord">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.caseCloseureReason">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.caseCloseureReasonDescription">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCoreDetails.ExternalReferences">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTUser">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUser.UserID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUser.UserName">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTObjectBriefDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTObjectBriefDetails.ObjectID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTObjectBriefDetails.ObjectDescription">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTObjectBriefDetails.Details">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTObjectBriefDetails.Category">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTObjectBriefDetails.CategorySpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTObjectID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTObjectID.ObjectType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTObjectID.ObjectReference">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseSearch">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.Status">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.ClassificationEventCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.ClassificationEventCodeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.Title">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.Queue">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.AssociatedObjectDescription">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.AssociatedObjectId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.RaisedByUser">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.CurrentHandler">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.CreatedAfter">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.CreatedAfterSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.CreatedBefore">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.CreatedBeforeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.PriorityMinimum">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.PriorityMinimumSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.PriorityMaximum">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.PriorityMaximumSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.ResultsLimit">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.ResultsLimitSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.SeverityMinimum">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.SeverityMinimumSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.SeverityMaximum">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.SeverityMaximumSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.CategoryNameKey">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.LastModifiedDateFrom">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.LastModifiedDateFromSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.LastModifiedDateTo">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseSearch.LastModifiedDateToSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseBriefDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.Status">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.Opened">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.EndDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.EndDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.RaisedByUser">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.Classification">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.Title">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.AssociatedObject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.Category">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.CategoryDescription">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.CategoryNameKey">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.CategoryNameValue">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.DueDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.DueDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.XCoord">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.YCoord">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.caseCloseureReason">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.caseCloseureReasonDescription">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.LastModifiedDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseBriefDetails.LastModifiedDateSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSearchCaseDetailsRequest">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchCaseDetailsRequest.FWTLaganCaseSearchParams">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTLaganCaseSearchParams">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTLaganCaseSearchParams.query">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTLaganCaseSearchParams.startIndex">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTLaganCaseSearchParams.numberOfRecords">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTLaganCaseSearchParams.sortField">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSearchCaseDetailsResult">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchCaseDetailsResult.FWTCaseCoreDetailsList">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTContactHistoryListRequest">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactHistoryListRequest.ObjectType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactHistoryListRequest.ObjectReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactHistoryListRequest.Option">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTContactHistory">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactHistory.CaseBriefDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactHistory.Interactions">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTInteractionDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionDetails.InteractionID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionDetails.Channel">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionDetails.Verified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionDetails.CreationDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionDetails.PartyID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionDetails.ChannelReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionDetails.ChannelData">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionDetails.Relation">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTInteractionHistoryListRequest">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionHistoryListRequest.ObjectType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionHistoryListRequest.ObjectReference">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTInteractionHistoryList">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionHistoryList.FWTInteractionHistory">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionHistoryList.FWTCaseBriefDetailsList">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTInteractionHistory">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionHistory.InteractionDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionHistory.CaseIds">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSearchTaskDetailsRequest">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchTaskDetailsRequest.FWTLaganCaseSearchParams">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseRelatedTask">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseRelatedTask.CaseTask">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseRelatedTask.CaseId">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseTask">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTask.TaskID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTask.Name">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTask.Description">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTask.Type">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTask.Priority">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTask.DueDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTask.Status">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTask.Completed">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTask.CompletedSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTask.Notes">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTNote">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNote.NoteID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNote.Text">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNote.Created">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNote.CreatedSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNote.CreatedBy">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNote.NoteLabels">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSearchInteractionDetailsRequest">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchInteractionDetailsRequest.FWTLaganCaseSearchParams">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseRelatedInteraction">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseRelatedInteraction.InteractionDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseRelatedInteraction.CaseId">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseFullDetailsRequest">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFullDetailsRequest.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFullDetailsRequest.Option">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseFullDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFullDetails.CoreDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFullDetails.Form">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFullDetails.Events">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFullDetails.Tasks">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFullDetails.Workflow">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFullDetails.Notes">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFullDetails.Eforms">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFullDetails.Interactions">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFullDetails.EformData">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFullDetails.LinkCases">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseForm">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseForm.FormField">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseForm.FormName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseForm.FormKey">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseFormField">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFormField.Value">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFormField.Key">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFormField.Label">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFormField.Type">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFormField.Format">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseEvent">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEvent.EventTitle">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEvent.Created">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEvent.HandledBy">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEvent.AdditionalInfo">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEvent.CaseQueue">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseWorkflowInstance">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseWorkflowInstance.Workflow">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseWorkflowInstance.CurrentStep">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseWorkflow">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseWorkflow.FlowName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseWorkflow.Queue">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseWorkflow.ExceptionQueue">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseEform">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEform.Name">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEform.URL">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEform.Created">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEform.LastModified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEform.ContentRepositoryVersion">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseEformData">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEformData.CaseEformInstance">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEformData.EformData">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseEformInstance">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEformInstance.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEformInstance.EformName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEformInstance.ContentRepositoryVersion">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTEformField">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTEformField.FieldName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTEformField.FieldValue">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTLinkedCase">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTLinkedCase.LinkedCase">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTLinkedCase.Key">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTLinkedCase.Inverse">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTLinkedCase.InvertedKey">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTDocument">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDocument.Document">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDocument.DocumentType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDocument.DocumentName">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCreateNoteToParent">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCreateNoteToParent.ParentId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCreateNoteToParent.ParentType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCreateNoteToParent.NoteDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCreateNoteToParent.EventCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCreateNoteToParent.EventCodeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCreateNoteToParent.EventInformationList">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCreateNoteToParent.CreatedBy">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCreateNoteDetail">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCreateNoteDetail.Text">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCreateNoteDetail.NoteLabels">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCreateNoteDetail.NoteAttachments">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTNoteDetailAttachment">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteDetailAttachment.AttachmentName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteDetailAttachment.AttachmentIdentifier">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteDetailAttachment.AttachmentType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteDetailAttachment.AttachmentTypeSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTNoteId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteId.NoteId">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTNoteUpdateDetail">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteUpdateDetail.NoteId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteUpdateDetail.Text">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteUpdateDetail.NoteLabels">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteUpdateDetail.NoteAttachments">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTNoteToParent">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteToParent.ParentId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteToParent.ParentType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteToParent.NoteDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteToParent.EventCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteToParent.EventCodeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteToParent.EventInformationList">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTNoteDetail">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteDetail.NoteId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteDetail.NoteIdSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteDetail.Created">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteDetail.CreatedSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteDetail.CreatedBy">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteDetail.Text">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteDetail.NoteLabels">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteDetail.NoteAttachments">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseCreate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.ClassificationEventCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.Priority">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.PrioritySpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.Title">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.Description">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.Queue">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.DueDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.DueDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.AssociatedObject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.Form">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.Internal">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.InternalSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.InteractionID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.InteractionIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.Parent">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.CreationDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.CreationDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.XCoord">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseCreate.YCoord">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTDomainObjectID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDomainObjectID.Type">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDomainObjectID.Identifier">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.Priority">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.PrioritySpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.Severity">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.SeveritySpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.Title">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.Description">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.Queue">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.DueDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.DueDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.AssociatedObject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.CurrentHandler">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.Internal">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.InternalSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.Form">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.NewNote">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.NoteLabels">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.NewNoteAttachment">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.UpdateNote">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.UpdateNoteAttachment">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.NewCaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.BPMCaseUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.Parent">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.CreationDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.CreationDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.XCoord">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseUpdate.YCoord">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTNoteAttachment">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteAttachment.NoteText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteAttachment.NoteLabels">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteAttachment.AttachmentName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteAttachment.AttachmentIdentifier">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteAttachment.AttachmentType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNoteAttachment.AttachmentTypeSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseNoteUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseNoteUpdate.NoteID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseNoteUpdate.NoteText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseNoteUpdate.NoteLabels">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTUpdateNoteAttachment">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUpdateNoteAttachment.NoteID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUpdateNoteAttachment.NoteText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUpdateNoteAttachment.NoteLabels">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUpdateNoteAttachment.AttachmentName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUpdateNoteAttachment.AttachmentIdentifier">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUpdateNoteAttachment.AttachmentType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUpdateNoteAttachment.AttachmentTypeSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTBPMCaseUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTBPMCaseUpdate.BPMReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTBPMCaseUpdate.BPMUpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCalculateDueDateInput">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCalculateDueDateInput.SLATimePeriod">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCalculateDueDateInput.SLATimeValue">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCalculateDueDateInput.SLAWorkingTime">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCalculateDueDateInput.SLACalendarKey">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.SLATimePeriodType">
+            <remarks/>
+        </member>
+        <member name="F:VerintWebService.SLATimePeriodType.SECOND">
+            <remarks/>
+        </member>
+        <member name="F:VerintWebService.SLATimePeriodType.MINUTE">
+            <remarks/>
+        </member>
+        <member name="F:VerintWebService.SLATimePeriodType.HOUR">
+            <remarks/>
+        </member>
+        <member name="F:VerintWebService.SLATimePeriodType.DAY">
+            <remarks/>
+        </member>
+        <member name="F:VerintWebService.SLATimePeriodType.WEEK">
+            <remarks/>
+        </member>
+        <member name="F:VerintWebService.SLATimePeriodType.MONTH">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCalculateDueDateFinish">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCalculateDueDateFinish.DueDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCalculateDueDateFinish.DueDateSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseFinish">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFinish.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFinish.Items">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFinish.WorkFlowCompletionStatus">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseFinish.Reason">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseActionReason">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseActionReason.Title">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseActionReason.Description">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseClose">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseClose.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseClose.Reason">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseClose.ClosedDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseClose.ClosedDateSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseEventNew">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEventNew.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEventNew.EventTitle">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEventNew.AdditionalInfo">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEventNew.ProxyUserID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEventNew.ProxyUserName">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseTaskNew">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNew.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNew.TaskDefinitionID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNew.TaskDefinitionIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNew.ManualTask">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseTaskNewManualTask">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNewManualTask.Name">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNewManualTask.Description">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNewManualTask.Type">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNewManualTask.Priority">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNewManualTask.Item">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNewManualTask.EscalationRuleName">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseTaskNewManualTaskDuration">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNewManualTaskDuration.TimeUnit">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNewManualTaskDuration.TimeAmount">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNewManualTaskDuration.WorkingTime">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskNewManualTaskDuration.CalendarKey">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseTaskUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskUpdate.TaskID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskUpdate.Status">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskUpdate.Completed">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskUpdate.CompletedSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskUpdate.DueDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseTaskUpdate.DueDateSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseEformNew">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEformNew.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEformNew.EformName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseEformNew.URL">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTInteractionCreate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionCreate.Channel">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionCreate.Verified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionCreate.PartyID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionCreate.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionCreate.ChannelReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionCreate.ChannelData">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionCreate.NoteText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionCreate.NoteLabels">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTInteractionUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionUpdate.InteractionID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionUpdate.InteractionMessage">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionUpdate.queueForInteractionMessage">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTInteractionMessage">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionMessage.from">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionMessage.to">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionMessage.sent">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionMessage.sentSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionMessage.received">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionMessage.receivedSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionMessage.subject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionMessage.content">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionMessage.messageType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionMessage.messageTypeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionMessage.AttachedDocuments">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTAttachedDocument">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAttachedDocument.documentName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAttachedDocument.documentReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAttachedDocument.storageType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAttachedDocument.storageTypeSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTInteractionCaseLink">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionCaseLink.InteractionID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInteractionCaseLink.CaseReference">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseExternalReferenceRequest">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseExternalReferenceRequest.CaseID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseExternalReferenceRequest.ExternalReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseExternalReferenceRequest.Linkage">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTPartySearch">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.SearchType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.SearchMatch">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.Name">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.Forename">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.Forename2">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.DateOfBirth">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.DateOfBirthSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.NationalInsuranceNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.SocialSecurityNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.Postcode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.AddressNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.StreetName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.City">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.StateCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.Zipcode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.PhoneNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.EmailAddress">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.GenericValue">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.SocialChannel">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartySearch.SocialID">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTPropertySearch">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.SearchMatch">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.AddressNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.Postcode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.UPRN">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.SAO">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.StreetName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.Locality">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.PAO">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.Town">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.USRN">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.PropertyID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.StreetName2">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.City">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.StateCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.Zipcode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.BuildingName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.SubBuildingName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.PAOUserDefined1">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.PAOUserDefined2">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.PAOUserDefined3">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.PAOUserDefined4">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.PAOUserDefined5">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.PAOUserDefined6">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.PAOUserDefined7">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.PAOUserDefined8">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.PAOUserDefined9">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.PAOUserDefined10">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.SAOUserDefined1">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.SAOUserDefined2">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.SAOUserDefined3">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.SAOUserDefined4">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.SAOUserDefined5">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.SAOUserDefined6">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.SAOUserDefined7">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.SAOUserDefined8">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.SAOUserDefined9">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPropertySearch.SAOUserDefined10">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTStreetSearch">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.SearchMatch">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.StreetName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.Locality">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.Town">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.USRN">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.City">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.StateCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.UserDefined1">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.UserDefined2">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.UserDefined3">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.UserDefined4">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.UserDefined5">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.UserDefined6">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.UserDefined7">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.UserDefined8">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.UserDefined9">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreetSearch.UserDefined10">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTIndividual">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.ChildSet">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.BriefDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.Name">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.ContactPostals">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.ContactPhones">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.ContactEmails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.SocialContacts">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.Gender">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.GenderAtBirth">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.PlaceOfBirth">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.CountryOfBirth">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.Nationality">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.MaritalStatus">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.DrivingLicenceNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.DrivingLicencePatternID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.DrivingLicencePatternIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.AdditionalDrivingLicences">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.AdditionalDrivingLicencesSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.PassportNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.PassportNumberPatternID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.PassportNumberPatternIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.AdditionalPassports">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.AdditionalPassportsSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.HealthNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.NationalInsuranceNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.SocialSecurityNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.Ethnicity">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.Disabilities">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.DisabilitiesSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.DisabilityRegNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.DateOfBirth">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.DateOfBirthSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.Occupation">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.AdditionalOccupations">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.AdditionalOccupationsSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.DateOfDeath">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.DateOfDeathSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.PreferredLanguage">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.ValidFromDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.ValidFromDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.ValidToDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.ValidToDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.SurveyConsent">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.RegistrationDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.AuthenticationDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.LGCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.AuthorisedView">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.Category">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.FreeText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.UserDefined">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.UserDefinedNum">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.UserDefinedText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.UserDefinedDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.GenericSmalls">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.GenericBigs">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.AuditDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.MergePartyList">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.Option">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividual.ExtraData">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTExtensionChildSet">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionChildSet.Name">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionChildSet.Child">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTExtensionChild">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionChild.RecordID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionChild.Value">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTKeyValue">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTKeyValue.Key">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTKeyValue.Item">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTKeyValue.ItemElementName">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.ItemChoiceType">
+            <remarks/>
+        </member>
+        <member name="F:VerintWebService.ItemChoiceType.BlockedValue">
+            <remarks/>
+        </member>
+        <member name="F:VerintWebService.ItemChoiceType.DateTimeValue">
+            <remarks/>
+        </member>
+        <member name="F:VerintWebService.ItemChoiceType.DateValue">
+            <remarks/>
+        </member>
+        <member name="F:VerintWebService.ItemChoiceType.NumberValue">
+            <remarks/>
+        </member>
+        <member name="F:VerintWebService.ItemChoiceType.StringValue">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTIndividualName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.NameID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.NameIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.Title">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.Forename">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.Initials">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.Surname">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.Suffix">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.FullName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.RequestedName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.DisplayType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.DateChange">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.DateChangeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.UserDefined">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.UserDefinedNum">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.UserDefinedText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.UserDefinedDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.AuditDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.Preferred">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualName.ExtraData">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTAuditDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetails.Created">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetails.CreatedSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetails.CreatedBy">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetails.LastModified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetails.LastModifiedSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetails.LastModifiedBy">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTContactPostal">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.AddressID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.AddressIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.AddressNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.AddressLine">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.Postcode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.Usage">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.UPRN">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.City">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.StateCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.Zipcode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.PropertyID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.POBox">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.PropertyStatus">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.AddressType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.UserDefined">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.UserDefinedNum">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.UserDefinedText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.UserDefinedDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.StartDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.StartDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.EndDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.EndDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.AuditDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.Preferred">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.Option">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostal.ExtraData">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTContactPhone">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPhone.PhoneID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPhone.PhoneIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPhone.Number">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPhone.DeviceType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPhone.Usage">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPhone.AuditDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPhone.Preferred">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPhone.ExtraData">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTContactEmail">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactEmail.EmailID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactEmail.EmailIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactEmail.EmailAddress">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactEmail.Usage">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactEmail.AuditDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactEmail.Preferred">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactEmail.ExtraData">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSocialContact">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSocialContact.ID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSocialContact.IDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSocialContact.SocialID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSocialContact.SocialChannel">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSocialContact.SiteName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSocialContact.AuditDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSocialContact.ExtraData">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTGenericSmall">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.RecordID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.RecordIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.RecordType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.Value1">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.Value2">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.RangeFrom">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.RangeTo">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.Date1">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.Date1Specified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.Date2">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.Date2Specified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.StartDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.StartDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.EndDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmall.EndDateSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTGenericBig">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.RecordID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.RecordIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.RecordType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.RecordIndex">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Value1">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Value2">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Value3">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Value4">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Value5">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Range1From">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Range1To">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Range2From">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Range2To">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Range3From">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Range3To">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Date1">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Date1Specified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Date2">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Date2Specified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Date3">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Date3Specified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Date4">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Date4Specified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Date5">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.Date5Specified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.StartDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.StartDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.EndDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBig.EndDateSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTOrganisation">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.BriefDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.Name">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.ContactPostals">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.ContactPhones">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.ContactEmails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.SocialContacts">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.LegalEntity">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.LegalEntitySpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.CreationDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.CreationDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.DissolutionDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.DissolutionDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.ChildSet">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.CompanyReferenceNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.OrganisationCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.VATNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.VATNumberPatternID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.VATNumberPatternIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.IndustryClassification">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.ValidFromDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.ValidFromDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.ValidToDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.ValidToDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.UserDefined">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.UserDefinedNum">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.UserDefinedText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.UserDefinedDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.GenericSmalls">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.GenericBigs">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.AuditDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.Option">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisation.ExtraData">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTOrganisationName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationName.NameID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationName.NameIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationName.FullName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationName.DisplayType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationName.DateChange">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationName.DateChangeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationName.UserDefined">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationName.UserDefinedNum">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationName.UserDefinedText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationName.UserDefinedDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationName.AuditDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationName.Preferred">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTProperty">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.BriefDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.UPRN">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.USRN">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PAO">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SAO">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PropertyID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.AddressNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.AddressLine1">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.AddressLine2">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PrimaryStreetName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.Locality">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.Town">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.Postcode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.City">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.StateCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.Zipcode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.County">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.Country">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.POBox">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.BuildingName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PrimaryStreetAltName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SecondaryStreetName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SecondaryStreetAltName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.IGGeoCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.GPSItmGeoCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.GPSUtmGeoCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.LocalCouncilCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.LocalCouncilCodeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.LocalCouncilName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.RegionalCouncilCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.RegionalCouncilCodeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.RegionalCouncilName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.WardRef">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.WardRefSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.WardName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.LocalityType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SecondaryLocality">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.TownlandRef">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.TownlandRefSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.TownlandName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PostTownRef">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PostTownRefSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.CityRef">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.CityRefSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.CountyRef">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.CountyRefSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.CountryRef">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.CountryRefSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.BuildingUse">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.BuildingStatus">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PAOUserDefined">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PAOUserDefinedNum">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PAOUserDefinedText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PAOUserDefinedDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PAOStartDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PAOStartDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PAOEndDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PAOEndDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SubBuildingName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.OrganisationName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.BusinessAlias">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.DepartmentName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.LargeUserPostCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SubBuildingStatus">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.BusinessUse">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.RMDeliveryPointSuffix">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.RMAddressKey">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.RMAddressKeySpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.VLARef">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.VLARefSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.OrdnanceSurveyRef">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.OrdnanceSurveyRefSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.DeliveryPointStatus">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.RecordStatusIndicator">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SAOUserDefined">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SAOUserDefinedNum">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SAOUserDefinedText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SAOUserDefinedDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SAOStartDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SAOStartDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SAOEndDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SAOEndDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.PAOAuditDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTProperty.SAOAuditDetails">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTStreet">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.BriefDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.USRN">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.StreetName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.PrimaryLocality">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.PostTownName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.CountyName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.City">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.StateCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.Primary">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.AlternativeStreetName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.LocalityType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.PostTownRef">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.PostTownRefSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.CityRef">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.CityRefSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.CountyRef">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.CountyRefSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.LocalCouncilCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.LocalCouncilCodeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.LocalCouncilName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.UserDefined">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.UserDefinedNum">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.UserDefinedText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.UserDefinedDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTStreet.AuditDetails">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTIndividualUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.ChildSet">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.BriefDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.Name">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.ContactPostals">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.ContactPhones">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.ContactEmails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.SocialContacts">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.GenderUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.GenderAtBirthUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.PlaceOfBirthUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.CountryOfBirthUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.NationalityUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.MaritalStatusUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.DrivingLicenceNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.DrivingLicencePatternIDUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.AdditionalDrivingLicencesUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.PassportNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.PassportNumberPatternIDUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.AdditionalPassportsUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.HealthNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.NationalInsuranceNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.SocialSecurityNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.EthnicityUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.DisabilitiesUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.DisabilityRegNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.DateOfBirthUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.OccupationUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.AdditionalOccupationsUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.DateOfDeathUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.PreferredLanguageUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.ValidFromDateUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.ValidToDateUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.SurveyConsentUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.RegistrationDetailsUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.AuthenticationDetailsUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.LGCodeUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.AuthorisedViewUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.CategoryUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.FreeTextUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.UserDefinedUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.UserDefinedNumUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.UserDefinedTextUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.UserDefinedDateUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.GenericSmallUpdates">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.GenericBigUpdates">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.Option">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualUpdate.ExtraData">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTIndividualNameUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualNameUpdate.IndividualNameDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndividualNameUpdate.ListItemUpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTContactPostalUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostalUpdate.PostalDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPostalUpdate.ListItemUpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTContactPhoneUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPhoneUpdate.PhoneDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactPhoneUpdate.ListItemUpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTContactEmailUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactEmailUpdate.EmailDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTContactEmailUpdate.ListItemUpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSocialContactUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSocialContactUpdate.SocialContacts">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSocialContactUpdate.ListItemUpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTGenderUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenderUpdate.Gender">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenderUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTGenderAtBirthUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenderAtBirthUpdate.GenderAtBirth">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenderAtBirthUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTPlaceOfBirthUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPlaceOfBirthUpdate.PlaceOfBirth">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPlaceOfBirthUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCountryOfBirthUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCountryOfBirthUpdate.CountryOfBirth">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCountryOfBirthUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTNationalityUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNationalityUpdate.Nationality">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNationalityUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTMaritalStatusUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMaritalStatusUpdate.MaritalStatus">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMaritalStatusUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTDrivingLicenceNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDrivingLicenceNumberUpdate.DrivingLicenceNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDrivingLicenceNumberUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTDrivingLicencePatternIDUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDrivingLicencePatternIDUpdate.DrivingLicencePatternID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDrivingLicencePatternIDUpdate.DrivingLicencePatternIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDrivingLicencePatternIDUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTAdditionalDrivingLicencesUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAdditionalDrivingLicencesUpdate.AdditionalDrivingLicences">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAdditionalDrivingLicencesUpdate.AdditionalDrivingLicencesSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAdditionalDrivingLicencesUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTPassportNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPassportNumberUpdate.PassportNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPassportNumberUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTPassportNumberPatternIDUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPassportNumberPatternIDUpdate.PassportNumberPatternID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPassportNumberPatternIDUpdate.PassportNumberPatternIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPassportNumberPatternIDUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTAdditionalPassportsUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAdditionalPassportsUpdate.AdditionalPassports">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAdditionalPassportsUpdate.AdditionalPassportsSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAdditionalPassportsUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTHealthNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTHealthNumberUpdate.HealthNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTHealthNumberUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTNationalInsuranceNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNationalInsuranceNumberUpdate.NationalInsuranceNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTNationalInsuranceNumberUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSocialSecurityNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSocialSecurityNumberUpdate.SocialSecurityNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSocialSecurityNumberUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTEthnicityUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTEthnicityUpdate.Ethnicity">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTEthnicityUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTDisabilitiesUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDisabilitiesUpdate.Disabilities">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDisabilitiesUpdate.DisabilitiesSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDisabilitiesUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTDisabilityRegNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDisabilityRegNumberUpdate.DisabilityRegNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDisabilityRegNumberUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTDateOfBirthUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDateOfBirthUpdate.DateOfBirth">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDateOfBirthUpdate.DateOfBirthSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDateOfBirthUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTOccupationUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOccupationUpdate.Occupation">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOccupationUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTAdditionalOccupationsUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAdditionalOccupationsUpdate.AdditionalOccupations">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAdditionalOccupationsUpdate.AdditionalOccupationsSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAdditionalOccupationsUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTDateOfDeathUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDateOfDeathUpdate.DateOfDeath">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDateOfDeathUpdate.DateOfDeathSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDateOfDeathUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTPreferredLanguageUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPreferredLanguageUpdate.PreferredLanguage">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPreferredLanguageUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTValidFromDateUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTValidFromDateUpdate.ValidFromDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTValidFromDateUpdate.ValidFromDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTValidFromDateUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTValidToDateUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTValidToDateUpdate.ValidToDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTValidToDateUpdate.ValidToDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTValidToDateUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSurveyConsentUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSurveyConsentUpdate.SurveyConsent">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSurveyConsentUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTRegistrationDetailsUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRegistrationDetailsUpdate.RegistrationDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRegistrationDetailsUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTAuthenticationDetailsUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuthenticationDetailsUpdate.AuthenticationDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuthenticationDetailsUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTLGCodeUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTLGCodeUpdate.LGCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTLGCodeUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTAuthorisedViewUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuthorisedViewUpdate.AuthorisedView">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuthorisedViewUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCategoryUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCategoryUpdate.Category">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCategoryUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTFreeTextUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFreeTextUpdate.FreeText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFreeTextUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTUserDefinedUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUserDefinedUpdate.UserDefined">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUserDefinedUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTUserDefinedNumUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUserDefinedNumUpdate.UserDefinedNum">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUserDefinedNumUpdate.UserDefinedNumSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUserDefinedNumUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTUserDefinedTextUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUserDefinedTextUpdate.UserDefinedText">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUserDefinedTextUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTUserDefinedDateUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUserDefinedDateUpdate.UserDefinedDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUserDefinedDateUpdate.UserDefinedDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTUserDefinedDateUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTGenericSmallUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmallUpdate.GenericSmallDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericSmallUpdate.ListItemUpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTGenericBigUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBigUpdate.GenericBigDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTGenericBigUpdate.ListItemUpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTOrganisationUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.BriefDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.Name">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.ContactPostals">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.ContactPhones">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.ContactEmails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.SocialContacts">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.LegalEntityUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.CreationDateUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.DissolutionDateUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.CompanyReferenceNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.OrganisationCodeUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.VATNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.VATNumberPatternIDUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.IndustryClassificationUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.ValidFromDateUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.ValidToDateUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.UserDefinedUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.UserDefinedNumUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.UserDefinedTextUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.UserDefinedDateUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.GenericSmallUpdates">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.GenericBigUpdates">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.Option">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.ChildSet">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationUpdate.ExtraData">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTOrganisationNameUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationNameUpdate.OrganisationNameDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationNameUpdate.ListItemUpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTLegalEntityUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTLegalEntityUpdate.LegalEntity">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTLegalEntityUpdate.LegalEntitySpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTLegalEntityUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCreationDateUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCreationDateUpdate.CreationDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCreationDateUpdate.CreationDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCreationDateUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTDissolutionDateUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDissolutionDateUpdate.DissolutionDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDissolutionDateUpdate.DissolutionDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDissolutionDateUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCompanyReferenceNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCompanyReferenceNumberUpdate.CompanyReferenceNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCompanyReferenceNumberUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTOrganisationCodeUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationCodeUpdate.OrganisationCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTOrganisationCodeUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTVATNumberUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTVATNumberUpdate.VATNumber">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTVATNumberUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTVATNumberPatternIDUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTVATNumberPatternIDUpdate.VATNumberPatternID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTVATNumberPatternIDUpdate.VATNumberPatternIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTVATNumberPatternIDUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTIndustryClassificationUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndustryClassificationUpdate.IndustryClassification">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTIndustryClassificationUpdate.UpdateType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTMergeCreate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMergeCreate.TargetParty">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMergeCreate.MergeParties">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTDeleteParty">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDeleteParty.ObjectID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTDeleteParty.Option">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTPartyCluster">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartyCluster.ObjectID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTPartyCluster.ClusterID">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTRelationshipNew">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipNew.RelationshipType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipNew.StartDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipNew.StartDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipNew.EndDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipNew.EndDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipNew.OwnerObject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipNew.RelatedObject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipNew.ExtraData">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTRelationship">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationship.RelationshipID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationship.RelationshipType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationship.StartDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationship.StartDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationship.EndDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationship.EndDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationship.RelatedObject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationship.ExtraData">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationship.OwnerObject">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTRelationshipTimeframeUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipTimeframeUpdate.RelationshipID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipTimeframeUpdate.StartDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipTimeframeUpdate.StartDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipTimeframeUpdate.EndDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipTimeframeUpdate.EndDateSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTRelationshipFormDataUpdate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipFormDataUpdate.RelationshipID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRelationshipFormDataUpdate.ExtraData">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTMessageGeneral">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageGeneral.MessageID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageGeneral.Subject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageGeneral.Text">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageGeneral.Created">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageGeneral.CreatedBy">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageGeneral.Read">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTMessageParty">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageParty.MessageID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageParty.Subject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageParty.Text">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageParty.Created">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageParty.CreatedBy">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageParty.Party">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageParty.HighPriority">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTMessageGeneralNew">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageGeneralNew.Subject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessageGeneralNew.Text">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTMessagePartyNew">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessagePartyNew.Party">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessagePartyNew.Subject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessagePartyNew.Text">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTMessagePartyNew.HighPriority">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTEvent">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTEvent.EventCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTEvent.EventName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTEvent.EventDescription">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTExtensionParty">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionParty.ObjectID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionParty.BriefDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionParty.ContactPostals">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionParty.ContactPhones">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionParty.ContactEmails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionParty.Value">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionParty.ChildSet">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTExtensionObject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionObject.ObjectID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionObject.BriefDetails">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionObject.Value">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTExtensionObject.ChildSet">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTObjectSearchCriteria">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTObjectSearchCriteria.SearchType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTObjectSearchCriteria.SearchTypeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTObjectSearchCriteria.Criteria">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTObjectSearchCriteria.Options">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTRuleEngineCriteria">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRuleEngineCriteria.RuleSet">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRuleEngineCriteria.CaseId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRuleEngineCriteria.UserId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRuleEngineCriteria.Data">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTRuleEngineItem">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRuleEngineItem.Name">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRuleEngineItem.Value">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRuleEngineItem.Children">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTRuleEngineResults">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRuleEngineResults.SessionID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRuleEngineResults.SessionIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRuleEngineResults.Output">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCodeBook">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCodeBook.CodeBookID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCodeBook.CodeBookName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCodeBook.Description">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCodeBook.Published">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCodeBook.StartDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCodeBook.StartDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCodeBook.EndDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCodeBook.EndDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCodeBook.Codes">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.CodeID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.CodeKey">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.CodeValue">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.Description">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.CodeBookName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.StartDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.StartDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.EndDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.EndDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.CodeGroup1">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.CodeGroup2">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.CodeGroup3">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.Filter1">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.Filter2">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.Filter3">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.Filter4">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.Filter5">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.Attribute1">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.Attribute2">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.Attribute3">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.Attribute4">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCode.Attribute5">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSearchAndRetrieveCase">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchAndRetrieveCase.FWTCaseSearch">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchAndRetrieveCase.Option">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSidAccessPermissions">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSidAccessPermissions.Type">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSidAccessPermissions.Sid">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSidAccessPermissions.GrantMask">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSidAccessPermissions.GrantMaskSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSidAccessPermissions.DenyMask">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSidAccessPermissions.DenyMaskSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSetAcl">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSetAcl.DomainObjectID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSetAcl.FWTSidAccessPermissionsList">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSetSidAccessPermissions">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSetSidAccessPermissions.DomainObjectID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSetSidAccessPermissions.FWTSidAccessPermissionsList">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTInsertSidAccessPermissions">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInsertSidAccessPermissions.DomainObjectID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTInsertSidAccessPermissions.FWTSidAccessPermissionsList">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTRemoveSidAccessPermissions">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRemoveSidAccessPermissions.DomainObjectID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTRemoveSidAccessPermissions.FWTSidAccessPermissionsList">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSearchCriteria">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchCriteria.QueryString">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchCriteria.ResultDetail">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchCriteria.StartIndex">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchCriteria.StartIndexSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchCriteria.PageSize">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchCriteria.PageSizeSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSearchResult">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchResult.TotalHits">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchResult.StartIndex">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchResult.PageSize">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchResult.ElapsedMilliseconds">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchResult.Hit">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSearchHit">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchHit.ID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchHit.Type">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchHit.Title">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchHit.Score">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchHit.Field">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTSearchHitField">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchHitField.relationship">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchHitField.rowID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchHitField.source">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchHitField.childRowID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchHitField.name">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTSearchHitField.value">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTFaceToFaceHeader">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceHeader.InteractionDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceHeader.InteractionDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceHeader.BranchID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceHeader.BranchIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceHeader.TicketNumber">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTFaceToFaceConversation">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceConversation.FaceToFaceID">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceConversation.StartDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceConversation.StartDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceConversation.Duration">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceConversation.DurationSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceConversation.Counter">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceConversation.CounterSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceConversation.Queue">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceConversation.QueueSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceConversation.WaitingTime">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTFaceToFaceConversation.WaitingTimeSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTReopenCaseRequest">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTReopenCaseRequest.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTReopenCaseRequest.Item">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTReopenCaseRequest.ItemElementName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTReopenCaseRequest.Reason">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTReopenCaseRequest.resetTaskSLAs">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTReopenCaseRequest.resetTaskSLAsSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.ItemChoiceType1">
+            <remarks/>
+        </member>
+        <member name="F:VerintWebService.ItemChoiceType1.AllocateToQueueByName">
+            <remarks/>
+        </member>
+        <member name="F:VerintWebService.ItemChoiceType1.AllocateToUser">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTAuditMethodDescriptor">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditMethodDescriptor.InterfaceName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditMethodDescriptor.MethodName">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditMethodDescriptor.DomainArea">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditMethodDescriptor.OperationType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditMethodDescriptor.Audited">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTAuditableServiceNamesRequest">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTAuditHeadersRequest">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersRequest.UserId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersRequest.IpAddress">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersRequest.StartDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersRequest.StartDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersRequest.EndDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersRequest.EndDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersRequest.Channel">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersRequest.DomainArea">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersRequest.OperationType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersRequest.ObjectId">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTAuditHeadersResponseItem">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersResponseItem.ItemId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersResponseItem.UserId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersResponseItem.AuditDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersResponseItem.IpAddress">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersResponseItem.Channel">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersResponseItem.ObjectId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersResponseItem.DomainArea">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditHeadersResponseItem.OperationType">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTAuditDetailResponse">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetailResponse.ItemId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetailResponse.UserId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetailResponse.AuditDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetailResponse.IpAddress">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetailResponse.Channel">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetailResponse.ObjectId">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetailResponse.DomainArea">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetailResponse.OperationType">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetailResponse.Inputs">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTAuditDetailResponse.Outputs">
+            <remarks/>
+        </member>
+        <member name="T:VerintWebService.FWTCaseReclassify">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.CaseReference">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.ClassificationEventCode">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.Priority">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.PrioritySpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.Severity">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.SeveritySpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.Title">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.Description">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.Queue">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.DueDate">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.DueDateSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.Form">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.AssociatedObject">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.CurrentHandler">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.Internal">
+            <remarks/>
+        </member>
+        <member name="P:VerintWebService.FWTCaseReclassify.InternalSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.AttachFileRequest">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.AttachFileRequest.ref">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.AttachFileRequest.filename">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.AttachFileRequest.file">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.AttachFileRequest.mimetype">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.AttachFileRequest.field">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.Form">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.name">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.version">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.ref">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.currentpage">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.customerid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.organisationid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.propertyid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.streetid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.interactionid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.email">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.caseid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.xref">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.xref1">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.xref2">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.retrycount">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.complete">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.authsupplied">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.locale">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.created">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.modified">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Form.data">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.Data">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Data.formdata">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.Field">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Field.name">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Field.Item">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.Children">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Children.child">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.Values">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.Values.value">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.File">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.File.ref">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.File.filename">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.File.file">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.File.mimetype">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.File.field">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.File.locale">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.File.created">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.File.modified">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.AttachFileResponse">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.AttachFileResponse.status">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.GetFileRequest">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetFileRequest.ref">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetFileRequest.filename">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.GetFileResponse">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetFileResponse.File">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.UpdateRequest">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.name">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.ref">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.version">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.customerid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.organisationid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.propertyid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.streetid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.interactionid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.email">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.password">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.caseid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.xref">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.xref1">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.xref2">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.currentpage">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.complete">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.completeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.retrycount">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.data">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateRequest.dataupdate">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.stringBoolean">
+            <remarks/>
+        </member>
+        <member name="F:VOFWebService.stringBoolean.Y">
+            <remarks/>
+        </member>
+        <member name="F:VOFWebService.stringBoolean.N">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.dataupdate">
+            <remarks/>
+        </member>
+        <member name="F:VOFWebService.dataupdate.none">
+            <remarks/>
+        </member>
+        <member name="F:VOFWebService.dataupdate.clear">
+            <remarks/>
+        </member>
+        <member name="F:VOFWebService.dataupdate.overwrite">
+            <remarks/>
+        </member>
+        <member name="F:VOFWebService.dataupdate.merge">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.UpdateResponse">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.UpdateResponse.status">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.ListRequest">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.ListRequest.customerid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.ListRequest.organisationid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.ListRequest.name">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.ListRequest.complete">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.ListRequest.completeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.ListRequest.option">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.ListRequest.optionSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.options">
+            <remarks/>
+        </member>
+        <member name="F:VOFWebService.options.all">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.ListResponse">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.ListResponse.Forms">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.CreateRequest">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.name">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.customerid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.organisationid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.propertyid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.streetid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.interactionid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.email">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.password">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.caseid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.xref">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.xref1">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.xref2">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.data">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.complete">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.completeSpecified">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateRequest.locale">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.CreateResponse">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateResponse.status">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.CreateResponse.ref">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.RemoveFileRequest">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.RemoveFileRequest.ref">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.RemoveFileRequest.filename">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.RemoveFileResponse">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.RemoveFileResponse.status">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.GetRequest">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetRequest.ref">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetRequest.option">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetRequest.optionSpecified">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.GetResponse">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.name">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.version">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.ref">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.currentpage">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.customerid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.propertyid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.streetid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.organisationid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.interactionid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.email">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.caseid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.xref">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.xref1">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.xref2">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.retrycount">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.complete">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.locale">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.authsupplied">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.created">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.modified">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.data">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.GetResponse.files">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.DeleteRequest">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.DeleteRequest.ref">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.DeleteResponse">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.DeleteResponse.status">
+            <remarks/>
+        </member>
+        <member name="T:VOFWebService.ReplaceCustomeridRequest">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.ReplaceCustomeridRequest.customerid">
+            <remarks/>
+        </member>
+        <member name="P:VOFWebService.ReplaceCustomeridRequest.replace">
+            <remarks/>
+        </member>
+        <member name="M:verint_service.Controllers.CaseController.UpdateCaseDescription(StockportGovUK.NetStandard.Models.Verint.Case)">
+            <summary>
+            Method to append a payment status to the description
+            </summary>
+            <param name="crmCase">The case to be updated</param>
+            <returns>An int declaring the state of the update</returns>
+        </member>
+        <member name="M:verint_service.Controllers.ConfirmTestController.CreateGetUpdate">
+            the way that should work if there wasn't bugs with Update
+        </member>
+        <member name="M:verint_service.Controllers.ConfirmTestController.CreateVerintCaseCreateVOFUpdate">
+            the working work around 
+        </member>
+        <member name="M:verint_service.Controllers.VerintOnlineFormController.Create(verint_service.Controllers.VerintOnlineFormController.VerintOnlineFormRequest)">
+            <summary>
+            Creates a Verint Online From, Verint Case, and triggers Confirm integration
+            </summary>
+            <remarks>
+                {
+                   "verintCase": {
+                       "eventCode": 2002573,
+                       },
+                   "formName": "confirm_integrationform",
+                   "formData": {
+                       "CONF_POC_CODE":"WEB",
+                       "CONF_POC_NAME":"Web/Online Form",
+                       "CONF_METH_CODE":"WEB",
+                       "CONF_METH_NAME":"Web/Online Form",
+                       "CONF_CUST_REF":"101003283810",
+                       "CONF_CUST_TITLE":"Mr",
+                       "CONF_CUST_SURNAME":"Humphreys",
+                       "CONF_CUST_FORENAME":"Elliott",
+                       "CONF_CUST_PHONE":"07388909179",
+                       "CONF_CUST_EMAIL":"elliott.humphreys@stockport.gov.uk",
+                       "CONF_CONTACT":"Mr Elliott Elliott Humphreys",
+                       "CONF_CONTACT_PHONE":"07388909179",
+                       "CONF_CONTACT_EMAIL":"elliott.humphreys@stockport.gov.uk",
+                       "CONF_CUST_BUILDING":"STOCKPORT DELIVERY OFFICE 1",
+                       "CONF_CUST_STREET":"EXCHANGE STREET",
+                       "CONF_CUST_LOCALITY":"",
+                       "CONF_CUST_TOWN":"STOCKPORT",
+                       "CONF_CUST_POSTCODE":"SK1 1AA",
+                       "CONF_SERVICE_CODE":"GREN",
+                       "CONF_SUBJECT_CODE":"TTPO",
+                       "CONF_CLASSIFICATION":"public_realm-greenspace-trees_request_new_tpo",
+                       "CboClassCode":"REQU",
+                       "FOLLOW_UP_BY":"10 Working Days",
+                       "CONF_DESC":"(Lagan) Event Name: Request for a new Tree preservation order. \r\nEvent Name: Request for a new Tree preservation order. \r\nReason for the TPO //request:Further?/ Location Information: test 1. \r\n",
+                       "CONF_LOCATION":"test 1",
+                       "CONF_SITE_CODE":"38102548",
+                       "CONF_SITE_NAME":"HIBBERT LANE",
+                       "CONF_SITE_LOCALITY":"MARPLE",
+                       "CONF_SITE_TOWN":"STOCKPORT",
+                       "EFORM_UPDATED":"true",
+                       "VIEWMODE":"C",
+                       "CboCustomerTypeCode":"PUBL",
+                       "CONF_LOGGED_BY":"Lagan",
+                       "le_eventcode":"2002573",
+                       "le_queue_complete":"AppsConfirmQueuePending",
+                       "le_associated_obj_type":"D4",
+                       "le_associated_obj_id":"1002109494",
+                       "le_description":"tpo"
+                   }
+               }
+            </remarks>
+        </member>
+    </members>
+</doc>

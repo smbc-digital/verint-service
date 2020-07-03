@@ -14,6 +14,7 @@ using verint_service.Services.Organisation;
 using verint_service.Services.Property;
 using verint_service.Services.Street;
 using verint_service.Services.Update;
+using verint_service.Services.VerintOnlineForm;
 using verint_service.Utils.Builders;
 using verint_service.Utils.Mappers;
 
@@ -45,6 +46,7 @@ namespace verint_service.Utils.Extensions
             services.AddTransient<IPropertyService, PropertyService>();
             services.AddTransient<IStreetService, StreetService>();
             services.AddTransient<IOrganisationService, OrganisationService>();
+            services.AddTransient<IVerintOnlineFormService, VerintOnlineFormService>();
         }
 
         public static void RegisterUtils(this IServiceCollection services)
@@ -66,6 +68,7 @@ namespace verint_service.Utils.Extensions
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Verint service API", Version = "v1" });
+                c.IncludeXmlComments($"./swagger-documentation.xml");
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",

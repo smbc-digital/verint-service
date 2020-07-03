@@ -1533,27 +1533,27 @@ namespace VOFWebService
         
         private string nameField;
         
-        private string customeridField;
+            private string customeridField;
         
-        private string organisationidField;
+            private string organisationidField;
         
-        private string propertyidField;
+            private string propertyidField;
         
-        private string streetidField;
+            private string streetidField;
         
-        private string interactionidField;
+            private string interactionidField;
         
-        private string emailField;
+            private string emailField;
         
-        private string passwordField;
+            private string passwordField;
         
         private string caseidField;
         
-        private string xrefField;
+            private string xrefField;
         
-        private string xref1Field;
+            private string xref1Field;
         
-        private string xref2Field;
+            private string xref2Field;
         
         private Data dataField;
         
