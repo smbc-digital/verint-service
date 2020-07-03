@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Verint;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace verint_service.Controllers
     [Produces("application/json")]
     [Route("api/v1/[Controller]")]
     [ApiController]
+    [TokenAuthentication]
     public class VerintOnlineFormController : ControllerBase
     {
         private readonly IVerintOnlineFormService _verintOnlineFormService;
