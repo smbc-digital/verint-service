@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using static verint_service.Controllers.VerintOnlineFormController;
+﻿using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
+using System.Threading.Tasks;
 
 namespace verint_service.Services.VerintOnlineForm
 {

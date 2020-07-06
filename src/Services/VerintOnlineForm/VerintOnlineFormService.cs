@@ -1,10 +1,10 @@
-﻿using System;
+﻿using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Services.Case;
 using VOFWebService;
-using static verint_service.Controllers.VerintOnlineFormController;
 
 namespace verint_service.Services.VerintOnlineForm
 {

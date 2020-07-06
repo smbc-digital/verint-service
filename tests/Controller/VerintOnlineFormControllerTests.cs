@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using verint_service.Controllers;
 using verint_service.Services.VerintOnlineForm;
 using Xunit;
+using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
 
 namespace verint_service_tests.Controller
 {
@@ -18,10 +19,10 @@ namespace verint_service_tests.Controller
         [Fact]
         public async Task Create_ShouldCallVerintOnlineFormService()
         {
-            _ = await _controller.Create(new VerintOnlineFormController.VerintOnlineFormRequest());
+            _ = await _controller.Create(new VerintOnlineFormRequest());
 
             _mockService
-                .Verify(_ => _.CreateVOFCase(It.IsAny<VerintOnlineFormController.VerintOnlineFormRequest>()), Times.Once);
+                .Verify(_ => _.CreateVOFCase(It.IsAny<VerintOnlineFormRequest>()), Times.Once);
 
             _mockService
                 .VerifyNoOtherCalls();
