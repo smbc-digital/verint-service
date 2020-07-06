@@ -27,7 +27,9 @@ namespace verint_service
         {
             services.AddControllers()
                     .AddNewtonsoftJson();
-            services.AddResilientHttpClients<IGateway, Gateway>(Configuration);
+
+            services.AddHttpClient<IGateway, Gateway>();
+
             services.AddAvailability();
             services.AddSwagger();
             services.AddHealthChecks()
