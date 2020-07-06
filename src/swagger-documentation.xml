@@ -4631,17 +4631,12 @@
             <param name="crmCase">The case to be updated</param>
             <returns>An int declaring the state of the update</returns>
         </member>
-        <member name="M:verint_service.Controllers.ConfirmTestController.CreateGetUpdate">
-            the way that should work if there wasn't bugs with Update
-        </member>
-        <member name="M:verint_service.Controllers.ConfirmTestController.CreateVerintCaseCreateVOFUpdate">
-            the working work around 
-        </member>
         <member name="M:verint_service.Controllers.VerintOnlineFormController.Create(verint_service.Controllers.VerintOnlineFormController.VerintOnlineFormRequest)">
             <summary>
             Creates a Verint Online From, Verint Case, and triggers Confirm integration
             </summary>
             <remarks>
+            Use the following object to create a TPO VOF case.
                 {
                    "verintCase": {
                        "eventCode": 2002573,
