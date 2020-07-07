@@ -19,11 +19,27 @@ namespace verint_service_tests.Services
         private readonly VerintOnlineFormService _verintOnlineFormService;
         private readonly Mock<ICaseService> _mockCaseService = new Mock<ICaseService>();
 
+        private readonly VerintOnlineFormRequest model = new VerintOnlineFormRequest
+        {
+            VerintCase = new Case { CaseReference = "reference" },
+            FormName = "test form",
+            FormData = new Dictionary<string, string>
+                {
+                    {
+                       "key",
+                       "value"
+                    }
+                }
+        };
+
         public VerintOnlineFormServiceTests()
         {
             _mockConnection
                .Setup(_ => _.VOFClient())
                .Returns(_mockVOFClient.Object);
+
+            _mockCaseService.Setup(_ => _.CreateCase(It.IsAny<Case>()))
+             .ReturnsAsync(model.VerintCase.CaseReference);
 
             _verintOnlineFormService = new VerintOnlineFormService(_mockConnection.Object, _mockCaseService.Object);
         }
@@ -31,23 +47,7 @@ namespace verint_service_tests.Services
         [Fact]
         public async Task CreateVOFCase_ShouldCallCaseService()
         {
-            //Arrange
-            var model = new VerintOnlineFormRequest
-            {
-                VerintCase = new Case { CaseReference = "reference" },
-                FormName = "test form",
-                FormData = new Dictionary<string, string>
-                {
-                    {
-                       "key",
-                       "value"
-                    }
-                }
-            };
-
-            _mockCaseService.Setup(_ => _.CreateCase(It.IsAny<Case>()))
-                .ReturnsAsync(model.VerintCase.CaseReference);
-
+            // Arrange 
             _mockVOFClient
             .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
             .ReturnsAsync(new CreateResponse1
@@ -58,33 +58,17 @@ namespace verint_service_tests.Services
             _mockVOFClient.Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
                 .ReturnsAsync(new UpdateResponse1 { UpdateResponse = new UpdateResponse { status = "success" } });
 
-            //Act
+            // Act
             await _verintOnlineFormService.CreateVOFCase(model);
 
-            //Assert
+            // Assert
             _mockCaseService.Verify(_ => _.CreateCase(It.IsAny<Case>()), Times.Once);
         }
 
         [Fact]
         public async Task CreateVOFCase_ShouldCallVOFConnectionToCreateRequest()
         {
-            //Arrange
-            var model = new VerintOnlineFormRequest
-            {
-                VerintCase = new Case { CaseReference = "reference" },
-                FormName = "test form",
-                FormData = new Dictionary<string, string>
-                {
-                    {
-                       "key",
-                       "value"
-                    }
-                }
-            };
-
-            _mockCaseService.Setup(_ => _.CreateCase(It.IsAny<Case>()))
-                .ReturnsAsync(model.VerintCase.CaseReference);
-
+            // Arrange
             _mockVOFClient
             .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
             .ReturnsAsync(new CreateResponse1
@@ -95,33 +79,17 @@ namespace verint_service_tests.Services
             _mockVOFClient.Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
                 .ReturnsAsync(new UpdateResponse1 { UpdateResponse = new UpdateResponse { status = "success" } });
 
-            //Act
+            // Act
             await _verintOnlineFormService.CreateVOFCase(model);
 
-            //Assert
+            // Assert
             _mockVOFClient.Verify(_ => _.CreateAsync(It.IsAny<CreateRequest>()), Times.Once);
         }
 
         [Fact]
         public async Task CreateVOFCase_ShouldThrowExceptionWhenRefIsNull()
         {
-            //Arrange
-            var model = new VerintOnlineFormRequest
-            {
-                VerintCase = new Case { CaseReference = "reference" },
-                FormName = "test form",
-                FormData = new Dictionary<string, string>
-                {
-                    {
-                       "key",
-                       "value"
-                    }
-                }
-            };
-
-            _mockCaseService.Setup(_ => _.CreateCase(It.IsAny<Case>()))
-                .ReturnsAsync(model.VerintCase.CaseReference);
-
+            // Arrange
             _mockVOFClient
             .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
             .ReturnsAsync(new CreateResponse1
@@ -132,33 +100,17 @@ namespace verint_service_tests.Services
             _mockVOFClient.Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
                 .ReturnsAsync(new UpdateResponse1 { UpdateResponse = new UpdateResponse { status = "success" } });
 
-            //Act
+            // Act
             var result = await Assert.ThrowsAsync<Exception>(() => _verintOnlineFormService.CreateVOFCase(model));
 
-            //Assert
+            // Assert
             Assert.Equal("VerintOnlineFormService.CreateVOFCase: VerintOnlineForms-WebService.CreateAsync failed to create basic case.", result.Message);
         }
 
         [Fact]
         public async Task CreateVOFCase_ShouldThrowExceptionWhenStatusIsNotSuccess()
         {
-            //Arrange
-            var model = new VerintOnlineFormRequest
-            {
-                VerintCase = new Case { CaseReference = "reference" },
-                FormName = "test form",
-                FormData = new Dictionary<string, string>
-                {
-                    {
-                       "key",
-                       "value"
-                    }
-                }
-            };
-
-            _mockCaseService.Setup(_ => _.CreateCase(It.IsAny<Case>()))
-                .ReturnsAsync(model.VerintCase.CaseReference);
-
+            // Arrange
             _mockVOFClient
             .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
             .ReturnsAsync(new CreateResponse1
@@ -169,32 +121,17 @@ namespace verint_service_tests.Services
             _mockVOFClient.Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
                 .ReturnsAsync(new UpdateResponse1 { UpdateResponse = new UpdateResponse { status = "not success" } });
 
-            //Act
+            // Act
             var result = await Assert.ThrowsAsync<Exception>(() => _verintOnlineFormService.CreateVOFCase(model));
 
-            //Assert
+            // Assert
             Assert.Equal("VerintOnlineFormService.CreateVOFCase: VerintOnlineForms-WebService.UpdateAsync failed to update case details.", result.Message);
         }
+
         [Fact]
         public async Task CreateVOFCase_ShouldCallVOFConnectionToUpdateRequest()
         {
-            //Arrange
-            var model = new VerintOnlineFormRequest
-            {
-                VerintCase = new Case { CaseReference = "reference" },
-                FormName = "test form",
-                FormData = new Dictionary<string, string>
-                {
-                    {
-                       "key",
-                       "value"
-                    }
-                }
-            };
-
-            _mockCaseService.Setup(_ => _.CreateCase(It.IsAny<Case>()))
-                .ReturnsAsync(model.VerintCase.CaseReference);
-
+            // Arrange
             _mockVOFClient
             .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
             .ReturnsAsync(new CreateResponse1
@@ -205,33 +142,17 @@ namespace verint_service_tests.Services
             _mockVOFClient.Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
                 .ReturnsAsync(new UpdateResponse1 { UpdateResponse = new UpdateResponse { status = "success" } });
 
-            //Act
+            // Act
             await _verintOnlineFormService.CreateVOFCase(model);
 
-            //Assert
+            // Assert
             _mockVOFClient.Verify(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()), Times.Once);
         }
 
         [Fact]
         public async Task CreateVOFCase_ShouldReturnVerintOnlineFormResponse()
         {
-            //Arrange
-            var model = new VerintOnlineFormRequest
-            {
-                VerintCase = new Case { CaseReference = "reference" },
-                FormName = "test form",
-                FormData = new Dictionary<string, string>
-                {
-                    {
-                       "key",
-                       "value"
-                    }
-                }
-            };
-
-            _mockCaseService.Setup(_ => _.CreateCase(It.IsAny<Case>()))
-                .ReturnsAsync(model.VerintCase.CaseReference);
-
+            // Arrange
             _mockVOFClient
             .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
             .ReturnsAsync(new CreateResponse1
@@ -242,11 +163,12 @@ namespace verint_service_tests.Services
             _mockVOFClient.Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
                 .ReturnsAsync(new UpdateResponse1 { UpdateResponse = new UpdateResponse { status = "success" } });
 
-            //Act
-            await _verintOnlineFormService.CreateVOFCase(model);
+            // Act
+           var result = await _verintOnlineFormService.CreateVOFCase(model);
 
-            //Assert
-            //finish this test to return VerintOnlineFormResponse
+            // Assert
+            Assert.Equal("reference", result.VerintCaseReference);
+            Assert.Equal("123456", result.VerintOnlineFormReference);
         }
     };
 }
