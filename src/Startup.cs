@@ -42,6 +42,7 @@ namespace verint_service
             services.RegisterConfiguration(Configuration);
             services.RegisterHelpers();
             services.RegisterServices();
+            services.RegisterAttributes();
             services.RegisterUtils();
         }
 

@@ -2,6 +2,7 @@
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
 using System.Threading.Tasks;
+using verint_service.Attributes;
 using verint_service.Services.VerintOnlineForm;
 
 namespace verint_service.Controllers
@@ -23,6 +24,15 @@ namespace verint_service.Controllers
         /// Creates a Verint Online From, Verint Case, and triggers Confirm integration
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Create(VerintOnlineFormRequest model) => Ok(await _verintOnlineFormService.CreateVOFCase(model));
+        public async Task<IActionResult> Create(VerintOnlineFormRequest model)
+            => Ok(await _verintOnlineFormService.CreateVOFCase(model));
+
+        /// <summary>
+        /// Gets a verint online form case
+        /// </summary>
+        [HttpGet]
+        [DevelopmentOnly]
+        public async Task<IActionResult> GetCase(string verintOnlineFormReference)
+            => Ok(await _verintOnlineFormService.GetVOFCase(verintOnlineFormReference));
     }
 }

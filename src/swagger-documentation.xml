@@ -4,6 +4,23 @@
         <name>verint-service</name>
     </assembly>
     <members>
+        <member name="M:verint_service.Controllers.CaseController.UpdateCaseDescription(StockportGovUK.NetStandard.Models.Verint.Case)">
+            <summary>
+            Method to append a payment status to the description
+            </summary>
+            <param name="crmCase">The case to be updated</param>
+            <returns>An int declaring the state of the update</returns>
+        </member>
+        <member name="M:verint_service.Controllers.VerintOnlineFormController.Create(StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm.VerintOnlineFormRequest)">
+            <summary>
+            Creates a Verint Online From, Verint Case, and triggers Confirm integration
+            </summary>
+        </member>
+        <member name="M:verint_service.Controllers.VerintOnlineFormController.GetCase(System.String)">
+            <summary>
+            Gets a verint online form case
+            </summary>
+        </member>
         <member name="T:VerintAuthWebService.FWTException">
             <remarks/>
         </member>
@@ -4623,18 +4640,6 @@
         </member>
         <member name="P:VOFWebService.ReplaceCustomeridRequest.replace">
             <remarks/>
-        </member>
-        <member name="M:verint_service.Controllers.CaseController.UpdateCaseDescription(StockportGovUK.NetStandard.Models.Verint.Case)">
-            <summary>
-            Method to append a payment status to the description
-            </summary>
-            <param name="crmCase">The case to be updated</param>
-            <returns>An int declaring the state of the update</returns>
-        </member>
-        <member name="M:verint_service.Controllers.VerintOnlineFormController.Create(StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm.VerintOnlineFormRequest)">
-            <summary>
-            Creates a Verint Online From, Verint Case, and triggers Confirm integration
-            </summary>
         </member>
     </members>
 </doc>

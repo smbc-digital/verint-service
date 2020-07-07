@@ -11,6 +11,8 @@ namespace VOFWebService
         Task<CreateResponse1> CreateAsync(CreateRequest CreateRequest);
 
         Task<UpdateResponse1> UpdateAsync(UpdateRequest request);
+
+        Task<GetResponse1> GetAsync(GetRequest GetRequest);
     }
 
     public partial class serviceClient : IVOFClient

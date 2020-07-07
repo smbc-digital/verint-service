@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
+using verint_service.Attributes;
 using verint_service.Helpers;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Models.Config;
@@ -61,6 +63,12 @@ namespace verint_service.Utils.Extensions
             services.AddTransient<ICaseFormBuilder, CaseFormBuilder>();
             services.AddSingleton<CaseToFWTCaseCreateMapper>();
             services.AddSingleton<ICaseFormBuilder, CaseFormBuilder>();
+        }
+
+        public static void RegisterAttributes(this IServiceCollection services)
+        {
+            services.AddSingleton(
+                new DevelopmentOnlyAttribute(services.BuildServiceProvider().GetService<IWebHostEnvironment>()));
         }
 
         public static void AddSwagger(this IServiceCollection services)
