@@ -28,7 +28,7 @@ namespace verint_service.Helpers.VerintConnection
             }
 
             var xDocument = XDocument.Parse(reply.ToString());
-            var elements = xDocument.Descendants("detail")?.FirstOrDefault()?.Descendants().FirstOrDefault();
+            var elements = xDocument.Descendants("detail")?.FirstOrDefault()?.Descendants()?.FirstOrDefault();
 
             if (elements == null)
             {

@@ -8,6 +8,8 @@
 
         public string AuthConnectionString { get; set; }
 
-        public string BaseConnectionString { get; set; }
+        public string VerintBaseConnectionString { get; set; }
+
+        public string VerintOnlineFormBaseConnectionString { get; set; }
     }
 }

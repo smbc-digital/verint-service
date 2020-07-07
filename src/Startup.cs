@@ -8,6 +8,7 @@ using StockportGovUK.AspNetCore.Availability;
 using StockportGovUK.AspNetCore.Availability.Middleware;
 using StockportGovUK.AspNetCore.Middleware;
 using StockportGovUK.NetStandard.Gateways;
+using StockportGovUK.NetStandard.Gateways.Extensions;
 using verint_service.Utils.Extensions;
 using verint_service.Utils.HealthChecks;
 
@@ -27,7 +28,9 @@ namespace verint_service
         {
             services.AddControllers()
                     .AddNewtonsoftJson();
-            services.AddResilientHttpClients<IGateway, Gateway>(Configuration);
+
+            services.AddHttpClient<IGateway, Gateway>(Configuration);
+
             services.AddAvailability();
             services.AddSwagger();
             services.AddHealthChecks()

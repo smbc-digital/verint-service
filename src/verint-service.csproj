@@ -1,14 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>verint_service</RootNamespace>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>.\swagger-documentation.xml</DocumentationFile>
+    <NoWarn>1701;1702;1951;1591</NoWarn>
+  </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
     <PackageReference Include="serilog" Version="2.9.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
@@ -18,8 +21,7 @@
     <PackageReference Include="StockportGovUK.AspNetCore.Availability" Version="1.1.0" />
     <PackageReference Include="StockportGovUK.AspNetCore.Logging.Elasticsearch.Aws" Version="1.0.0" />
     <PackageReference Include="StockportGovUK.AspNetCore.Middleware.ExceptionHandling" Version="2.0.0" />
-    <PackageReference Include="StockportGovUK.NetStandard.Gateways" Version="3.0.6" />
-    <PackageReference Include="StockportGovUK.NetStandard.Models" Version="1.0.0" />
+    <PackageReference Include="StockportGovUK.NetStandard.Gateways" Version="4.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.4.1" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.7.0" />
     <PackageReference Include="System.ServiceModel.Http" Version="4.7.0" />
@@ -35,6 +37,8 @@
     <WCFMetadata Include="Connected Services" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Connected Services\LaganLookupService\LaganLookupService\" />
+    <None Update="swagger-documentation.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
