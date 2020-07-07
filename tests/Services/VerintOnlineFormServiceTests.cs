@@ -1,5 +1,7 @@
-﻿using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
-using Moq;
+﻿using Moq;
+using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
+using StockportGovUK.NetStandard.Models.Verint;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using verint_service.Helpers.VerintConnection;
@@ -7,8 +9,6 @@ using verint_service.Services.Case;
 using verint_service.Services.VerintOnlineForm;
 using VOFWebService;
 using Xunit;
-using StockportGovUK.NetStandard.Models.Verint;
-using System;
 
 namespace verint_service_tests.Services
 {
@@ -25,10 +25,7 @@ namespace verint_service_tests.Services
             FormName = "test form",
             FormData = new Dictionary<string, string>
                 {
-                    {
-                       "key",
-                       "value"
-                    }
+                    {"key","value"}
                 }
         };
 
@@ -38,8 +35,9 @@ namespace verint_service_tests.Services
                .Setup(_ => _.VOFClient())
                .Returns(_mockVOFClient.Object);
 
-            _mockCaseService.Setup(_ => _.CreateCase(It.IsAny<Case>()))
-             .ReturnsAsync(model.VerintCase.CaseReference);
+            _mockCaseService
+                .Setup(_ => _.CreateCase(It.IsAny<Case>()))
+                .ReturnsAsync(model.VerintCase.CaseReference);
 
             _verintOnlineFormService = new VerintOnlineFormService(_mockConnection.Object, _mockCaseService.Object);
         }
@@ -49,13 +47,14 @@ namespace verint_service_tests.Services
         {
             // Arrange 
             _mockVOFClient
-            .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
-            .ReturnsAsync(new CreateResponse1
-            {
-                CreateResponse = new CreateResponse { @ref = "123456" }
-            }); ;
+                .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
+                .ReturnsAsync(new CreateResponse1
+                {
+                    CreateResponse = new CreateResponse { @ref = "123456" }
+                });
 
-            _mockVOFClient.Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
+            _mockVOFClient
+                .Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
                 .ReturnsAsync(new UpdateResponse1 { UpdateResponse = new UpdateResponse { status = "success" } });
 
             // Act
@@ -70,13 +69,14 @@ namespace verint_service_tests.Services
         {
             // Arrange
             _mockVOFClient
-            .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
-            .ReturnsAsync(new CreateResponse1
-            {
-                CreateResponse = new CreateResponse { @ref = "123456" }
-            }); ;
+                .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
+                .ReturnsAsync(new CreateResponse1
+                {
+                    CreateResponse = new CreateResponse { @ref = "123456" }
+                });
 
-            _mockVOFClient.Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
+            _mockVOFClient
+                .Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
                 .ReturnsAsync(new UpdateResponse1 { UpdateResponse = new UpdateResponse { status = "success" } });
 
             // Act
@@ -91,13 +91,14 @@ namespace verint_service_tests.Services
         {
             // Arrange
             _mockVOFClient
-            .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
-            .ReturnsAsync(new CreateResponse1
-            {
-                CreateResponse = new CreateResponse()
-            }); ;
+                .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
+                .ReturnsAsync(new CreateResponse1
+                {
+                    CreateResponse = new CreateResponse()
+                });
 
-            _mockVOFClient.Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
+            _mockVOFClient
+                .Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
                 .ReturnsAsync(new UpdateResponse1 { UpdateResponse = new UpdateResponse { status = "success" } });
 
             // Act
@@ -112,13 +113,14 @@ namespace verint_service_tests.Services
         {
             // Arrange
             _mockVOFClient
-            .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
-            .ReturnsAsync(new CreateResponse1
-            {
-                CreateResponse = new CreateResponse { @ref = "123456" }
-            }); ;
+                .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
+                .ReturnsAsync(new CreateResponse1
+                {
+                    CreateResponse = new CreateResponse { @ref = "123456" }
+                });
 
-            _mockVOFClient.Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
+            _mockVOFClient
+                .Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
                 .ReturnsAsync(new UpdateResponse1 { UpdateResponse = new UpdateResponse { status = "not success" } });
 
             // Act
@@ -133,13 +135,14 @@ namespace verint_service_tests.Services
         {
             // Arrange
             _mockVOFClient
-            .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
-            .ReturnsAsync(new CreateResponse1
-            {
-                CreateResponse = new CreateResponse { @ref = "123456" }
-            }); ;
+                .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
+                .ReturnsAsync(new CreateResponse1
+                {
+                    CreateResponse = new CreateResponse { @ref = "123456" }
+                });
 
-            _mockVOFClient.Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
+            _mockVOFClient
+                .Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
                 .ReturnsAsync(new UpdateResponse1 { UpdateResponse = new UpdateResponse { status = "success" } });
 
             // Act
@@ -154,13 +157,14 @@ namespace verint_service_tests.Services
         {
             // Arrange
             _mockVOFClient
-            .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
-            .ReturnsAsync(new CreateResponse1
-            {
-                CreateResponse = new CreateResponse { @ref = "123456" }
-            }); ;
+                .Setup(_ => _.CreateAsync(It.IsAny<CreateRequest>()))
+                .ReturnsAsync(new CreateResponse1
+                {
+                    CreateResponse = new CreateResponse { @ref = "123456" }
+                });
 
-            _mockVOFClient.Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
+            _mockVOFClient
+                .Setup(_ => _.UpdateAsync(It.IsAny<UpdateRequest>()))
                 .ReturnsAsync(new UpdateResponse1 { UpdateResponse = new UpdateResponse { status = "success" } });
 
             // Act
