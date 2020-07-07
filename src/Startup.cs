@@ -11,6 +11,7 @@ using StockportGovUK.NetStandard.Gateways;
 using StockportGovUK.NetStandard.Gateways.Extensions;
 using verint_service.Utils.Extensions;
 using verint_service.Utils.HealthChecks;
+using ServiceCollectionExtensions = StockportGovUK.NetStandard.Gateways.Extensions.ServiceCollectionExtensions;
 
 namespace verint_service
 {
@@ -29,7 +30,9 @@ namespace verint_service
             services.AddControllers()
                     .AddNewtonsoftJson();
 
-            services.AddHttpClient<IGateway, Gateway>(Configuration);
+            services.AddHttpClient<IGateway, Gateway>()
+                .AddPolicyHandler(ServiceCollectionExtensions.GetWaitAndRetryForeverPolicy())
+                .AddPolicyHandler(ServiceCollectionExtensions.GetCircuitBreakerPolicy());
 
             services.AddAvailability();
             services.AddSwagger();
