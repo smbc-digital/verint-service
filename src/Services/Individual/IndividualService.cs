@@ -117,7 +117,8 @@ namespace verint_service.Services
         {
             return new FWTPartySearch(){
                 Forename = customer.Forename.Trim(),
-                Name = customer.Surname.Trim()
+                Name = customer.Surname.Trim(),
+                
             };
         }
 
@@ -130,7 +131,7 @@ namespace verint_service.Services
             FWTObjectID individual = null;
             if (matchingIndividuals.FWTObjectBriefDetailsList.Any() && matchingIndividuals != null)
             {
-                individual =  await GetBestMatchingIndividual(matchingIndividuals.FWTObjectBriefDetailsList, customer);
+                individual =  await GetBestMatchingIndividual(matchingIndividuals.FWTObjectBriefDetailsList.Take(50).ToArray(), customer);
             }
 
             return individual;
