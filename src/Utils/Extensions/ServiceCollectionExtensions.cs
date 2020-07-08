@@ -67,8 +67,7 @@ namespace verint_service.Utils.Extensions
 
         public static void RegisterAttributes(this IServiceCollection services)
         {
-            services.AddSingleton(
-                new DevelopmentOnlyAttribute(services.BuildServiceProvider().GetService<IWebHostEnvironment>()));
+            services.AddSingleton(new DevelopmentOnlyAttribute(services.BuildServiceProvider().GetService<IWebHostEnvironment>()));
         }
 
         public static void AddSwagger(this IServiceCollection services)
