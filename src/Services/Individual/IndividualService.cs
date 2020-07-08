@@ -100,11 +100,11 @@ namespace verint_service.Services
 
             if (individual == null)
             {
-                _logger.LogDebug($"  IndividualService.FindIndividual: No Result found for Customer {customer.Surname}");
+                _logger.LogDebug($"   IndividualService.FindIndividual: No Result found for Customer {customer.Surname}");
             }
             else
             {
-                _logger.LogDebug($"  IndividualService.FindIndividual: Result found for Customer {customer.Surname}");
+                _logger.LogDebug($"   IndividualService.FindIndividual: Result found for Customer {customer.Surname}");
             }
 
             stopwatch.Stop();
@@ -124,7 +124,8 @@ namespace verint_service.Services
         private async Task<FWTObjectID> SearchIndividuals(FWTPartySearch searchCriteria, Customer customer)
         {
             searchCriteria.SearchType = "individual";
-            var matchingIndividuals = await _verintConnection.searchForPartyAsync(searchCriteria); 
+            var matchingIndividuals = await _verintConnection.searchForPartyAsync(searchCriteria);
+            _logger.LogDebug($"   IndividualService.SearchIndividuals: Name matchings found for Customer {customer.Surname} = {matchingIndividuals.FWTObjectBriefDetailsList?.Count()}");
 
             FWTObjectID individual = null;
             if (matchingIndividuals.FWTObjectBriefDetailsList.Any() && matchingIndividuals != null)
@@ -195,6 +196,7 @@ namespace verint_service.Services
             }
 
             var results = await Task.WhenAll(tasks);
+
             results.ToList().ForEach((result) =>
             {
                 var individual = result.FWTIndividual;
