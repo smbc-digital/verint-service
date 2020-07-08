@@ -30,8 +30,6 @@ namespace verint_service
                 .WriteToElasticsearchAws(Configuration)
                 .CreateLogger();
 
-            WebProxy proxy = new WebProxy("http://172.16.0.166:8080", false);
-            WebRequest.DefaultWebProxy = proxy;
             BuildHost(args).Run();
         }
 
