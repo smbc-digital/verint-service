@@ -174,6 +174,64 @@ namespace verint_service_tests.Services
             Assert.Equal("reference", result.VerintCaseReference);
             Assert.Equal("123456", result.VerintOnlineFormReference);
         }
+
+        [Fact]
+        public async Task GetVOFCase_ShouldCallVOFConnectionToGetCase()
+        {
+            _mockVOFClient
+                .Setup(_ => _.GetAsync(It.IsAny<GetRequest>()))
+                .ReturnsAsync(new GetResponse1());
+
+            await _verintOnlineFormService.GetVOFCase("test-ref");
+
+            _mockVOFClient
+                .Verify(_ => _.GetAsync(It.IsAny<GetRequest>()), Times.Once);
+
+            _mockVOFClient
+                .VerifyNoOtherCalls();
+
+            _mockCaseService
+                .VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task GetVOFCase_ShouldCallVOFConnectionWithCorrectReference()
+        {
+            var expectedRef = "test-ref";
+
+            _mockVOFClient
+                .Setup(_ => _.GetAsync(new GetRequest
+                {
+                    @ref = expectedRef
+                }))
+                .ReturnsAsync(new GetResponse1());
+
+            await _verintOnlineFormService.GetVOFCase(expectedRef);
+
+            _mockVOFClient
+                .Verify(_ => _.GetAsync(It.Is<GetRequest>(_ => _.@ref.Equals(expectedRef))), Times.Once);
+
+            _mockVOFClient
+                .VerifyNoOtherCalls();
+
+            _mockCaseService
+                .VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task GetVOFCase_ShouldReturnCase()
+        {
+            var expectedRef = "test-ref";
+
+            _mockVOFClient
+                .Setup(_ => _.GetAsync(It.IsAny<GetRequest>()))
+                .ReturnsAsync(new GetResponse1());
+
+            var result = await _verintOnlineFormService.GetVOFCase(expectedRef);
+
+            Assert.NotNull(result);
+            Assert.IsType<GetResponse1>(result);
+        }
     };
 }
 

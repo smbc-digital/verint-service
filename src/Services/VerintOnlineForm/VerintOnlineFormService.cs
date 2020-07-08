@@ -65,5 +65,11 @@ namespace verint_service.Services.VerintOnlineForm
                 VerintOnlineFormReference = createVOFResponse.CreateResponse.@ref
             };
         }
+
+        public async Task<GetResponse1> GetVOFCase(string verintOnlineFormReference)
+            => await _VOFConnection.GetAsync(new GetRequest
+            {
+                @ref = verintOnlineFormReference
+            });
     }
 }

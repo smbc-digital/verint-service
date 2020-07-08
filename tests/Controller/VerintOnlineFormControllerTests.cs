@@ -27,5 +27,21 @@ namespace verint_service_tests.Controller
             _mockService
                 .VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task GetCase_ShouldCallVerintOnlineFormService()
+        {
+            _mockService
+                .Setup(_ => _.GetVOFCase(It.IsAny<string>()))
+                .ReturnsAsync(new VOFWebService.GetResponse1());
+
+            await _controller.GetCase("test-ref");
+
+            _mockService
+                .Verify(_ => _.GetVOFCase(It.IsAny<string>()), Times.Once);
+
+            _mockService
+                .VerifyNoOtherCalls();
+        }
     }
 }
