@@ -18,17 +18,14 @@ public class DateOfBirthWeighting : IIndividualWeighting
         {
             if(individual.DateOfBirthSpecified && individual.DateOfBirth == customer.DateOfBirth)
             {
-                _logger.LogInformation($"DateOfBirthWeighting.Calculate, Match, Score 2, Customer: {customer.Surname}");
                 return 2;
             }
             else if(individual.DateOfBirthSpecified && individual.DateOfBirth != customer.DateOfBirth)
             {
-                _logger.LogInformation($"DateOfBirthWeighting.Calculate, No Match, Score -10, Customer: {customer.Surname}");
                 return -10;
             }
         }
 
-        _logger.LogInformation($"DateOfBirthWeighting.Calculate, No Date for Comparison, Score 0, Customer: {customer.Surname}");
         return 0;
     }
 }

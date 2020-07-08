@@ -66,40 +66,50 @@ namespace verint_service.Services
         
         private async Task<FWTObjectID> FindIndividual(Customer customer)
         {
+            _logger.LogDebug($"IndividualService.FindIndividual: *** Starting customer search - {customer.Forename} {customer.Surname}");
             var stopwatch = Stopwatch.StartNew();
 
-            _logger.LogDebug($"IndividualService.FindIndividual: Searching by Email - Customer {customer.Surname}");
+            var stopwatchSearchSpecifc = Stopwatch.StartNew();
             FWTObjectID individual = await SearchByEmail(customer);
-            
+            stopwatchSearchSpecifc.Stop();
+            _logger.LogDebug($"   InteractionService: FindIndividual - Email Time Elapsed (seconds) {stopwatchSearchSpecifc.Elapsed.TotalSeconds}");
+
             if (individual == null)
             {
-                _logger.LogDebug($"IndividualService.FindIndividual: Searching by Telephone - Customer {customer.Surname}");
+                stopwatchSearchSpecifc = Stopwatch.StartNew();
                 individual = await SearchByTelephone(customer);
+                stopwatchSearchSpecifc.Stop();
+                _logger.LogDebug($"   InteractionService: FindIndividual - Telephone Time Elapsed (seconds) {stopwatchSearchSpecifc.Elapsed.TotalSeconds}");
             }            
             
             if (individual == null)
             {
-                _logger.LogDebug($"IndividualService.FindIndividual: Searching by Address - Customer {customer.Surname}");
+                stopwatchSearchSpecifc = Stopwatch.StartNew();
                 individual = await SearchByAddress(customer);
+                stopwatchSearchSpecifc.Stop();
+                _logger.LogDebug($"   InteractionService: FindIndividual - Address Time Elapsed (seconds) {stopwatchSearchSpecifc.Elapsed.TotalSeconds}");
             }
 
             if (individual == null)
             {
-                _logger.LogDebug($"IndividualService.FindIndividual: Searching by Name - Customer {customer.Surname}");
+                stopwatchSearchSpecifc = Stopwatch.StartNew();
                 individual = await SearchByName(customer);
+                stopwatchSearchSpecifc.Stop();
+                _logger.LogDebug($"   InteractionService: FindIndividual - Name Time Elapsed (seconds) {stopwatchSearchSpecifc.Elapsed.TotalSeconds}");
             }
 
             if (individual == null)
             {
-                _logger.LogDebug($"IndividualService.FindIndividual: No Result found for Customer {customer.Surname}");
+                _logger.LogDebug($"  IndividualService.FindIndividual: No Result found for Customer {customer.Surname}");
             }
             else
             {
-                _logger.LogDebug($"IndividualService.FindIndividual: Result found for Customer {customer.Surname}");
+                _logger.LogDebug($"  IndividualService.FindIndividual: Result found for Customer {customer.Surname}");
             }
 
             stopwatch.Stop();
-            _logger.LogDebug($"InteractionService: FindIndividual - Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
+            _logger.LogDebug($"   InteractionService: FindIndividual - Total Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
+            _logger.LogDebug($"IndividualService.FindIndividual: *** Finished customer search - {customer.Forename} {customer.Surname}");
             return individual;
         }
 

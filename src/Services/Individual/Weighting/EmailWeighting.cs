@@ -18,17 +18,14 @@ public class EmailWeighting : IIndividualWeighting
             individual.ContactEmails.Length == 0 || 
             string.IsNullOrEmpty(customer.Email))
         {
-            _logger.LogInformation($"EmailWeighting.Calculate, Null, Score 0, Customer: {customer.Surname}");
             return 0;
         } 
         
         if (individual.ContactEmails.Any(x => x.EmailAddress == customer.Email))
         {
-            _logger.LogInformation($"EmailWeighting.Calculate, Match, Score 2, Customer: {customer.Surname}");
             return 2;
         } 
 
-        _logger.LogInformation($"EmailWeighting.Calculate, No Match, Score 2, Customer: {customer.Surname}");
         return 0;
     }
 }
