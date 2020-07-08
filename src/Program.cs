@@ -25,11 +25,12 @@ namespace verint_service
         public static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(Configuration)
+                .ReadFrom
+                .Configuration(Configuration)
                 .WriteToElasticsearchAws(Configuration)
                 .CreateLogger();
 
-            WebProxy proxy = new WebProxy("http://172.16.0.126:8080", false);
+            WebProxy proxy = new WebProxy("http://172.16.0.166:8080", false);
             WebRequest.DefaultWebProxy = proxy;
             BuildHost(args).Run();
         }
