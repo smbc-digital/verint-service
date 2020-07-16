@@ -34,7 +34,7 @@ namespace verint_service
                 .AddPolicyHandler(ServiceCollectionExtensions.GetWaitAndRetryForeverPolicy())
                 .AddPolicyHandler(ServiceCollectionExtensions.GetCircuitBreakerPolicy());
 
-            services.AddAvailability();
+            //services.AddAvailability();
             services.AddSwagger();
             services.AddHealthChecks()
                     .AddCheck<TestHealthCheck>("TestHealthCheck");
@@ -57,7 +57,7 @@ namespace verint_service
                 app.UseHsts();
             }
 
-            app.UseMiddleware<Availability>();
+            //app.UseMiddleware<Availability>();
             app.UseMiddleware<ApiExceptionHandling>();
 
             app.UseHttpsRedirection();

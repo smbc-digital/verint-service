@@ -7,5 +7,6 @@ namespace verint_service.Services.Street
     public interface IStreetService
     {
         Task<IEnumerable<AddressSearchResult>> SearchByStreetAsync(string reference);
+        Task<AddressSearchResult> GetStreet(string reference);
     }
 }

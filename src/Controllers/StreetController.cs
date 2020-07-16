@@ -26,5 +26,12 @@ namespace verint_service.Controllers
         {
             return await _streetService.SearchByStreetAsync(street);
         }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<AddressSearchResult> Get(string id)
+        {
+            return await _streetService.GetStreet(id);
+        }
     }
 }

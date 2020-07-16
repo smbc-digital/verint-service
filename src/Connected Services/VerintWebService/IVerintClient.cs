@@ -37,7 +37,8 @@ namespace VerintWebService
         Task<createNotesResponse> createNotesAsync(FWTCreateNoteToParent FWTNoteToParentRef);
 
         Task<addDocumentToRepositoryResponse> addDocumentToRepositoryAsync(FWTDocument FWTDocument);
-        
+
+        Task<retrieveStreetResponse> retrieveStreetAsync(FWTObjectID FLStreetID);
     }
 
     public partial class FLWebInterfaceClient : IVerintClient

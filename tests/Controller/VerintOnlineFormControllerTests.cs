@@ -4,16 +4,18 @@ using verint_service.Controllers;
 using verint_service.Services.VerintOnlineForm;
 using Xunit;
 using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
+using Microsoft.Extensions.Logging;
 
 namespace verint_service_tests.Controller
 {
     public class VerintOnlineFormControllerTests
     {
         private Mock<IVerintOnlineFormService> _mockService = new Mock<IVerintOnlineFormService>();
+        private Mock<ILogger<VerintOnlineFormController>> _mockLogger = new Mock<ILogger<VerintOnlineFormController>>();
         private VerintOnlineFormController _controller;
         public VerintOnlineFormControllerTests()
         {
-            _controller = new VerintOnlineFormController(_mockService.Object);
+            _controller = new VerintOnlineFormController(_mockService.Object, _mockLogger.Object);
         }
 
         [Fact]

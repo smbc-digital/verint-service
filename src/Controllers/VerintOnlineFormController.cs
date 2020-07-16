@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
 using System.Threading.Tasks;
@@ -14,10 +15,12 @@ namespace verint_service.Controllers
     public class VerintOnlineFormController : ControllerBase
     {
         private readonly IVerintOnlineFormService _verintOnlineFormService;
+        private readonly ILogger<VerintOnlineFormController> _logger;
 
-        public VerintOnlineFormController(IVerintOnlineFormService verintOnlineFormService)
+        public VerintOnlineFormController(IVerintOnlineFormService verintOnlineFormService, ILogger<VerintOnlineFormController> logger)
         {
             _verintOnlineFormService = verintOnlineFormService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -34,5 +37,18 @@ namespace verint_service.Controllers
         [DevelopmentOnly]
         public async Task<IActionResult> GetCase(string verintOnlineFormReference)
             => Ok(await _verintOnlineFormService.GetVOFCase(verintOnlineFormReference));
+
+        [HttpPatch]
+        [DevelopmentOnly]
+        public IActionResult TestLogger(string valueToLog = "test")
+        {
+            _logger.LogDebug($"VerintOnlineFormController.TestLogger: {valueToLog}");
+            _logger.LogInformation($"VerintOnlineFormController.TestLogger: {valueToLog}");
+            _logger.LogWarning($"VerintOnlineFormController.TestLogger: {valueToLog}");
+            _logger.LogError($"VerintOnlineFormController.TestLogger: {valueToLog}");
+            _logger.LogCritical($"VerintOnlineFormController.TestLogger: {valueToLog}");
+
+            return Ok();
+        }
     }
 }
