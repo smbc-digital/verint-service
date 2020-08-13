@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Moq;
 using verint_service.Helpers.VerintConnection;
+using verint_service.Services.Individual.Weighting;
 using verint_service.Services;
 using verint_service.Services.Property;
 using VerintWebService;

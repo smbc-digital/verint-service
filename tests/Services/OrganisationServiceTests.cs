@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using Moq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Services.Organisation;
+using verint_service.Services.Organisation.Weighting;
 using VerintWebService;
 using Xunit;
 
@@ -25,7 +27,7 @@ namespace verint_service_tests.Services
                 .ReturnsAsync(new searchForPartyResponse {  FWTObjectBriefDetailsList = new FWTObjectBriefDetails[0] });
 
 
-            _service = new OrganisationService(_mockConnection.Object, _mockLogger.Object);
+            _service = new OrganisationService(_mockConnection.Object, new List<IOrganisationWeighting>(), _mockLogger.Object);
         }
 
         [Fact]

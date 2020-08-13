@@ -1,4 +1,5 @@
 using StockportGovUK.NetStandard.Models.Verint;
+using verint_service.Services.Individual.Weighting;
 using VerintWebService;
 using Xunit;
 

@@ -28,7 +28,7 @@ namespace verint_service_tests.Mappers
             };
 
             // Act
-            var mappedOrg = baseOrg.MapToOrganisation();
+            var mappedOrg = baseOrg.Map();
 
             // Assert
             Assert.Equal("id 1", mappedOrg.SocialContacts[0].Value);
@@ -53,7 +53,7 @@ namespace verint_service_tests.Mappers
             };
 
             // Act
-            var mappedOrg = baseOrg.MapToOrganisation();
+            var mappedOrg = baseOrg.Map();
 
             // Assert
             Assert.Equal("Organisation name", mappedOrg.Name);
@@ -79,7 +79,7 @@ namespace verint_service_tests.Mappers
             };
 
             // Act
-            var mappedOrg = baseOrg.MapToOrganisation();
+            var mappedOrg = baseOrg.Map();
 
             // Assert
             Assert.Equal("test email 1", mappedOrg.Email);

@@ -1,11 +1,9 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 using StockportGovUK.NetStandard.Models.Verint;
+using verint_service.Services.Individual.Weighting;
 using VerintWebService;
 using Xunit;
-
-
-
 
 namespace verint_service_tests.Weighting
 {
