@@ -25,13 +25,13 @@ namespace verint_service_tests.Controllers
         {
             var result = await _controller.Search("searcthTerm");
 
-            _mockOrganisationServiceService.Verify(_ => _.SearchByOrganisationAsync(It.IsAny<string>()), Times.Once);
+            _mockOrganisationServiceService.Verify(_ => _.SearchByNameAsync(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
         public async Task Search_ShouldReturn_InternalServerError_When_ServiceThrowsException()
         {
-            _mockOrganisationServiceService.Setup(_ => _.SearchByOrganisationAsync(It.IsAny<string>())).ThrowsAsync(new Exception());
+            _mockOrganisationServiceService.Setup(_ => _.SearchByNameAsync(It.IsAny<string>())).ThrowsAsync(new Exception());
 
             var result = await _controller.Search("searcthTerm");
 

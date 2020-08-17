@@ -3,32 +3,35 @@ using Microsoft.Extensions.Logging;
 using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 
-public class UprnWeighting : IIndividualWeighting
+namespace verint_service.Services.Individual.Weighting
 {
-    ILogger<UprnWeighting> _logger;
-
-    public UprnWeighting(ILogger<UprnWeighting> logger)
+    public class UprnWeighting : IIndividualWeighting
     {
-        _logger = logger;
-    }
+        ILogger<UprnWeighting> _logger;
 
-    public int Calculate(FWTIndividual individual, Customer customer)
-    {
-        if(customer.Address == null || individual.ContactPostals == null)
+        public UprnWeighting(ILogger<UprnWeighting> logger)
         {
+            _logger = logger;
+        }
+
+        public int Calculate(FWTIndividual individual, Customer customer)
+        {
+            if(customer.Address == null || individual.ContactPostals == null)
+            {
+                return 0;
+            }
+
+            if(string.IsNullOrEmpty(customer.Address.UPRN))
+            {
+                return 0;
+            }
+
+            if (individual.ContactPostals.Any(x => x.UPRN == customer.Address.UPRN.Trim()))
+            {
+                return 2;
+            }
+
             return 0;
         }
-
-        if(string.IsNullOrEmpty(customer.Address.UPRN))
-        {
-            return 0;
-        }
-
-        if (individual.ContactPostals.Any(x => x.UPRN == customer.Address.UPRN.Trim()))
-        {
-            return 2;
-        }
-
-        return 0;
     }
 }

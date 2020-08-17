@@ -3,29 +3,32 @@ using Microsoft.Extensions.Logging;
 using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 
-public class EmailWeighting : IIndividualWeighting
+namespace verint_service.Services.Individual.Weighting
 {
-    ILogger<EmailWeighting> _logger;
-
-    public EmailWeighting(ILogger<EmailWeighting> logger)
+    public class EmailWeighting : IIndividualWeighting
     {
-        _logger = logger;
-    }
+        ILogger<EmailWeighting> _logger;
 
-    public int Calculate(FWTIndividual individual, Customer customer)
-    {
-        if (individual.ContactEmails == null || 
-            individual.ContactEmails.Length == 0 || 
-            string.IsNullOrEmpty(customer.Email))
+        public EmailWeighting(ILogger<EmailWeighting> logger)
         {
+            _logger = logger;
+        }
+
+        public int Calculate(FWTIndividual individual, Customer customer)
+        {
+            if (individual.ContactEmails == null || 
+                individual.ContactEmails.Length == 0 || 
+                string.IsNullOrEmpty(customer.Email))
+            {
+                return 0;
+            } 
+            
+            if (individual.ContactEmails.Any(x => x.EmailAddress == customer.Email))
+            {
+                return 2;
+            } 
+
             return 0;
-        } 
-        
-        if (individual.ContactEmails.Any(x => x.EmailAddress == customer.Email))
-        {
-            return 2;
-        } 
-
-        return 0;
+        }
     }
 }

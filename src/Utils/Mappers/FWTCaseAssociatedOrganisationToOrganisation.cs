@@ -6,9 +6,17 @@ namespace verint_service.Utils.Mappers
 {
     public static class FwtCaseAssociatedOrganisationToOrganisation
     {
-        public static Organisation MapToOrganisation(this FWTOrganisation organisation)
+        public static Organisation Map(this FWTOrganisation organisation)
         {
+            // _logger.LogDebug($"FwtCaseAssociatedOrganisationToOrganisation.Map Start");
+
             var mappedOrganisation = new Organisation();
+
+            if(organisation.BriefDetails !=null && organisation.BriefDetails.ObjectID.ObjectReference.Any())
+            {
+                mappedOrganisation.Reference = organisation.BriefDetails.ObjectID.ObjectReference[0];
+            }
+            
 
             if (organisation.SocialContacts != null && organisation.SocialContacts.Any())
             {
@@ -23,6 +31,11 @@ namespace verint_service.Utils.Mappers
                 }
             }
 
+            if(organisation.ContactPostals != null && organisation.ContactPostals.Any())
+            {
+                mappedOrganisation.Address = organisation.ContactPostals.OrderByDescending(_ => _.Preferred).FirstOrDefault().Map();
+            }
+
             if (organisation.Name?[0].FullName != null)
             {
                 mappedOrganisation.Name = organisation.Name[0].FullName;
@@ -30,7 +43,12 @@ namespace verint_service.Utils.Mappers
 
             if (organisation.ContactEmails != null && organisation.ContactEmails.Any())
             {
-                mappedOrganisation.Email = organisation.ContactEmails[0].EmailAddress;
+                mappedOrganisation.Email = organisation.ContactEmails.OrderByDescending(_ => _.Preferred).FirstOrDefault().EmailAddress;
+            }
+
+            if (organisation.ContactPhones != null && organisation.ContactPhones.Any())
+            {
+                mappedOrganisation.Telephone = organisation.ContactPhones.OrderByDescending(_ => _.Preferred).FirstOrDefault().Number;
             }
 
             return mappedOrganisation;

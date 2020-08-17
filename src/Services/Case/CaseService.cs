@@ -60,7 +60,7 @@ namespace verint_service.Services.Case
                     var organisation = await _verintConnection.retrieveOrganisationAsync(response.FWTCaseFullDetails.CoreDetails.AssociatedObject.ObjectID);
                     if (organisation != null)
                     {
-                        caseDetails.Organisation = organisation.FWTOrganisation.MapToOrganisation();
+                        caseDetails.Organisation = organisation.FWTOrganisation.Map();
                     }
                 }
 
@@ -81,7 +81,7 @@ namespace verint_service.Services.Case
 
         public async Task<string> CreateCase(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
-            // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
+            // HACK: Check whether UPRN provided is actually an ID and if so lookup the real UPRN
             if (crmCase.Customer != null && crmCase.Customer.Address != null)
             {
                 crmCase.Customer.Address.UPRN = await _individualService.CheckUPRNForId(crmCase.Customer);

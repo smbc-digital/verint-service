@@ -40,9 +40,12 @@ namespace verint_service.Helpers
                 case AssociatedWithBehaviourEnum.Organisation:
                     if(crmCase.Organisation.Reference != null)
                     {
-                        associatedObject.ObjectType = VerintConstants.OrganisationObjectType;
-                        associatedObject.ObjectReference = new[] { crmCase.Organisation.Reference };
-                        associatedObjectBriefDetails.ObjectID = associatedObject;
+                        associatedObjectBriefDetails.ObjectID =  new FWTObjectID
+                        {
+                            ObjectType = VerintConstants.OrganisationObjectType,
+                            ObjectReference = new[] { crmCase.Organisation.Reference } 
+                        };
+
                         return associatedObjectBriefDetails;
                     }
                     

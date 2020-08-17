@@ -3,27 +3,30 @@ using Microsoft.Extensions.Logging;
 using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 
-public class TelephoneWeighting : IIndividualWeighting
+namespace verint_service.Services.Individual.Weighting
 {
-    ILogger<TelephoneWeighting> _logger;
-
-    public TelephoneWeighting(ILogger<TelephoneWeighting> logger)
+    public class TelephoneWeighting : IIndividualWeighting
     {
-        _logger = logger;
-    }
+        ILogger<TelephoneWeighting> _logger;
 
-    public int Calculate(FWTIndividual individual, Customer customer)
-    {
-        if (!string.IsNullOrEmpty(customer.Telephone) && 
-            individual.ContactPhones != null)
+        public TelephoneWeighting(ILogger<TelephoneWeighting> logger)
         {
-            if (individual.ContactPhones.Any(x => x.Number.Replace(" ", string.Empty).Replace("-", string.Empty).Trim()
-                == customer.Telephone.Replace(" ", string.Empty).Replace("-", string.Empty).Trim()))
-            {
-                return 1;
-            }
+            _logger = logger;
         }
 
-        return 0;
+        public int Calculate(FWTIndividual individual, Customer customer)
+        {
+            if (!string.IsNullOrEmpty(customer.Telephone) && 
+                individual.ContactPhones != null)
+            {
+                if (individual.ContactPhones.Any(x => x.Number.Replace(" ", string.Empty).Replace("-", string.Empty).Trim()
+                    == customer.Telephone.Replace(" ", string.Empty).Replace("-", string.Empty).Trim()))
+                {
+                    return 1;
+                }
+            }
+
+            return 0;
+        }
     }
 }

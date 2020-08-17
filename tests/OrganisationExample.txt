@@ -1,0 +1,39 @@
+Matching
+
+{
+  "name": "Tesco",
+  "telephone": "01612527300",
+  "email": "dummyemail@stockport.gov.uk"
+}
+
+Resolving creates new/Matching return notfound
+{
+  "name": "NewOrg",
+  "telephone": "01614745438",
+  "email": "neworg@stockport.gov.uk"
+}
+
+Create case with organisation (Substitute org data for new organisation creation)
+{
+  "customer": {
+    "title": "Mr",
+    "forename": "Test",
+    "surname": "Test",
+    "email": "test.test@stockport.gov.uk",
+    "Telephone": "01614741234",
+    "dateOfBirth": "1980-01-01T00:00:00.000Z",
+    "Address": {
+        "UPRN": "101002265507"
+    }
+  },
+  "organisation": {
+    "name": "Tesco",
+    "telephone": "01612527300",
+    "email": "dummyemail@stockport.gov.uk"
+  }
+  "eventTitle": "Compliment",
+  "eventCode": "4000000",
+  "description": "Test description",
+  "raisedByBehaviour": 1,
+  "associatedWithBehaviour": 1
+}

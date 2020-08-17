@@ -11,6 +11,42 @@
             <param name="crmCase">The case to be updated</param>
             <returns>An int declaring the state of the update</returns>
         </member>
+        <member name="M:verint_service.Controllers.OrganisationController.Get(System.String)">
+            <summary>
+            Gets an existing orgnisation
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:verint_service.Controllers.OrganisationController.Create(StockportGovUK.NetStandard.Models.Verint.Organisation)">
+            <summary>
+            Create a new organisation 
+            </summary>
+            <param name="organisation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:verint_service.Controllers.OrganisationController.Match(StockportGovUK.NetStandard.Models.Verint.Organisation)">
+            <summary>
+            Matches the specified organisation to the closest accurate matching organisation in verint
+            </summary>
+            <param name="organisation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:verint_service.Controllers.OrganisationController.Resolve(StockportGovUK.NetStandard.Models.Verint.Organisation)">
+            <summary>
+            Matches the specified organisation to the closest accurate matching organisation in verint
+            If no match is found a new organisation is created
+            </summary>
+            <param name="organisation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:verint_service.Controllers.OrganisationController.Search(System.String)">
+            <summary>
+            Searches existing orgnisations by name
+            </summary>
+            <param name="organisation"></param>
+            <returns></returns>
+        </member>
         <member name="M:verint_service.Controllers.VerintOnlineFormController.Create(StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm.VerintOnlineFormRequest)">
             <summary>
             Creates a Verint Online From, Verint Case, and triggers Confirm integration

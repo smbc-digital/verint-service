@@ -1,21 +1,23 @@
 using System.Linq;
 using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
-
-public class AlternativeTelephoneWeighting : IIndividualWeighting
+namespace verint_service.Services.Individual.Weighting
 {
-    public int Calculate(FWTIndividual individual, Customer customer)
+    public class AlternativeTelephoneWeighting : IIndividualWeighting
     {
-        if (!string.IsNullOrEmpty(customer.AlternativeTelephone) && individual.ContactPhones != null)
+        public int Calculate(FWTIndividual individual, Customer customer)
         {
-            if (individual.ContactPhones
-                .Any(x => x.Number.Replace(" ", string.Empty).Replace("-", string.Empty).Trim()
-                    == customer.AlternativeTelephone.Replace(" ", string.Empty).Replace("-", string.Empty).Trim()))
+            if (!string.IsNullOrEmpty(customer.AlternativeTelephone) && individual.ContactPhones != null)
             {
-                return 1;
+                if (individual.ContactPhones
+                    .Any(x => x.Number.Replace(" ", string.Empty).Replace("-", string.Empty).Trim()
+                        == customer.AlternativeTelephone.Replace(" ", string.Empty).Replace("-", string.Empty).Trim()))
+                {
+                    return 1;
+                }
             }
-        }
 
-        return 0;
+            return 0;
+        }
     }
 }

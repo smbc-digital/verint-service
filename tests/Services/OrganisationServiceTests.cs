@@ -33,7 +33,7 @@ namespace verint_service_tests.Services
         [Fact]
         public async Task SearchByOrganisationAsync_ShouldCall_searchForPartyAsync()
         {
-            await _service.SearchByOrganisationAsync("orgName");
+            await _service.SearchByNameAsync("orgName");
 
             // Assert
             _mockClient.Verify(client => client.searchForPartyAsync(It.IsAny<FWTPartySearch>()), Times.Once);
@@ -46,7 +46,7 @@ namespace verint_service_tests.Services
             _mockClient.Setup(_ => _.searchForPartyAsync(It.IsAny<FWTPartySearch>()))
                 .ReturnsAsync(new searchForPartyResponse { FWTObjectBriefDetailsList = new FWTObjectBriefDetails[1] { new FWTObjectBriefDetails { ObjectDescription = "test Org description", ObjectID = new FWTObjectID { ObjectReference = new string[1] { "010101010" } } } } });
 
-            var results = await _service.SearchByOrganisationAsync("orgName");
+            var results = await _service.SearchByNameAsync("orgName");
 
             // Assert
             Assert.Single(results);

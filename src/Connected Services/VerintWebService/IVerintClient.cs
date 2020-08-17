@@ -26,6 +26,8 @@ namespace VerintWebService
 
         Task<createIndividualResponse> createIndividualAsync(FWTIndividual individual);
 
+        Task<createOrganisationResponse> createOrganisationAsync(FWTOrganisation organisation);
+
         Task<searchForPartyResponse> searchForPartyAsync(FWTPartySearch searchCriteria);
 
         Task<updateIndividualResponse> updateIndividualAsync(FWTIndividualUpdate individualUpdate);

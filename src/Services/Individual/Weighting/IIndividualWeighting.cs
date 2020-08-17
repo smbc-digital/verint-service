@@ -1,7 +1,9 @@
 using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
-
-public interface IIndividualWeighting
+namespace verint_service.Services.Individual.Weighting
 {
-    int Calculate(FWTIndividual individual, Customer customer);
+    public interface IIndividualWeighting
+    {
+        int Calculate(FWTIndividual individual, Customer customer);
+    }
 }

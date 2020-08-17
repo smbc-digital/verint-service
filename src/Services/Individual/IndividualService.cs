@@ -10,6 +10,7 @@ using verint_service.Utils.Mappers;
 using VerintWebService;
 using System;
 using System.Diagnostics;
+using verint_service.Services.Individual.Weighting;
 
 namespace verint_service.Services
 {
@@ -66,36 +67,21 @@ namespace verint_service.Services
         
         private async Task<FWTObjectID> FindIndividual(Customer customer)
         {
-            _logger.LogDebug($"IndividualService.FindIndividual: *** Starting customer search - {customer.Forename} {customer.Surname}");
-            var stopwatch = Stopwatch.StartNew();
-
-            var stopwatchSearchSpecifc = Stopwatch.StartNew();
             FWTObjectID individual = await SearchByEmail(customer);
-            stopwatchSearchSpecifc.Stop();
-            _logger.LogDebug($"   InteractionService: FindIndividual - Email Time Elapsed (seconds) {stopwatchSearchSpecifc.Elapsed.TotalSeconds}");
 
             if (individual == null)
             {
-                stopwatchSearchSpecifc = Stopwatch.StartNew();
                 individual = await SearchByTelephone(customer);
-                stopwatchSearchSpecifc.Stop();
-                _logger.LogDebug($"   InteractionService: FindIndividual - Telephone Time Elapsed (seconds) {stopwatchSearchSpecifc.Elapsed.TotalSeconds}");
             }            
             
             if (individual == null)
             {
-                stopwatchSearchSpecifc = Stopwatch.StartNew();
                 individual = await SearchByAddress(customer);
-                stopwatchSearchSpecifc.Stop();
-                _logger.LogDebug($"   InteractionService: FindIndividual - Address Time Elapsed (seconds) {stopwatchSearchSpecifc.Elapsed.TotalSeconds}");
             }
 
             if (individual == null)
             {
-                stopwatchSearchSpecifc = Stopwatch.StartNew();
                 individual = await SearchByName(customer);
-                stopwatchSearchSpecifc.Stop();
-                _logger.LogDebug($"   InteractionService: FindIndividual - Name Time Elapsed (seconds) {stopwatchSearchSpecifc.Elapsed.TotalSeconds}");
             }
 
             if (individual == null)
@@ -107,9 +93,6 @@ namespace verint_service.Services
                 _logger.LogDebug($"   IndividualService.FindIndividual: Result found for Customer {customer.Surname}");
             }
 
-            stopwatch.Stop();
-            _logger.LogDebug($"   InteractionService: FindIndividual - Total Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
-            _logger.LogDebug($"IndividualService.FindIndividual: *** Finished customer search - {customer.Forename} {customer.Surname}");
             return individual;
         }
 
