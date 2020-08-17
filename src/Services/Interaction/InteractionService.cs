@@ -6,6 +6,7 @@ using verint_service.Models;
 using verint_service.Utils.Consts;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
+using verint_service.Services.Organisation;
 
 namespace verint_service.Services
 {
@@ -19,68 +20,79 @@ namespace verint_service.Services
 
         private readonly IIndividualService _individualService;
 
-        public InteractionService(IVerintConnection verint, IIndividualService individualService, ILogger<InteractionService> logger)
+        private readonly IOrganisationService _organisationService;
+
+        public InteractionService(IVerintConnection verint, IIndividualService individualService, IOrganisationService organisationService, ILogger<InteractionService> logger)
         {
             _verintConnection = verint.Client();
             _individualService = individualService;
+            _organisationService = organisationService;
             _logger = logger;
         }
 
         public async Task<long> CreateInteraction(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
-            var stopwatch = Stopwatch.StartNew();
             _logger.LogDebug($"InteractionService.Create:Attempting to create interaction, Event {crmCase.EventTitle}, event code {crmCase.EventCode}");
-
-            var interactionDetails = new FWTInteractionCreate {
+            var interactionDetails = new FWTInteractionCreate
+            {
                 Channel = VerintConstants.Channel,
                 Verified = false,
             };
 
-            FWTObjectID raisedBy = await GetRaisedByObject(crmCase);
-            if(raisedBy != null)
+            await ResolveIndividual(crmCase);
+            await ResolveOrganisation(crmCase);
+
+            if (crmCase.Organisation != null && crmCase.Customer != null)
             {
-                interactionDetails.PartyID = raisedBy;
+                interactionDetails.PartyID = GetRaisedByObjects(crmCase);
             }
 
             var createInteractionResult = await _verintConnection.createInteractionAsync(interactionDetails);
-            _logger.LogDebug($"InteractionService.Create: Create interaction, Id {createInteractionResult.InteractionID} Event {crmCase.EventTitle}, event code {crmCase.EventCode}");
-            stopwatch.Stop();
-            _logger.LogDebug($"InteractionService: CreateInteraction - Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
+            _logger.LogDebug($"InteractionService.Create: Created interaction, Id {createInteractionResult.InteractionID} Event {crmCase.EventTitle}, event code {crmCase.EventCode}");
+            
             return createInteractionResult.InteractionID;
         }
 
-        private async Task<FWTObjectID> GetRaisedByObject(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
+        private async Task ResolveIndividual(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
-            var stopwatch = Stopwatch.StartNew();
-
-            FWTObjectID raisedBy = null;
-
-            if(crmCase.Customer != null && crmCase.RaisedByBehaviour == RaisedByBehaviourEnum.Individual)
+            if (crmCase.Customer != null && string.IsNullOrEmpty(crmCase.Customer.CustomerReference))
             {
-                _logger.LogDebug($"InteractionService.GetRaisedByObject - Individual");
-
                 var individual = await _individualService.ResolveIndividual(crmCase.Customer);
                 crmCase.Customer.CustomerReference = individual.ObjectReference[0];
-                raisedBy = individual;
-                
-                _logger.LogDebug($"InteractionService.GetRaisedByObject - Result Individual Id: {individual.ObjectReference[0]}");
-
-                return raisedBy;
             }
+        }
 
-            if(crmCase.Organisation != null)
+        private async Task ResolveOrganisation(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
+        {
+            if (crmCase.Organisation != null && string.IsNullOrEmpty(crmCase.Organisation.Reference))
             {
-                _logger.LogDebug($"InteractionService.GetRaisedByObject - Organisation");
+                var organisation = await _organisationService.ResolveAsync(crmCase.Organisation);
+                crmCase.Organisation.Reference = organisation.ObjectReference[0];
+            }
+        }
 
-                raisedBy = new FWTObjectID()
+        private FWTObjectID GetRaisedByObjects(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
+        {
+            FWTObjectID raisedBy = null;
+            
+            if(crmCase.Customer != null && crmCase.RaisedByBehaviour == RaisedByBehaviourEnum.Individual)
+            {
+                raisedBy = new FWTObjectID
+                {
+                    ObjectType = VerintConstants.IndividualObjectType,
+                    ObjectReference = new string[] { crmCase.Customer.CustomerReference }
+                };
+            }
+            else if(crmCase.Organisation != null)
+            {
+                raisedBy = new FWTObjectID
                 {
                     ObjectType = VerintConstants.OrganisationObjectType,
-                    ObjectReference = new[] { crmCase.Organisation.Reference }
-                };    
+                    ObjectReference = new string[] { crmCase.Organisation.Reference }
+                };
             }
 
-            stopwatch.Stop();
-            _logger.LogDebug($"InteractionService: GetRaisedByObject - Time Elapsed (seconds) {stopwatch.Elapsed.TotalSeconds}");
+            _logger.LogDebug($"InteractionService: GetRaisedByObject - Raised By: {raisedBy.ObjectReference}, {raisedBy.ObjectType}");
             
             return raisedBy;
         }
