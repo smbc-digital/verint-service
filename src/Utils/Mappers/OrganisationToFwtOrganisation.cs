@@ -13,7 +13,10 @@ namespace verint_service.Utils.Mappers
             {
                 Name = new []
                 {
-                    new FWTOrganisationName { FullName = organisation.Name.Trim() }
+                    new FWTOrganisationName { 
+                        FullName = organisation.Name.Trim(),
+                        Preferred = true
+                     }
                 }
             };          
 

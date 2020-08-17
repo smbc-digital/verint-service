@@ -41,8 +41,10 @@ namespace verint_service.Services.Organisation
 
         public async Task<FWTObjectID> CreateAsync(StockportGovUK.NetStandard.Models.Verint.Organisation organisation)
         {
+            _logger.LogDebug($"OrganisationService.ResolveOrganisation: Creating new organisation - { organisation.Name }");
             var fwtOrganisation = organisation.Map();
             var response = await _verintConnection.createOrganisationAsync(fwtOrganisation);
+            _logger.LogDebug($"OrganisationService.ResolveOrganisation: Created new organisation - { fwtOrganisation.Name.First().FullName }, { response.FLNewOrganisationID.ObjectReference.First() }");
             return response.FLNewOrganisationID;
         }
 
