@@ -27,9 +27,9 @@ Create case with organisation (Substitute org data for new organisation creation
     }
   },
   "organisation": {
-    "name": "Tesco",
-    "telephone": "01612527300",
-    "email": "dummyemail@stockport.gov.uk"
+    "name": "NewOrg2",
+    "telephone": "01614745438",
+    "email": "neworg@stockport.gov.uk"
   }
   "eventTitle": "Compliment",
   "eventCode": "4000000",
