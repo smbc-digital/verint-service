@@ -28,6 +28,13 @@ namespace verint_service.Controllers
         }
 
         [HttpGet]
+        [Route("usrnsearch/{usrn}")]
+        public async Task<IEnumerable<AddressSearchResult>> UsrnSearch(string street)
+        {
+            return await _streetService.SearchByUsrnAsync(street);
+        }
+
+        [HttpGet]
         [Route("{id}")]
         public async Task<AddressSearchResult> Get(string id)
         {

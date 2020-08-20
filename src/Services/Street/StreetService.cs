@@ -47,6 +47,16 @@ namespace verint_service.Services.Street
             return await DoStreetSearch(streetSearch);
         }
 
+        public async Task<IEnumerable<AddressSearchResult>> SearchByUsrnAsync(string usrn)
+        {
+            var streetSearch = new FWTStreetSearch
+            {
+                 USRN = usrn
+            };
+
+            return await DoStreetSearch(streetSearch);
+        }
+
         private async Task<IEnumerable<AddressSearchResult>> DoStreetSearch(FWTStreetSearch streetSearch)
         {
             var streetSearchResults = await _verintConnection.searchForStreetAsync(streetSearch);
