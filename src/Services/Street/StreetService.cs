@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using StockportGovUK.NetStandard.Models.Addresses;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +64,8 @@ namespace verint_service.Services.Street
             var streetResults = streetSearchResults.FWTObjectBriefDetailsList.OrderBy(street => street.ObjectDescription).Select(result => new AddressSearchResult
             {
                 UniqueId = result.ObjectID.ObjectReference[0],
-                Name = result.ObjectDescription
+                Name = result.ObjectDescription,
+                AddressLine1 = JsonConvert.SerializeObject(result)
             });
 
             return streetResults;
