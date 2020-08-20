@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using StockportGovUK.NetStandard.Models.Addresses;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Utils.Consts;
@@ -31,7 +30,9 @@ namespace verint_service.Services.Street
                 UniqueId = reference,
                 USRN = result.USRN,
                 Name = result.BriefDetails?.ObjectDescription,
-                AddressLine1 = JsonConvert.SerializeObject(result)
+                AddressLine1 = result.StreetName,
+                AddressLine2 = result.PrimaryLocality,
+                AddressLine3 = result.PostTownName
             };
         }
 
@@ -42,18 +43,13 @@ namespace verint_service.Services.Street
         private async Task<IEnumerable<AddressSearchResult>> DoStreetSearch(FWTStreetSearch streetSearch)
         {
             var streetResult = await GetUniqueId(streetSearch);
-            return streetResult.Select(_ => GetStreet(_.UniqueId).Result);
+            return streetResult.Select(_ => GetStreet(_).Result);
         }
 
-        private async Task<IEnumerable<AddressSearchResult>> GetUniqueId(FWTStreetSearch streetSearch)
+        private async Task<IEnumerable<string>> GetUniqueId(FWTStreetSearch streetSearch)
         {
             var streetSearchResults = await _verintConnection.searchForStreetAsync(streetSearch);
-            return streetSearchResults.FWTObjectBriefDetailsList.OrderBy(street => street.ObjectDescription).Select(result => new AddressSearchResult
-            {
-                UniqueId = result.ObjectID.ObjectReference[0],
-                Name = result.ObjectDescription,
-                AddressLine1 = JsonConvert.SerializeObject(result)
-            });
+            return streetSearchResults.FWTObjectBriefDetailsList.OrderBy(street => street.ObjectDescription).Select(result => result.ObjectID.ObjectReference[0]);
         }
     }
 }
