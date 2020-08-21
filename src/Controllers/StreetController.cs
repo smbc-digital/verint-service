@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
@@ -30,9 +31,16 @@ namespace verint_service.Controllers
 
         [HttpGet]
         [Route("search")]
-        public async Task<IEnumerable<AddressSearchResult>> Search([FromQuery]StreetSearch search)
+        public async Task<ActionResult> Search([FromQuery]StreetSearch search)
         {
-            return await _streetService.Search(search);
+            var result = await _streetService.Search(search);
+
+            if (result == null || !result.Any())
+            {
+                return NotFound();
+            }
+            
+            return Ok(result);
         }
 
         [HttpGet]
