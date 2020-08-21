@@ -19,8 +19,7 @@ namespace verint_service.Services.Street
 
         public async Task<AddressSearchResult> GetStreet(string reference)
         {
-            var result = (await _verintConnection.retrieveStreetAsync(new FWTObjectID
-            {
+            var result = (await _verintConnection.retrieveStreetAsync(new FWTObjectID {
                 ObjectReference = new[] { reference },
                 ObjectType = VerintConstants.StreetObjectType
             })).FWTStreet;
