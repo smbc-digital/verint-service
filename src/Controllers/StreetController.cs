@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Addresses;
+using verint_service.Models;
 using verint_service.Services.Street;
 
 namespace verint_service.Controllers
@@ -21,6 +22,20 @@ namespace verint_service.Controllers
         }
 
         [HttpGet]
+        [Route("{id}")]
+        public async Task<AddressSearchResult> Get(string id)
+        {
+            return await _streetService.GetStreet(id);
+        }
+
+        [HttpGet]
+        [Route("search")]
+        public async Task<IEnumerable<AddressSearchResult>> Search([FromQuery]StreetSearch search)
+        {
+            return await _streetService.Search(search);
+        }
+
+        [HttpGet]
         [Route("streetsearch/{street}")]
         public async Task<IEnumerable<AddressSearchResult>> StreetSearch(string street)
         {
@@ -32,13 +47,6 @@ namespace verint_service.Controllers
         public async Task<IEnumerable<AddressSearchResult>> UsrnSearch(string usrn)
         {
             return await _streetService.SearchByUsrnAsync(usrn);
-        }
-
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<AddressSearchResult> Get(string id)
-        {
-            return await _streetService.GetStreet(id);
         }
     }
 }

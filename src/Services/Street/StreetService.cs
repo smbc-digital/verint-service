@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using StockportGovUK.NetStandard.Models.Addresses;
 using verint_service.Helpers.VerintConnection;
+using verint_service.Models;
 using verint_service.Utils.Consts;
 using VerintWebService;
 
@@ -34,6 +35,8 @@ namespace verint_service.Services.Street
                 AddressLine3 = result.PostTownName
             };
         }
+
+        public async Task<IEnumerable<AddressSearchResult>> Search(StreetSearch search) => await DoStreetSearch(new FWTStreetSearch { StreetName = search.StreetName, USRN = search.USRN });
 
         public async Task<IEnumerable<AddressSearchResult>> SearchByStreetAsync(string reference) => await DoStreetSearch(new FWTStreetSearch { StreetName = reference });
 
