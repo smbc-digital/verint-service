@@ -36,13 +36,13 @@ namespace verint_service.Services
             var interactionDetails = new FWTInteractionCreate
             {
                 Channel = VerintConstants.Channel,
-                Verified = false,
+                Verified = false
             };
 
             await ResolveIndividual(crmCase);
             await ResolveOrganisation(crmCase);
 
-            if (crmCase.Organisation != null && crmCase.Customer != null)
+            if (crmCase.Organisation != null || crmCase.Customer != null)
             {
                 interactionDetails.PartyID = GetRaisedByObjects(crmCase);
             }
@@ -83,7 +83,7 @@ namespace verint_service.Services
                     ObjectReference = new string[] { crmCase.Customer.CustomerReference }
                 };
             }
-            else if(crmCase.Organisation != null)
+            else if(crmCase.Organisation != null && crmCase.RaisedByBehaviour == RaisedByBehaviourEnum.Organisation)
             {
                 raisedBy = new FWTObjectID
                 {

@@ -209,7 +209,7 @@ namespace verint_service_tests.Services
             await _verintOnlineFormService.GetVOFCase(expectedRef);
 
             _mockVOFClient
-                .Verify(_ => _.GetAsync(It.Is<GetRequest>(_ => _.@ref.Equals(expectedRef))), Times.Once);
+                .Verify(_ => _.GetAsync(It.Is<GetRequest>(x => x.@ref.Equals(expectedRef))), Times.Once);
 
             _mockVOFClient
                 .VerifyNoOtherCalls();
