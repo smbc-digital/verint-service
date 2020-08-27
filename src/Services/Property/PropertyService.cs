@@ -50,7 +50,8 @@ namespace verint_service.Services.Property
                 AddressLine2 = result.FWTProperty.AddressLine2,
                 City = result.FWTProperty.City,
                 Postcode = result.FWTProperty.Postcode,
-                Number = result.FWTProperty.AddressNumber
+                Number = result.FWTProperty.AddressNumber,
+                USRN = result.FWTProperty.USRN
             };
 
             return address;
