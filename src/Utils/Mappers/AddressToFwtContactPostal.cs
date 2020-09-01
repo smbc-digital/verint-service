@@ -12,7 +12,9 @@ namespace verint_service.Utils.Mappers
             FWTContactPostal contactPostal = null;
             if (address != null)
             {
-                contactPostal.Preferred = true;   
+                contactPostal = new FWTContactPostal{
+                    Preferred = true
+                };
 
                 if (!string.IsNullOrEmpty(address.UPRN))
                 {

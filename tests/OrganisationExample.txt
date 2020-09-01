@@ -10,7 +10,10 @@ Resolving creates new/Matching return notfound
 {
   "name": "NewOrg",
   "telephone": "01614745438",
-  "email": "neworg@stockport.gov.uk"
+  "email": "neworg@stockport.gov.uk",
+    "address": {
+        "UPRN": "101002265507"
+    }
 }
 
 Create case with organisation (Substitute org data for new organisation creation)
