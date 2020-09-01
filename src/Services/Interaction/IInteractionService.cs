@@ -5,6 +5,6 @@ namespace verint_service.Services
 {
     public interface IInteractionService
     {    
-        Task<long> CreateInteraction(StockportGovUK.NetStandard.Models.Verint.Case crmCase);
+        Task<long> CreateAsync(StockportGovUK.NetStandard.Models.Verint.Case crmCase);
     }
 }

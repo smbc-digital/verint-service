@@ -1,6 +1,4 @@
-﻿using System;
-using StockportGovUK.NetStandard.Models.Verint;
-using verint_service.Utils.Consts;
+﻿using StockportGovUK.NetStandard.Models.Verint;
 using VerintWebService;
 
 namespace verint_service.Utils.Mappers
@@ -16,33 +14,17 @@ namespace verint_service.Utils.Mappers
                     new FWTOrganisationName { 
                         FullName = organisation.Name.Trim(),
                         Preferred = true
-                     }
+                    }
                 }
             };          
 
             if (organisation.Address != null)
             {
-                var contactPostal = new FWTContactPostal
-                {
-                    AddressNumber = organisation.Address.Number,
-                    AddressLine = new[] { organisation.Address.AddressLine1, organisation.Address.AddressLine2, organisation.Address.AddressLine3, organisation.Address.City },
-                    City = organisation.Address.City,
-                    Postcode = organisation.Address.Postcode?.Trim(),
-                    Preferred = true,
-                };
-
-                if (!string.IsNullOrEmpty(organisation.Address.UPRN))
-                {
-                    contactPostal.Option = new [] { VerintConstants.UseUprnForAddress,  VerintConstants.IgnoreInvalidUprn };
-                    contactPostal.UPRN = organisation.Address.UPRN.Trim();
-                }
-
-                fwtOrganisation.ContactPostals = new[] { contactPostal };
+                fwtOrganisation.ContactPostals = new[] { organisation.Address.Map() };
             }
 
             if(!string.IsNullOrEmpty(organisation.Telephone))
-            {
-                
+            {                
                 fwtOrganisation.ContactPhones = new[] 
                 { 
                     new FWTContactPhone

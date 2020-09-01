@@ -53,7 +53,7 @@ namespace verint_service.Controllers
             try
             {
                 _logger.LogDebug($"CaseController.Create:Attempting to create case {crmCase.EventTitle}, event code {crmCase.EventCode}");
-                var response = await _caseService.CreateCase(crmCase);
+                var response = await _caseService.Create(crmCase);
                 _logger.LogDebug($"CaseController.Create: Reference {response}, Create case {crmCase.EventTitle}, event code {crmCase.EventCode}");
 
                 return CreatedAtAction("Create", response);
@@ -77,7 +77,7 @@ namespace verint_service.Controllers
         {
             try
             {
-                var response = await _caseService.UpdateCaseDescription(crmCase);
+                var response = await _caseService.UpdateDescription(crmCase);
 
                 return CreatedAtAction("UpdateCaseDescription", response);
             }

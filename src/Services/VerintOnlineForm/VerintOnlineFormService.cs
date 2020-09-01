@@ -21,7 +21,7 @@ namespace verint_service.Services.VerintOnlineForm
 
         public async Task<VerintOnlineFormResponse> CreateVOFCase(VerintOnlineFormRequest model)
         {
-            var verintCaseId = await _caseService.CreateCase(model.VerintCase);
+            var verintCaseId = await _caseService.Create(model.VerintCase);
 
             var createVOFResponse = await _VOFConnection.CreateAsync(new CreateRequest
             {

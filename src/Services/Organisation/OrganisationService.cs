@@ -8,6 +8,7 @@ using verint_service.Helpers.VerintConnection;
 using verint_service.Utils.Mappers;
 using verint_service.Services.Organisation.Weighting;
 using verint_service.Utils.Consts;
+using verint_service.Services.Property;
 
 namespace verint_service.Services.Organisation
 {
@@ -17,11 +18,14 @@ namespace verint_service.Services.Organisation
         private readonly IVerintClient _verintConnection;
         private readonly IEnumerable<IOrganisationWeighting> _organisationWeightings;
 
-        public OrganisationService(IVerintConnection verint, IEnumerable<IOrganisationWeighting> organisationWeightings, ILogger<OrganisationService> logger)
+        private readonly IPropertyService _propertyService;
+
+        public OrganisationService(IVerintConnection verint, IEnumerable<IOrganisationWeighting> organisationWeightings, IPropertyService propertyService, ILogger<OrganisationService> logger)
         {
             _logger = logger;
             _verintConnection = verint.Client();
             _organisationWeightings = organisationWeightings;
+            _propertyService = propertyService;
         }
 
         public async Task<StockportGovUK.NetStandard.Models.Verint.Organisation> GetAsync(string id)
@@ -41,7 +45,13 @@ namespace verint_service.Services.Organisation
 
         public async Task<FWTObjectID> CreateAsync(StockportGovUK.NetStandard.Models.Verint.Organisation organisation)
         {
-            _logger.LogDebug($"OrganisationService.ResolveOrganisation: Creating new organisation - { organisation.Name }");
+            _logger.LogDebug($"OrganisationService.Create: Attempting to Create - { organisation.Name }");
+            
+            if (organisation.Address != null)
+            {
+                organisation.Address.UPRN = await _propertyService.CheckUPRNForId(organisation.Address);
+            }
+
             var fwtOrganisation = organisation.Map();
             var response = await _verintConnection.createOrganisationAsync(fwtOrganisation);
             _logger.LogDebug($"OrganisationService.ResolveOrganisation: Created new organisation - { fwtOrganisation.Name.First().FullName }, { response.FLNewOrganisationID.ObjectReference.First() }");
@@ -50,13 +60,20 @@ namespace verint_service.Services.Organisation
 
         public async Task<FWTObjectID> ResolveAsync(StockportGovUK.NetStandard.Models.Verint.Organisation organisation)
         {
+            _logger.LogDebug($"OrganisationService.Resolve: Attempting to resolve { organisation.Name }");
+
+            if (organisation.Address != null)
+            {
+                organisation.Address.UPRN = await _propertyService.CheckUPRNForId(organisation.Address);
+            }
+
             var organisationObject = await MatchAsync(organisation);
             if(organisationObject != null)
             {
                 return organisationObject;    
             }
 
-            _logger.LogDebug($"OrganisationService.ResolveOrganisation: No match - Creating new organisation - {organisation.Name}");
+            _logger.LogDebug($"OrganisationService.Resolve: No match - Creating new organisation - {organisation.Name}");
             return await CreateAsync(organisation);
         }
 

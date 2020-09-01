@@ -22,9 +22,9 @@ namespace verint_service_tests.Services
         private readonly Mock<ILogger<IndividualService>> _mockLogger = new Mock<ILogger<IndividualService>>();
         private readonly Mock<ILogger<InteractionService>> _mockInteractionLogger = new Mock<ILogger<InteractionService>>();
         private readonly Mock<IPropertyService> _mockPropertyService = new Mock<IPropertyService>();
-
         private readonly Mock<IOrganisationService> _mockOrganisationService = new Mock<IOrganisationService>();
         private readonly InteractionService _service;
+        
         public InteractionServiceTests()
         {
             _mockConnection
@@ -48,7 +48,7 @@ namespace verint_service_tests.Services
             var crmCase = new Case();
 
             // Act
-            var result =  await _service.CreateInteraction(crmCase);
+            var result =  await _service.CreateAsync(crmCase);
 
             // Assert
             _mockClient.Verify(client => client.createInteractionAsync(It.IsAny<FWTInteractionCreate>()), Times.Once);

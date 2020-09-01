@@ -17,8 +17,8 @@ namespace verint_service.Services.Case
         private readonly IVerintClient _verintConnection;
 
         private IInteractionService _interactionService;
-        private IIndividualService _individualService;
 
+        private IIndividualService _individualService;
 
         private CaseToFWTCaseCreateMapper _caseToFWTCaseCreateMapper;
 
@@ -79,20 +79,14 @@ namespace verint_service.Services.Case
             return caseDetails;
         }
 
-        public async Task<string> CreateCase(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
+        public async Task<string> Create(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
-            // HACK: Check whether UPRN provided is actually an ID and if so lookup the real UPRN
-            if (crmCase.Customer != null && crmCase.Customer.Address != null)
-            {
-                crmCase.Customer.Address.UPRN = await _individualService.CheckUPRNForId(crmCase.Customer);
-            }
-
-            crmCase.InteractionReference = await _interactionService.CreateInteraction(crmCase);
+            crmCase.InteractionReference = await _interactionService.CreateAsync(crmCase);
             var caseDetails = _caseToFWTCaseCreateMapper.Map(crmCase);
             return _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;
         }
 
-        public async Task<int> UpdateCaseDescription(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
+        public async Task<int> UpdateDescription(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
             var caseDetails = new FWTCaseUpdate
             {

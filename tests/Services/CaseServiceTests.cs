@@ -9,7 +9,6 @@ using Xunit;
 using verint_service.Services;
 using verint_service.Helpers;
 using StockportGovUK.NetStandard.Models.Verint;
-using verint_service;
 using verint_service.Utils.Builders;
 using verint_service.Utils.Consts;
 using verint_service.Utils.Mappers;
@@ -33,12 +32,8 @@ namespace verint_service_tests.Services
                 .Returns(_mockClient.Object);
 
             _mockInteractionService
-                .Setup(_ => _.CreateInteraction(It.IsAny<Case>()))
+                .Setup(_ => _.CreateAsync(It.IsAny<Case>()))
                 .ReturnsAsync(987654321);
-
-            _mockIndividualService
-                .Setup(_ => _.CheckUPRNForId(It.IsAny<Customer>()))
-                .ReturnsAsync("101002265507");
 
             _mockAssociatedObjectHelper
                 .Setup(helper => helper.Resolve(It.IsAny<Case>()))
@@ -207,7 +202,7 @@ namespace verint_service_tests.Services
                 });
 
             // Act
-            await _caseService.CreateCase(testCase);
+            await _caseService.Create(testCase);
 
             // Assert
             _mockAssociatedObjectHelper.Verify(helper => helper.Resolve(It.IsAny<Case>()), Times.Once);
@@ -286,7 +281,7 @@ namespace verint_service_tests.Services
                 });
 
             // Act
-            await _caseService.CreateCase(caseDetails);
+            await _caseService.Create(caseDetails);
 
             // Assert
             _mockClient.Verify(client => client.createCaseAsync(It.IsAny<FWTCaseCreate>()), Times.Once);
@@ -308,7 +303,7 @@ namespace verint_service_tests.Services
                 .Throws(new Exception());
 
             // Act
-            await Assert.ThrowsAsync<Exception>(() => _caseService.CreateCase(caseDetails));
+            await Assert.ThrowsAsync<Exception>(() => _caseService.Create(caseDetails));
 
             // Assert
             _mockClient.Verify(_ => _.createCaseAsync(It.IsAny<FWTCaseCreate>()), Times.Once);
@@ -331,7 +326,7 @@ namespace verint_service_tests.Services
                 .ReturnsAsync(() => new updateCaseResponse{ FWTCaseUpdateResponse = 1});
 
             // Act
-            await _caseService.UpdateCaseDescription(caseDetails);
+            await _caseService.UpdateDescription(caseDetails);
 
             // Assert
             _mockClient.Verify(client => client.updateCaseAsync(It.IsAny<FWTCaseUpdate>()), Times.Once);
@@ -352,7 +347,7 @@ namespace verint_service_tests.Services
                 .Setup(client => client.updateCaseAsync(It.IsAny<FWTCaseUpdate>())).Throws(new Exception());
 
             // Act
-            await Assert.ThrowsAsync<Exception>(() => _caseService.UpdateCaseDescription(caseDetails));
+            await Assert.ThrowsAsync<Exception>(() => _caseService.UpdateDescription(caseDetails));
 
             // Assert
             _mockClient.Verify(client => client.updateCaseAsync(It.IsAny<FWTCaseUpdate>()), Times.Once);

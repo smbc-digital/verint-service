@@ -36,7 +36,7 @@ namespace verint_service_tests.Services
                .Returns(_mockVOFClient.Object);
 
             _mockCaseService
-                .Setup(_ => _.CreateCase(It.IsAny<Case>()))
+                .Setup(_ => _.Create(It.IsAny<Case>()))
                 .ReturnsAsync(model.VerintCase.CaseReference);
 
             _verintOnlineFormService = new VerintOnlineFormService(_mockConnection.Object, _mockCaseService.Object);
@@ -61,7 +61,7 @@ namespace verint_service_tests.Services
             await _verintOnlineFormService.CreateVOFCase(model);
 
             // Assert
-            _mockCaseService.Verify(_ => _.CreateCase(It.IsAny<Case>()), Times.Once);
+            _mockCaseService.Verify(_ => _.Create(It.IsAny<Case>()), Times.Once);
         }
 
         [Fact]

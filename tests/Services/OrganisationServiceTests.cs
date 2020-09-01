@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 using Moq;
+using StockportGovUK.NetStandard.Models.Verint;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using verint_service.Helpers.VerintConnection;
 using verint_service.Services.Organisation;
 using verint_service.Services.Organisation.Weighting;
+using verint_service.Services.Property;
 using VerintWebService;
 using Xunit;
 
@@ -14,6 +16,7 @@ namespace verint_service_tests.Services
     {
         private readonly Mock<IVerintConnection> _mockConnection = new Mock<IVerintConnection>();
         private readonly Mock<IVerintClient> _mockClient = new Mock<IVerintClient>();
+        private readonly Mock<IPropertyService> _mockPropertyService = new Mock<IPropertyService>();
         private readonly Mock<ILogger<OrganisationService>> _mockLogger = new Mock<ILogger<OrganisationService>>();
         private readonly OrganisationService _service;
 
@@ -26,8 +29,12 @@ namespace verint_service_tests.Services
             _mockClient.Setup(_ => _.searchForPartyAsync(It.IsAny<FWTPartySearch>()))
                 .ReturnsAsync(new searchForPartyResponse {  FWTObjectBriefDetailsList = new FWTObjectBriefDetails[0] });
 
+            _mockPropertyService
+                .Setup(_ => _.CheckUPRNForId(It.IsAny<Address>()))
+                .ReturnsAsync("101002265507");
 
-            _service = new OrganisationService(_mockConnection.Object, new List<IOrganisationWeighting>(), _mockLogger.Object);
+
+            _service = new OrganisationService(_mockConnection.Object, new List<IOrganisationWeighting>(), _mockPropertyService.Object, _mockLogger.Object);
         }
 
         [Fact]

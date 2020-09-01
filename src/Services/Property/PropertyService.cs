@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using StockportGovUK.NetStandard.Models.Addresses;
-using StockportGovUK.NetStandard.Models.Verint;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +54,28 @@ namespace verint_service.Services.Property
             };
 
             return address;
+        }
+
+        public async Task<string> CheckUPRNForId(StockportGovUK.NetStandard.Models.Verint.Address address)
+        {
+            // HACK: Check whether UPRN provided is actually an ID and if so lookup the real UPRN
+            // If it's a real ID it shouldn't return a property!
+            if(!string.IsNullOrEmpty(address.UPRN))
+            {
+                try{
+                    var propertyResult = await GetPropertyAsync(address.UPRN);
+                    if(propertyResult != null)
+                    {
+                        return propertyResult.UPRN;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    _logger.LogWarning($"PropertyService.CheckUPRNForId - Exception occurred searching for property, assuming UPRN {address.UPRN}", ex);            
+                }
+            }
+
+            return address.UPRN;
         }
 
         private async Task<IEnumerable<AddressSearchResult>> DoPropertySearch(FWTPropertySearch propertySearch)
