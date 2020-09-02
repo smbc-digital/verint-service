@@ -101,7 +101,7 @@ namespace verint_service.Services
 
             if (individual == null)
             {
-                _logger.LogDebug($"   IndividualService.FindIndividual: No Result found for Customer {customer.Surname}");
+                _logger.LogDebug($"IndividualService.FindIndividual: No Result found for Customer {customer.Surname}");
             }
             else
             {
@@ -185,16 +185,19 @@ namespace verint_service.Services
             var bestMatchScore = 0;
 
             var tasks = new List<Task<retrieveIndividualResponse>>();
-
+            _logger.LogDebug($"IndividualService.GetBestMatchingAsync Retrieving results for {individualResults.Count()} results");
+            
             foreach (var individualResult in individualResults)
             {
                 tasks.Add(Task.Run(async () =>
                 {
+                    _logger.LogDebug($"IndividualService.GetBestMatchingAsync Retrievingindividual, Ref: {individualResult.ObjectID.ObjectReference}");
                     return await _verintConnection.retrieveIndividualAsync(individualResult.ObjectID);
                 }));
             }
 
             var results = await Task.WhenAll(tasks);
+            _logger.LogDebug($"IndividualService.GetBestMatchingAsync Retrieved all search result objects, Customer: {customer.Surname}");
 
             results.ToList().ForEach((result) =>
             {
@@ -212,7 +215,7 @@ namespace verint_service.Services
 
             if (bestMatch != null && bestMatchScore >= 5)
             {
-                _logger.LogDebug($"IndividualService.GetBestMatchingIndividual Match Found - Customer: {customer.Surname} Score: {bestMatchScore}");
+                _logger.LogDebug($"IndividualService.GetBestMatchingAsync Match Found - Customer: {customer.Surname} Score: {bestMatchScore}");
                 await UpdateIndividual(bestMatch, customer);
                 bestMatchingObjectID = bestMatch.BriefDetails.ObjectID;
             }
