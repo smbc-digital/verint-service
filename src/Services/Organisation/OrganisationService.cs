@@ -115,8 +115,11 @@ namespace verint_service.Services.Organisation
             if (searchResults.FWTObjectBriefDetailsList.Any() && searchResults != null)
             {
                 matchingOrganisation =  await GetBestMatchingOrganisationAsync(searchResults.FWTObjectBriefDetailsList.Take(50).ToArray(), organisation);
-                _logger.LogDebug($"OrganisationService.MatchAsync - Organisation Found: { matchingOrganisation.ObjectReference.First() }");
-                return matchingOrganisation;
+                if(matchingOrganisation!=null)
+                {
+                    _logger.LogDebug($"OrganisationService.MatchAsync - Organisation Found: { matchingOrganisation.ObjectReference.First() }");
+                    return matchingOrganisation;
+                }
             }
 
             _logger.LogDebug($"OrganisationService.MatchAsync - Organisation Not Found: { organisation.Name }");
