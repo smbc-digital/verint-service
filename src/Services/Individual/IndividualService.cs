@@ -105,7 +105,7 @@ namespace verint_service.Services
             }
             else
             {
-                _logger.LogDebug($"   IndividualService.FindIndividual: Result found for Customer {customer.Surname}");
+                _logger.LogDebug($"IndividualService.FindIndividual: Result found for Customer {customer.Surname}");
             }
 
             return individual;

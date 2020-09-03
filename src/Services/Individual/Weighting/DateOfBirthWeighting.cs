@@ -18,11 +18,7 @@ namespace verint_service.Services.Individual.Weighting
         {
             if(customer.DateOfBirth != null && customer.DateOfBirth != DateTime.MinValue)
             {
-                if(individual.DateOfBirthSpecified && individual.DateOfBirth == customer.DateOfBirth)
-                {
-                    return 2;
-                }
-                else if(individual.DateOfBirthSpecified && individual.DateOfBirth != customer.DateOfBirth)
+                if(individual.DateOfBirthSpecified && individual.DateOfBirth != customer.DateOfBirth)
                 {
                     return -10;
                 }
