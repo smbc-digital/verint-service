@@ -77,7 +77,7 @@ namespace verint_service.Services
                 };
             }
 
-            _logger.LogDebug($"InteractionService: GetRaisedByObject - Raised By: {raisedBy.ObjectReference.First().ObjectReference}, {raisedBy.ObjectType}");
+            _logger.LogDebug($"InteractionService: GetRaisedByObject - Raised By: {raisedBy.ObjectReference.First()}, {raisedBy.ObjectType}");
             
             return raisedBy;
         }
