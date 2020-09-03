@@ -17,9 +17,9 @@ namespace verint_service.Services.Organisation.Weighting
 
         public int Calculate(FWTOrganisation organisationObject, StockportGovUK.NetStandard.Models.Verint.Organisation organisation)
         {
-                if (organisation.Name != null && organisationObject.Name.Any(x => organisation.Name == x.FullName))
+                if (organisation.Name != null && organisationObject.Name.Any(x => organisation.Name.Trim() == x.FullName.Trim()))
                 {
-                    return 1;
+                    return 2;
                 }
 
                 return 0;

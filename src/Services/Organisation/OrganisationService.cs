@@ -90,12 +90,12 @@ namespace verint_service.Services.Organisation
 
         public async Task<FWTObjectID> MatchAsync(StockportGovUK.NetStandard.Models.Verint.Organisation organisation)
         {
-            _logger.LogDebug($"OrganisationService.MatchAsync - Organisation: {organisation.Name}");
+            _logger.LogDebug($"OrganisationService.MatchAsync - Organisation: {organisation.Name.Trim()}");
 
             var search = new FWTPartySearch
             {
                 SearchType = "organisation",
-                Name = organisation.Name
+                Name = organisation.Name.Trim()
             };
 
             if(!string.IsNullOrEmpty(organisation.Telephone))

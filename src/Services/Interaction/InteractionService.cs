@@ -5,6 +5,7 @@ using VerintWebService;
 using verint_service.Utils.Consts;
 using Microsoft.Extensions.Logging;
 using verint_service.Services.Organisation;
+using System.Linq;
 
 namespace verint_service.Services
 {
@@ -76,7 +77,7 @@ namespace verint_service.Services
                 };
             }
 
-            _logger.LogDebug($"InteractionService: GetRaisedByObject - Raised By: {raisedBy.ObjectReference}, {raisedBy.ObjectType}");
+            _logger.LogDebug($"InteractionService: GetRaisedByObject - Raised By: {raisedBy.ObjectReference.First().ObjectReference}, {raisedBy.ObjectType}");
             
             return raisedBy;
         }
