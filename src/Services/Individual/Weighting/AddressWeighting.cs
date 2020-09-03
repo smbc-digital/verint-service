@@ -43,7 +43,7 @@ namespace verint_service.Services.Individual.Weighting
                 individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressNumber) && string.Equals(x.AddressNumber.Trim(), customer.Address.Number.ToString(), StringComparison.CurrentCultureIgnoreCase))
                 )
             {
-                score += 2;
+                score += 1;
             }
 
             if (!string.IsNullOrEmpty(customer.Address.AddressLine1) &&

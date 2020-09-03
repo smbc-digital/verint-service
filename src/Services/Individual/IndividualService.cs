@@ -116,7 +116,7 @@ namespace verint_service.Services
             return new FWTPartySearch(){
                 Forename = customer.Forename.Trim(),
                 Name = customer.Surname.Trim(),
-                
+                SearchMatch = "equals_ignore_case"
             };
         }
 
@@ -213,7 +213,7 @@ namespace verint_service.Services
                 }
             });
 
-            if (bestMatch != null && bestMatchScore >= 5)
+            if (bestMatch != null && bestMatchScore >= 1)
             {
                 _logger.LogDebug($"IndividualService.GetBestMatchingAsync Match Found - Customer: {customer.Surname} Score: {bestMatchScore}");
                 await UpdateIndividual(bestMatch, customer);

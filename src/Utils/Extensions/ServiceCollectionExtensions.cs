@@ -57,7 +57,6 @@ namespace verint_service.Utils.Extensions
         {
             services.AddSingleton<IIndividualWeighting, verint_service.Services.Individual.Weighting.EmailWeighting>();
             services.AddSingleton<IIndividualWeighting, verint_service.Services.Individual.Weighting.DateOfBirthWeighting>();
-            services.AddSingleton<IIndividualWeighting, verint_service.Services.Individual.Weighting.NameWeighting>();
             services.AddSingleton<IIndividualWeighting, verint_service.Services.Individual.Weighting.TelephoneWeighting>();
             services.AddSingleton<IIndividualWeighting, verint_service.Services.Individual.Weighting.AlternativeTelephoneWeighting>();
             services.AddSingleton<IIndividualWeighting, verint_service.Services.Individual.Weighting.UprnWeighting>();

@@ -28,7 +28,7 @@ namespace verint_service.Services.Individual.Weighting
 
             if (individual.ContactPostals.Any(x => x.UPRN == customer.Address.UPRN.Trim()))
             {
-                return 2;
+                return 1;
             }
 
             return 0;
