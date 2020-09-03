@@ -82,22 +82,19 @@ namespace verint_service.Services
         
         private async Task<FWTObjectID> FindAsync(Customer customer)
         {
-            FWTObjectID individual = await SearchByEmailAsync(customer);
+            var individual = await SearchByAllProvidedData(customer);
 
             if (individual == null)
-            {
+                individual = await SearchByEmailAsync(customer);
+
+            if (individual == null)
                 individual = await SearchByTelephoneAsync(customer);
-            }            
             
             if (individual == null)
-            {
                 individual = await SearchByAddressAsync(customer);
-            }
 
             if (individual == null)
-            {
                 individual = await SearchByNameAsync(customer);
-            }
 
             if (individual == null)
             {
@@ -124,7 +121,7 @@ namespace verint_service.Services
         {
             searchCriteria.SearchType = "individual";
             var matchingIndividuals = await _verintConnection.searchForPartyAsync(searchCriteria);
-            _logger.LogDebug($"   IndividualService.SearchIndividuals: Name matchings found for Customer {customer.Surname} = {matchingIndividuals.FWTObjectBriefDetailsList?.Count()}");
+            _logger.LogDebug($"IndividualService.SearchIndividuals: Name matchings found for Customer {customer.Surname} = {matchingIndividuals.FWTObjectBriefDetailsList?.Count()}");
 
             FWTObjectID individual = null;
             if (matchingIndividuals.FWTObjectBriefDetailsList.Any() && matchingIndividuals != null)
@@ -178,6 +175,24 @@ namespace verint_service.Services
             return await SearchAsync(GetBaseSearchCriteria(customer), customer);
         }
 
+        private async Task<FWTObjectID> SearchByAllProvidedData(Customer customer)
+        {
+            var baseSearchCriteria = GetBaseSearchCriteria(customer);
+
+            if (!string.IsNullOrWhiteSpace(customer.Email))
+                baseSearchCriteria.EmailAddress = customer.Email.Trim();
+
+            if (!string.IsNullOrWhiteSpace(customer.Telephone))
+                baseSearchCriteria.PhoneNumber = customer.Telephone.Trim();
+
+            if (customer.Address != null && !string.IsNullOrWhiteSpace(customer.Address.Postcode)  && !string.IsNullOrWhiteSpace(customer.Address.Number))
+            {
+                baseSearchCriteria.AddressNumber = customer.Address.Number.Trim();
+                baseSearchCriteria.Postcode = customer.Address.Postcode.Trim();
+            }
+
+            return await SearchAsync(baseSearchCriteria, customer);
+        }
         private async Task<FWTObjectID> GetBestMatchingAsync(FWTObjectBriefDetails[] individualResults, Customer customer)
         {
             FWTIndividual bestMatch = null;
