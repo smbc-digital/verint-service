@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using Moq;
 using verint_service.Helpers.VerintConnection;
@@ -27,27 +26,27 @@ namespace verint_service_tests.Services
             _mockConnection
                 .Setup(_ => _.Client())
                 .Returns(_mockClient.Object);
+                
             _service = new IndividualService(_mockConnection.Object, new List<IIndividualWeighting>(), _mockPropertyService.Object, _mockLogger.Object);
         }
 
         [Fact]
-        public void FirstTest()
+        public void ResolveAsync_ShouldCallVerint_SearchPartyAsync_Once_WhenMatchingUserFound_OnInitalSearch()
         {
-            // // Arrange
-            // var objectId = new FWTObjectID();
 
-            // _mockClient
-            //     .Setup(client => client.createInteractionAsync(It.IsAny<FWTInteractionCreate>()))
-            //     .ReturnsAsync(new createInteractionResponse{
-            //         InteractionID = 987654321
-            //     });
+        }
 
-            // // Act
-            // var result =  await _service.CreateInteractionForIndividual(objectId);
+        
+        [Fact]
+        public void ResolveAsync_ShouldCallVerint_SearchPartyAsync_WithEmailSearchCrtieria_WhenMatchingUserNotFound_OnInitalSearch()
+        {
 
-            // // Assert
-            // _mockClient.Verify(client => client.createInteractionAsync(It.IsAny<FWTInteractionCreate>()), Times.Once);
-            // Assert.IsType<long>(result);
+        }
+
+        [Fact]
+        public void ResolveAsync_ShouldCallVerint_SearchPartyAsync_WithAllPossibleSearchCrtieria_WhenMatchingUserNotFound_OnAnySearch()
+        {
+
         }
     }
 }

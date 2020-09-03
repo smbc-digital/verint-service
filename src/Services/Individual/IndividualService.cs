@@ -39,7 +39,7 @@ namespace verint_service.Services
                 customer.Address.UPRN = await _propertyService.CheckUPRNForId(customer.Address);
             }
 
-            FWTObjectID individual = await FindAsync(customer);
+            var individual = await FindAsync(customer);
             if(individual == null)
             {
                 _logger.LogDebug($"IndividualService.ResolveIndividual: No match - Creating new inidividual - Customer {customer.Surname}");
