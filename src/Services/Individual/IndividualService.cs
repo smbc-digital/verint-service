@@ -49,20 +49,6 @@ namespace verint_service.Services
             return individual;
         }
 
-        private async Task<FWTObjectID> CreateAsync(Customer customer)
-        {
-            // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
-            if (customer.Address != null)
-            {
-                customer.Address.UPRN = await _propertyService.CheckUPRNForId(customer.Address);
-            }
-
-            var fwtIndividual = customer.Map();
-            var createIndividualResult = await _verintConnection.createIndividualAsync(fwtIndividual);
-
-            return createIndividualResult.FLNewIndividualID;
-        }
-
         public async Task UpdateIndividual(FWTIndividual individual, Customer customer)
         {
             var individualResponse = await _verintConnection.retrieveIndividualAsync(individual.BriefDetails.ObjectID);
@@ -78,6 +64,20 @@ namespace verint_service.Services
             {
                 await _verintConnection.updateIndividualAsync(update); 
             } 
+        }
+        
+        private async Task<FWTObjectID> CreateAsync(Customer customer)
+        {
+            // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
+            if (customer.Address != null)
+            {
+                customer.Address.UPRN = await _propertyService.CheckUPRNForId(customer.Address);
+            }
+
+            var fwtIndividual = customer.Map();
+            var createIndividualResult = await _verintConnection.createIndividualAsync(fwtIndividual);
+
+            return createIndividualResult.FLNewIndividualID;
         }
         
         private async Task<FWTObjectID> FindAsync(Customer customer)

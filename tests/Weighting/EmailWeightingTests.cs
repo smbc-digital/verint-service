@@ -79,7 +79,7 @@ namespace verint_service_tests.Weighting
         }
 
                 [Fact]
-        public void Calculate_Should_Return_2_If_IndividualContactEmails_IsThereIsAMatchingEmail()
+        public void Calculate_Should_Return_1_If_IndividualContactEmails_IsThereIsAMatchingEmail()
         {
             // Arrange 
             var weighting = new EmailWeighting(_mockLogger.Object);
@@ -103,7 +103,7 @@ namespace verint_service_tests.Weighting
             var result = weighting.Calculate(individual, customer);
 
             // Assert
-            Assert.Equal(2, result);
+            Assert.Equal(1, result);
         }
     }
 }
