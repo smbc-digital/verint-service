@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using verint_service.Controllers;
 using Moq;
@@ -12,7 +11,6 @@ using VerintWebService;
 using Microsoft.Extensions.Logging;
 using verint_service.Services.Event;
 using StockportGovUK.NetStandard.Models.Verint;
-using verint_service.Models;
 using System.Collections.Generic;
 using verint_service.Models.CaseEvent;
 
