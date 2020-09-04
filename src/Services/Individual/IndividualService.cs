@@ -113,7 +113,7 @@ namespace verint_service.Services.Individual
 
             FWTObjectID individual = null;
             if (matchingIndividuals.FWTObjectBriefDetailsList.Any() && matchingIndividuals != null)
-                individual = await GetBestMatchingAsync(matchingIndividuals.FWTObjectBriefDetailsList.Take(50).ToArray(), customer);
+                individual = await GetBestMatchingAsync(matchingIndividuals.FWTObjectBriefDetailsList.Take(30).ToArray(), customer);
 
             return individual;
         }
