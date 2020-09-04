@@ -20,19 +20,13 @@ namespace verint_service.Services.Individual.Weighting
         {
             
             if(customer.Address == null)
-            {
                 return 0;
-            }
 
             if(individual.ContactPostals == null)
-            {
                 return 0;
-            }
 
             if(!string.IsNullOrEmpty(customer.Address.UPRN))
-            {
                 return 0;
-            }
 
             var score = 0; 
 
