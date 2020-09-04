@@ -12,6 +12,7 @@ using verint_service.Models.Config;
 using verint_service.Services;
 using verint_service.Services.Case;
 using verint_service.Services.Event;
+using verint_service.Services.Individual;
 using verint_service.Services.Individual.Weighting;
 using verint_service.Services.Organisation;
 using verint_service.Services.Organisation.Weighting;

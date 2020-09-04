@@ -51,9 +51,6 @@ namespace verint_service.Services.Individual
 
         public async Task UpdateIndividual(FWTIndividual individual, Customer customer)
         {
-            var individualResponse = await _verintConnection.retrieveIndividualAsync(individual.BriefDetails.ObjectID);
-            individual = individualResponse.FWTIndividual;
-
             var update = new FWTIndividualUpdate
             {
                 BriefDetails = individual.BriefDetails

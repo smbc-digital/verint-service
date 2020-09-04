@@ -66,7 +66,7 @@ namespace verint_service_tests.Services
             // Assert
             Assert.NotNull(result);
             _mockClient.Verify(_ => _.searchForPartyAsync(It.Is<FWTPartySearch>(x => x.SearchType == "individual" && x.Forename == "forename" && x.Name == "surname")), Times.Once);
-            _mockClient.Verify(_ => _.retrieveIndividualAsync(It.IsAny<FWTObjectID>()), Times.Exactly(2));
+            _mockClient.Verify(_ => _.retrieveIndividualAsync(It.IsAny<FWTObjectID>()), Times.Exactly(1));
         }
         
         [Fact]
@@ -98,7 +98,7 @@ namespace verint_service_tests.Services
             // Assert
             Assert.NotNull(result);
             _mockClient.Verify(_ => _.searchForPartyAsync(It.Is<FWTPartySearch>(x => x.SearchType == "individual" && x.EmailAddress == "email@test.com")), Times.Exactly(2));
-            _mockClient.Verify(_ => _.retrieveIndividualAsync(It.IsAny<FWTObjectID>()), Times.Exactly(3));
+            _mockClient.Verify(_ => _.retrieveIndividualAsync(It.IsAny<FWTObjectID>()), Times.Exactly(2));
         }
 
         [Fact]
@@ -115,6 +115,8 @@ namespace verint_service_tests.Services
                 .WithForename("forename")
                 .WithSurname("surname")
                 .WithEmail("email@test.com")
+                .WithTelephone("12345")
+                .WithAddress(new Address{ Postcode = "sk11aa", Number = "123" })
                 .Build();
 
             // Act
@@ -122,11 +124,14 @@ namespace verint_service_tests.Services
 
             // Assert
             _mockConnection.Verify(_ => _.Client().createIndividualAsync(It.IsAny<FWTIndividual>()), Times.Once);
+            _mockClient.Verify(_ => _.searchForPartyAsync(It.Is<FWTPartySearch>(x => x.SearchType == "individual" && x.PhoneNumber == "12345")), Times.Exactly(2));
+            _mockClient.Verify(_ => _.searchForPartyAsync(It.Is<FWTPartySearch>(x => x.SearchType == "individual" && x.EmailAddress == "email@test.com")), Times.Exactly(2));
+            _mockClient.Verify(_ => _.searchForPartyAsync(It.Is<FWTPartySearch>(x => x.SearchType == "individual" && x.AddressNumber == "123" && x.Postcode == "sk11aa")), Times.Exactly(2));
             _mockClient.Verify(_ => _.createIndividualAsync(It.IsAny<FWTIndividual>()), Times.Once);
         }
 
         [Fact]
-        public async Task UpdateIndividual_ShouldCallVerintConnection_RetrieveIndividualAsync_AndUpdateIndividual()
+        public async Task UpdateIndividual_ShouldCallVerintConnection_AndUpdateIndividual()
         {
             // Arrange
             var individual = new FWTIndividual
@@ -158,7 +163,6 @@ namespace verint_service_tests.Services
             await _service.UpdateIndividual(individual, customer);
 
             // Assert
-            _mockConnection.Verify(_ => _.Client().retrieveIndividualAsync(It.IsAny<FWTObjectID>()), Times.Once);
             _mockConnection.Verify(_ => _.Client().updateIndividualAsync(It.IsAny<FWTIndividualUpdate>()), Times.Once);
         }
 
