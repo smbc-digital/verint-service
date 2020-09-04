@@ -106,7 +106,7 @@ namespace verint_service_tests.Weighting
         }
 
         [Fact]
-        public void Calculate_Should_Return_1_If_AddressLine1_City_Postcode_AreAMatch()
+        public void Calculate_Should_Return_1_If_AddressLine1_AddressLine3_Postcode_AreAMatch()
         {
             // Arrange 
             var weighting = new AddressWeighting(_mockLogger.Object);
@@ -115,10 +115,11 @@ namespace verint_service_tests.Weighting
                 ContactPostals = new FWTContactPostal[]
                 {
                     new FWTContactPostal {
-                        AddressLine = new string[1] {
-                            "Address line 1"
+                        AddressLine = new string[3] {
+                            "Address line 1",
+                            null,
+                            "Address line 3"
                         },
-                        City = "town",
                         Postcode = "sk11aa"
                     }
                 }
@@ -129,7 +130,7 @@ namespace verint_service_tests.Weighting
                 Address = new Address()
                 {
                     AddressLine1 = "Address line 1",
-                    City = "town",
+                    AddressLine3 = "Address line 3",
                     Postcode = "sk11aa"
                 }
             };
