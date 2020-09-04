@@ -1,15 +1,16 @@
-using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Moq;
+using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Helpers.VerintConnection;
-using verint_service.Services.Individual.Weighting;
 using verint_service.Services;
+using verint_service.Services.Individual;
+using verint_service.Services.Individual.Weighting;
 using verint_service.Services.Property;
+using verint_service_tests.Builders;
 using VerintWebService;
 using Xunit;
-using StockportGovUK.NetStandard.Models.Verint;
-using verint_service_tests.Builders;
-using System.Threading.Tasks;
 
 namespace verint_service_tests.Services
 {
@@ -39,9 +40,9 @@ namespace verint_service_tests.Services
         }
 
         [Fact]
-        public async Task ResolveAsync_ShouldCallVerint_SearchPartyAsync_Once_WhenMatchingUserFound_OnInitalSearch()
+        public async Task ResolveAsync_ShouldCallVerint_SearchPartyAsync_Once_WhenMatchingUserFound_OnInitialSearch()
         {
-            //Setup
+            // Arrange
              _mockIndividualWeighting.Setup(_ => _.Calculate(It.IsAny<FWTIndividual>(), It.IsAny<Customer>()))
                 .Returns(2);
 
@@ -59,17 +60,19 @@ namespace verint_service_tests.Services
             var customer = new CustomerBuilder()
                 .Build();
             
+            // Act
             var result = await _service.ResolveAsync(customer);
 
+            // Assert
             Assert.NotNull(result);
             _mockClient.Verify(_ => _.searchForPartyAsync(It.Is<FWTPartySearch>(x => x.SearchType == "individual" && x.Forename == "forename" && x.Name == "surname")), Times.Once);
             _mockClient.Verify(_ => _.retrieveIndividualAsync(It.IsAny<FWTObjectID>()), Times.Exactly(2));
         }
         
         [Fact]
-        public async Task ResolveAsync_ShouldCallVerint_SearchPartyAsync_WithEmailSearchCrtieria_WhenMatchingUserNotFound_OnInitalSearch()
+        public async Task ResolveAsync_ShouldCallVerint_SearchPartyAsync_WithEmailSearchCriteria_WhenMatchingUserNotFound_OnInitialSearch()
         {
-            //Setup
+            // Arrange
              _mockIndividualWeighting.SetupSequence(_ => _.Calculate(It.IsAny<FWTIndividual>(), It.IsAny<Customer>()))
                 .Returns(0)
                 .Returns(2);
@@ -89,17 +92,103 @@ namespace verint_service_tests.Services
                 .WithEmail("email@test.com")
                 .Build();
             
+            // Act
             var result = await _service.ResolveAsync(customer);
 
+            // Assert
             Assert.NotNull(result);
             _mockClient.Verify(_ => _.searchForPartyAsync(It.Is<FWTPartySearch>(x => x.SearchType == "individual" && x.EmailAddress == "email@test.com")), Times.Exactly(2));
             _mockClient.Verify(_ => _.retrieveIndividualAsync(It.IsAny<FWTObjectID>()), Times.Exactly(3));
         }
 
         [Fact]
-        public void ResolveAsync_ShouldCreateCustomer_WhenNonFoundAfterAll_SearchPartyAsyncCalls_Performed()
+        public async Task ResolveAsync_ShouldCreateCustomer_WhenNonFoundAfterAll_SearchPartyAsyncCalls_Performed()
         {
+            // Arrange
+            _mockClient.Setup(_ => _.searchForPartyAsync(It.IsAny<FWTPartySearch>()))
+                .ReturnsAsync(new searchForPartyResponse { FWTObjectBriefDetailsList = new FWTObjectBriefDetails[0] });
 
+            _mockClient.Setup(_ => _.createIndividualAsync(It.IsAny<FWTIndividual>()))
+                .ReturnsAsync(new createIndividualResponse{ FLNewIndividualID = new FWTObjectID() });
+           
+            var customer = new CustomerBuilder()
+                .WithForename("forename")
+                .WithSurname("surname")
+                .WithEmail("email@test.com")
+                .Build();
+
+            // Act
+            await _service.ResolveAsync(customer);
+
+            // Assert
+            _mockConnection.Verify(_ => _.Client().createIndividualAsync(It.IsAny<FWTIndividual>()), Times.Once);
+            _mockClient.Verify(_ => _.createIndividualAsync(It.IsAny<FWTIndividual>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task UpdateIndividual_ShouldCallVerintConnection_RetrieveIndividualAsync_AndUpdateIndividual()
+        {
+            // Arrange
+            var individual = new FWTIndividual
+            {
+                BriefDetails = new FWTObjectBriefDetails
+                {
+                    ObjectID = new FWTObjectID
+                    {
+                        ObjectReference = new []{"objRef"},
+                        ObjectType = "objType"
+                    }
+                }
+            };
+
+            var customer = new CustomerBuilder()
+                .WithSurname("surname")
+                .WithForename("forename")
+                .WithEmail("forename.surname@gmail.com")
+                .Build();
+
+            _mockClient
+                .Setup(_ => _.retrieveIndividualAsync(individual.BriefDetails.ObjectID))
+                .ReturnsAsync(new retrieveIndividualResponse
+                {
+                    FWTIndividual = individual
+                });
+
+            // Act
+            await _service.UpdateIndividual(individual, customer);
+
+            // Assert
+            _mockConnection.Verify(_ => _.Client().retrieveIndividualAsync(It.IsAny<FWTObjectID>()), Times.Once);
+            _mockConnection.Verify(_ => _.Client().updateIndividualAsync(It.IsAny<FWTIndividualUpdate>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task UpdateIndividual_ShouldNotCallVerintConnection_UpdateIndividualAsync_IfUpdateIsNotRequired()
+        {
+            var individual = new FWTIndividual
+            {
+                BriefDetails = new FWTObjectBriefDetails
+                {
+                    ObjectID = new FWTObjectID
+                    {
+                        ObjectReference = new[] { "objRef" },
+                        ObjectType = "objType"
+                    }
+                }
+            };
+            
+            _mockClient
+                .Setup(_ => _.retrieveIndividualAsync(individual.BriefDetails.ObjectID))
+                .ReturnsAsync(new retrieveIndividualResponse
+                {
+                    FWTIndividual = individual
+                });
+
+            // Act
+            await _service.UpdateIndividual(individual, new Customer());
+
+            // Assert
+            _mockConnection.Verify(_ => _.Client().updateIndividualAsync(It.IsAny<FWTIndividualUpdate>()), Times.Never);
         }
     }
 }
