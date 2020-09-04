@@ -34,16 +34,16 @@ namespace verint_service.Services.Individual.Weighting
             if (!string.IsNullOrEmpty(customer.Address.Postcode) &&    
                 individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.Postcode) && string.Equals(x.Postcode.Trim().Replace(" ", string.Empty), customer.Address.Postcode.Trim().Replace(" ", string.Empty), StringComparison.CurrentCultureIgnoreCase)) && 
                 !string.IsNullOrEmpty(customer.Address.Number) &&
-                individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressNumber) && string.Equals(x.AddressNumber.Trim(), customer.Address.Number.ToString(), StringComparison.CurrentCultureIgnoreCase))
+                individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressNumber) && string.Equals(x.AddressNumber.Trim(), customer.Address.Number, StringComparison.CurrentCultureIgnoreCase))
                 )
             {
                 score += 1;
             }
             
             if (!string.IsNullOrEmpty(customer.Address.AddressLine1) &&
-                individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressLine[0]) && string.Equals(x.AddressLine[0].Trim(), customer.Address.AddressLine1.ToString(), StringComparison.CurrentCultureIgnoreCase))
-                && !string.IsNullOrEmpty(customer.Address.City) &&
-                individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.City) && string.Equals(x.City.Trim(), customer.Address.City.ToString(), StringComparison.CurrentCultureIgnoreCase))
+                individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressLine[0]) && string.Equals(x.AddressLine[0].Trim(), customer.Address.AddressLine1, StringComparison.CurrentCultureIgnoreCase))
+                && !string.IsNullOrEmpty(customer.Address.AddressLine3) &&
+                individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressLine[2]) && string.Equals(x.AddressLine[2].Trim(), customer.Address.AddressLine3, StringComparison.CurrentCultureIgnoreCase))
                 && !string.IsNullOrEmpty(customer.Address.Postcode) &&    
                 individual.ContactPostals.Any(x => !string.IsNullOrEmpty(x.Postcode) && string.Equals(x.Postcode.Trim().Replace(" ", string.Empty), customer.Address.Postcode.Trim().Replace(" ", string.Empty), StringComparison.CurrentCultureIgnoreCase)))
             {
