@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
@@ -11,6 +10,7 @@ using verint_service.Services.Individual.Weighting;
 using VerintWebService;
 using Xunit;
 using verint_service.Services.Organisation;
+using verint_service.Services.Individual;
 
 namespace verint_service_tests.Services
 {

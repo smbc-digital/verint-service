@@ -102,74 +102,11 @@ namespace verint_service_tests.Weighting
             var result = weighting.Calculate(individual, customer);
 
             // Assert
-            Assert.Equal(2, result);
-        }
-
-        [Fact]
-        public void Calculate_Should_Return_1_If_AddressLine1Match()
-        {
-            // Arrange 
-            var weighting = new AddressWeighting(_mockLogger.Object);
-            var individual = new FWTIndividual()
-            {
-                ContactPostals = new FWTContactPostal[]
-                {
-                    new FWTContactPostal {
-                        AddressLine = new string[] {
-                            "Test Line 1"
-                        }
-                    }
-                }
-            };
-
-            // Act
-            var customer = new Customer(){
-                Address = new Address()
-                {
-                    AddressLine1 = "Test Line 1"
-                }
-            };
-
-            var result = weighting.Calculate(individual, customer);
-
-            // Assert
             Assert.Equal(1, result);
         }
 
         [Fact]
-        public void Calculate_Should_Return_1_If_AddressLine2Match()
-        {
-            // Arrange 
-            var weighting = new AddressWeighting(_mockLogger.Object);
-            var individual = new FWTIndividual()
-            {
-                ContactPostals = new FWTContactPostal[]
-                {
-                    new FWTContactPostal {
-                        AddressLine = new string[2] {
-                            null,
-                            "Test Line 2"
-                        }
-                    }
-                }
-            };
-
-            // Act
-            var customer = new Customer(){
-                Address = new Address()
-                {
-                    AddressLine2 = "Test Line 2"
-                }
-            };
-
-            var result = weighting.Calculate(individual, customer);
-
-            // Assert
-            Assert.Equal(1, result);
-        }
-
-        [Fact]
-        public void Calculate_Should_Return_1_If_AddressLine3Match()
+        public void Calculate_Should_Return_1_If_AddressLine1_AddressLine3_Postcode_AreAMatch()
         {
             // Arrange 
             var weighting = new AddressWeighting(_mockLogger.Object);
@@ -179,10 +116,11 @@ namespace verint_service_tests.Weighting
                 {
                     new FWTContactPostal {
                         AddressLine = new string[3] {
+                            "Address line 1",
                             null,
-                            null,
-                            "Test Line 3"
-                        }
+                            "Address line 3"
+                        },
+                        Postcode = "sk11aa"
                     }
                 }
             };
@@ -191,7 +129,9 @@ namespace verint_service_tests.Weighting
             var customer = new Customer(){
                 Address = new Address()
                 {
-                    AddressLine3 = "Test Line 3"
+                    AddressLine1 = "Address line 1",
+                    AddressLine3 = "Address line 3",
+                    Postcode = "sk11aa"
                 }
             };
 
@@ -202,35 +142,6 @@ namespace verint_service_tests.Weighting
         }
 
         [Fact]
-        public void Calculate_Should_Return_1_If_CityMatch()
-        {
-            // Arrange 
-            var weighting = new AddressWeighting(_mockLogger.Object);
-            var individual = new FWTIndividual()
-            {
-                ContactPostals = new FWTContactPostal[]
-                {
-                    new FWTContactPostal {
-                        City = "Stockport"
-                    }
-                }
-            };
-
-            // Act
-            var customer = new Customer(){
-                Address = new Address()
-                {
-                    City = "Stockport"
-                }
-            };
-
-            var result = weighting.Calculate(individual, customer);
-
-            // Assert
-            Assert.Equal(1, result);
-        }
-
-                 [Fact]
         public void Calculate_Should_Return_Max2_If_FullAddressMatch()
         {
             // Arrange 

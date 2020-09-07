@@ -24,9 +24,7 @@ namespace verint_service.Services.Individual.Weighting
             } 
             
             if (individual.ContactEmails.Any(x => x.EmailAddress == customer.Email))
-            {
-                return 2;
-            } 
+                return 1;
 
             return 0;
         }

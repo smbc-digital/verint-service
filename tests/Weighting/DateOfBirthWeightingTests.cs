@@ -54,7 +54,7 @@ namespace verint_service_tests.Weighting
         }
 
         [Fact]
-        public void Calculate_Should_Return_2_If_DateOfBirth_IsTheSame()
+        public void Calculate_Should_Return_1_If_DateOfBirth_IsTheSame()
         {
             // Arrange 
             var weighting = new DateOfBirthWeighting(_mockLogger.Object);
@@ -72,7 +72,7 @@ namespace verint_service_tests.Weighting
             var result = weighting.Calculate(individual, customer);
 
             // Assert
-            Assert.Equal(2, result);
+            Assert.Equal(1, result);
         }
 
         [Fact]
