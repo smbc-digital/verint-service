@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Helpers.VerintConnection;
-using verint_service.Services;
 using verint_service.Services.Individual;
 using verint_service.Services.Individual.Weighting;
 using verint_service.Services.Property;
@@ -44,7 +43,7 @@ namespace verint_service_tests.Services
         {
             // Arrange
              _mockIndividualWeighting.Setup(_ => _.Calculate(It.IsAny<FWTIndividual>(), It.IsAny<Customer>()))
-                .Returns(2);
+                .Returns(1);
 
             var userSearchResponse = new FWTObjectBriefDetails 
             {
@@ -55,9 +54,11 @@ namespace verint_service_tests.Services
                 .ReturnsAsync(new searchForPartyResponse{ FWTObjectBriefDetailsList = new FWTObjectBriefDetails[1]{ userSearchResponse } });
 
             _mockClient.Setup(_ => _.retrieveIndividualAsync(It.IsAny<FWTObjectID>()))
-                .ReturnsAsync(new retrieveIndividualResponse{ FWTIndividual = new FWTIndividual { BriefDetails = new FWTObjectBriefDetails { ObjectID = new FWTObjectID() } } });
+                .ReturnsAsync(new retrieveIndividualResponse{ FWTIndividual = new FWTIndividual { BriefDetails = new FWTObjectBriefDetails { ObjectID = new FWTObjectID() }, Name = new FWTIndividualName[1] { new FWTIndividualName { Surname = "surname", Forename = new string[1] { "forename" } } } } });
 
             var customer = new CustomerBuilder()
+                .WithForename("forename")
+                .WithSurname("surname")
                 .Build();
             
             // Act
@@ -75,7 +76,7 @@ namespace verint_service_tests.Services
             // Arrange
              _mockIndividualWeighting.SetupSequence(_ => _.Calculate(It.IsAny<FWTIndividual>(), It.IsAny<Customer>()))
                 .Returns(0)
-                .Returns(2);
+                .Returns(1);
 
             var userSearchResponse = new FWTObjectBriefDetails 
             {
@@ -86,9 +87,11 @@ namespace verint_service_tests.Services
                 .ReturnsAsync(new searchForPartyResponse{ FWTObjectBriefDetailsList = new FWTObjectBriefDetails[1]{ userSearchResponse } });
 
             _mockClient.Setup(_ => _.retrieveIndividualAsync(It.IsAny<FWTObjectID>()))
-                .ReturnsAsync(new retrieveIndividualResponse{ FWTIndividual = new FWTIndividual { BriefDetails = new FWTObjectBriefDetails { ObjectID = new FWTObjectID() } } });
+                .ReturnsAsync(new retrieveIndividualResponse{ FWTIndividual = new FWTIndividual { BriefDetails = new FWTObjectBriefDetails { ObjectID = new FWTObjectID() }, Name = new FWTIndividualName[1] { new FWTIndividualName { Surname = "last", Forename = new string[1] { "first" } } } } });
 
             var customer = new CustomerBuilder()
+                .WithForename("first")
+                .WithSurname("last")
                 .WithEmail("email@test.com")
                 .Build();
             

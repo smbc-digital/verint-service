@@ -199,6 +199,7 @@ namespace verint_service.Services.Individual
 
             var results = await Task.WhenAll(tasks);
             _logger.LogDebug($"IndividualService.GetBestMatchingAsync Retrieved all search result objects, Customer: {customer.Surname}");
+            results = RemoveNonMatchingForenameAndSurname(results, customer);
 
             results.ToList().ForEach(result =>
             {
@@ -222,6 +223,21 @@ namespace verint_service.Services.Individual
             }
 
             return bestMatchingObjectID;
+        }
+
+        private retrieveIndividualResponse[] RemoveNonMatchingForenameAndSurname(retrieveIndividualResponse[] results, Customer customer)
+        {
+            if(results == null)
+                return results;
+
+            results = results.ToList()
+                .Where(_ => _.FWTIndividual.Name != null)
+                .Where(_ => _.FWTIndividual.Name.Any(_ => _.Surname != null && _.Forename.Any(x => x != null)))
+                .Where(_ => _.FWTIndividual.Name.Any(_ => _.Surname.Trim().ToLower().Equals(customer.Surname.Trim().ToLower())))
+                .Where(_ => _.FWTIndividual.Name.Any(_ => _.Forename.Any(_ => _.Trim().ToLower().Equals(customer.Forename.Trim().ToLower()))))
+                .ToArray();
+
+            return results;
         }
     }
 }
