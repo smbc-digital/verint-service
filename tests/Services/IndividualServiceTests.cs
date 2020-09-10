@@ -54,11 +54,9 @@ namespace verint_service_tests.Services
                 .ReturnsAsync(new searchForPartyResponse{ FWTObjectBriefDetailsList = new FWTObjectBriefDetails[1]{ userSearchResponse } });
 
             _mockClient.Setup(_ => _.retrieveIndividualAsync(It.IsAny<FWTObjectID>()))
-                .ReturnsAsync(new retrieveIndividualResponse{ FWTIndividual = new FWTIndividual { BriefDetails = new FWTObjectBriefDetails { ObjectID = new FWTObjectID() }, Name = new FWTIndividualName[1] { new FWTIndividualName { Surname = "surname", Forename = new string[1] { "forename" } } } } });
+                .ReturnsAsync(new retrieveIndividualResponse{ FWTIndividual = new FWTIndividual { BriefDetails = new FWTObjectBriefDetails { ObjectID = new FWTObjectID() } } });
 
             var customer = new CustomerBuilder()
-                .WithForename("forename")
-                .WithSurname("surname")
                 .Build();
             
             // Act
@@ -87,11 +85,9 @@ namespace verint_service_tests.Services
                 .ReturnsAsync(new searchForPartyResponse{ FWTObjectBriefDetailsList = new FWTObjectBriefDetails[1]{ userSearchResponse } });
 
             _mockClient.Setup(_ => _.retrieveIndividualAsync(It.IsAny<FWTObjectID>()))
-                .ReturnsAsync(new retrieveIndividualResponse{ FWTIndividual = new FWTIndividual { BriefDetails = new FWTObjectBriefDetails { ObjectID = new FWTObjectID() }, Name = new FWTIndividualName[1] { new FWTIndividualName { Surname = "last", Forename = new string[1] { "first" } } } } });
+                .ReturnsAsync(new retrieveIndividualResponse{ FWTIndividual = new FWTIndividual { BriefDetails = new FWTObjectBriefDetails { ObjectID = new FWTObjectID() } } });
 
             var customer = new CustomerBuilder()
-                .WithForename("first")
-                .WithSurname("last")
                 .WithEmail("email@test.com")
                 .Build();
             
@@ -197,5 +193,28 @@ namespace verint_service_tests.Services
             // Assert
             _mockConnection.Verify(_ => _.Client().updateIndividualAsync(It.IsAny<FWTIndividualUpdate>()), Times.Never);
         }
+
+        [Theory]
+        [InlineData("", "surname")]
+        [InlineData("forename", "")]
+        public async Task ResolveAsync_ShouldNotSearchForCustomer_When_FirstName_Or_LastName_IsNullOrEmpty(string forename, string surname)
+        {
+            // Arrange
+            _mockClient.Setup(_ => _.createIndividualAsync(It.IsAny<FWTIndividual>()))
+                .ReturnsAsync(new createIndividualResponse{ FLNewIndividualID = new FWTObjectID() });
+           
+            var customer = new CustomerBuilder()
+                .WithForename(forename)
+                .WithSurname(surname)
+                .Build();
+
+            // Act
+            await _service.ResolveAsync(customer);
+
+            // Assert
+            _mockConnection.Verify(_ => _.Client().createIndividualAsync(It.IsAny<FWTIndividual>()), Times.Once);
+            _mockClient.Verify(_ => _.searchForPartyAsync(It.IsAny<FWTPartySearch>()), Times.Never);
+        }
+
     }
 }
