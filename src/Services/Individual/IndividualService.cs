@@ -37,6 +37,9 @@ namespace verint_service.Services.Individual
             if (customer.Address != null)
                 customer.Address.UPRN = await _propertyService.CheckUPRNForId(customer.Address);
 
+            if(string.IsNullOrEmpty(customer.Forename) || string.IsNullOrEmpty(customer.Surname))
+                return await CreateAsync(customer);
+
             var individual = await FindAsync(customer);
 
             if (individual == null)

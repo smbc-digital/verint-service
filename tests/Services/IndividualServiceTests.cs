@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Helpers.VerintConnection;
-using verint_service.Services;
 using verint_service.Services.Individual;
 using verint_service.Services.Individual.Weighting;
 using verint_service.Services.Property;
@@ -44,7 +43,7 @@ namespace verint_service_tests.Services
         {
             // Arrange
              _mockIndividualWeighting.Setup(_ => _.Calculate(It.IsAny<FWTIndividual>(), It.IsAny<Customer>()))
-                .Returns(2);
+                .Returns(1);
 
             var userSearchResponse = new FWTObjectBriefDetails 
             {
@@ -75,7 +74,7 @@ namespace verint_service_tests.Services
             // Arrange
              _mockIndividualWeighting.SetupSequence(_ => _.Calculate(It.IsAny<FWTIndividual>(), It.IsAny<Customer>()))
                 .Returns(0)
-                .Returns(2);
+                .Returns(1);
 
             var userSearchResponse = new FWTObjectBriefDetails 
             {
@@ -194,5 +193,28 @@ namespace verint_service_tests.Services
             // Assert
             _mockConnection.Verify(_ => _.Client().updateIndividualAsync(It.IsAny<FWTIndividualUpdate>()), Times.Never);
         }
+
+        [Theory]
+        [InlineData("", "surname")]
+        [InlineData("forename", "")]
+        public async Task ResolveAsync_ShouldNotSearchForCustomer_When_FirstName_Or_LastName_IsNullOrEmpty(string forename, string surname)
+        {
+            // Arrange
+            _mockClient.Setup(_ => _.createIndividualAsync(It.IsAny<FWTIndividual>()))
+                .ReturnsAsync(new createIndividualResponse{ FLNewIndividualID = new FWTObjectID() });
+           
+            var customer = new CustomerBuilder()
+                .WithForename(forename)
+                .WithSurname(surname)
+                .Build();
+
+            // Act
+            await _service.ResolveAsync(customer);
+
+            // Assert
+            _mockConnection.Verify(_ => _.Client().createIndividualAsync(It.IsAny<FWTIndividual>()), Times.Once);
+            _mockClient.Verify(_ => _.searchForPartyAsync(It.IsAny<FWTPartySearch>()), Times.Never);
+        }
+
     }
 }
