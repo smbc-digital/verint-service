@@ -50,7 +50,7 @@ namespace verint_service.Services.Individual.Weighting
                 score += 1;
             }
             
-            return score > 2 ? 2 : score;
+            return score > 1 ? 1 : score;
         }
     }
 }
