@@ -50,7 +50,9 @@ namespace verint_service.Services.Property
                 City = result.FWTProperty.City,
                 Postcode = result.FWTProperty.Postcode,
                 Number = result.FWTProperty.AddressNumber,
-                USRN = result.FWTProperty.USRN
+                USRN = result.FWTProperty.USRN,
+                Easting = result.FWTProperty.GPSItmGeoCode,
+                Northing = result.FWTProperty.GPSUtmGeoCode
             };
 
             return address;
