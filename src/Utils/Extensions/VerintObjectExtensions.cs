@@ -64,7 +64,7 @@ namespace verint_service.Utils.Extensions
                 return false;
             }
 
-            if (individual.ContactPostals == null && customer.Address != null)
+            if ((individual.ContactPostals == null || individual.ContactPostals.Count() == 0) && customer.Address != null)
             {
                 return true;
             }

@@ -7,6 +7,7 @@ using VerintWebService;
 using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Utils.Consts;
 using verint_service.Utils.Mappers;
+using System.Diagnostics;
 
 namespace verint_service.Services.Case
 {
@@ -81,9 +82,19 @@ namespace verint_service.Services.Case
 
         public async Task<string> Create(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
+            var stopwatch = Stopwatch.StartNew();
             crmCase.InteractionReference = await _interactionService.CreateAsync(crmCase);
+            
+            _logger.LogDebug("CaseService.Create: Mapping CrmCase");
             var caseDetails = _caseToFWTCaseCreateMapper.Map(crmCase);
-            return _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;
+
+            _logger.LogDebug("CaseService.Create: Mapping CrmCase - Mapping finalised - Attempting to create case");
+            var result  = _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;
+            
+            stopwatch.Stop();
+            _logger.LogDebug($"CaseService.Create: Case creation complete : {stopwatch.Elapsed.TotalSeconds}");
+
+            return result;
         }
 
         public async Task<int> UpdateDescription(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
