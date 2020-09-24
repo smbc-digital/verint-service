@@ -35,13 +35,16 @@ namespace verint_service.Services.Individual
         {
             // HACK: Check whether UPRN provided is actually an ID and if so lookup the reals UPRN
             if (customer.Address != null)
+            {
                 customer.Address.UPRN = await _propertyService.CheckUPRNForId(customer.Address);
+            }
 
             if(string.IsNullOrEmpty(customer.Forename) || string.IsNullOrEmpty(customer.Surname))
+            {
                 return await CreateAsync(customer);
+            }
 
             var individual = await FindAsync(customer);
-
             if (individual == null)
             {
                 _logger.LogDebug($"IndividualService.ResolveIndividual: No match - Creating new individual - Customer {customer.Surname}");
@@ -94,8 +97,8 @@ namespace verint_service.Services.Individual
                 individual = await SearchByNameAsync(customer);
 
             _logger.LogDebug(individual == null
-                ? $"IndividualService.FindIndividual: No Result found for Customer {customer.Surname}"
-                : $"IndividualService.FindIndividual: Result found for Customer {customer.Surname}");
+                ? $"IndividualService.FindIndividual:{customer.Surname}: No Result found for Customer"
+                : $"IndividualService.FindIndividual:{customer.Surname}: Result found for Customer");
 
             return individual;
         }
@@ -112,11 +115,13 @@ namespace verint_service.Services.Individual
         {
             searchCriteria.SearchType = "individual";
             var matchingIndividuals = await _verintConnection.searchForPartyAsync(searchCriteria);
-            _logger.LogDebug($"IndividualService.SearchIndividuals: Name matchings found for Customer {customer.Surname} = {matchingIndividuals.FWTObjectBriefDetailsList?.Count()}");
+            _logger.LogDebug($"IndividualService.SearchIndividuals:{customer.Surname}: {matchingIndividuals.FWTObjectBriefDetailsList?.Count()} name matchings found for Customer");
 
             FWTObjectID individual = null;
             if (matchingIndividuals.FWTObjectBriefDetailsList.Any() && matchingIndividuals != null)
+            {
                 individual = await GetBestMatchingAsync(matchingIndividuals.FWTObjectBriefDetailsList.Take(30).ToArray(), customer);
+            }
 
             return individual;
         }
@@ -188,20 +193,19 @@ namespace verint_service.Services.Individual
             var bestMatchScore = 0;
 
             var tasks = new List<Task<retrieveIndividualResponse>>();
-            _logger.LogDebug($"IndividualService.GetBestMatchingAsync Retrieving results for {individualResults.Count()} results");
+            _logger.LogDebug($"IndividualService.GetBestMatchingAsync:{customer.Surname}: Retrieving results for {individualResults.Count()} results");
 
             foreach (var individualResult in individualResults)
             {
                 tasks.Add(Task.Run(async () =>
                 {
-                    _logger.LogDebug($"IndividualService.GetBestMatchingAsync Retrievingindividual, Ref: {individualResult.ObjectID.ObjectReference}");
-
+                    _logger.LogDebug($"IndividualService.GetBestMatchingAsync:{customer.Surname}: Retrievingindividual, Ref: {individualResult.ObjectID.ObjectReference.FirstOrDefault()}");
                     return await _verintConnection.retrieveIndividualAsync(individualResult.ObjectID);
                 }));
             }
 
             var results = await Task.WhenAll(tasks);
-            _logger.LogDebug($"IndividualService.GetBestMatchingAsync Retrieved all search result objects, Customer: {customer.Surname}");
+            _logger.LogDebug($"IndividualService.GetBestMatchingAsync:{customer.Surname}: Retrieved all search result objects");
 
             results.ToList().ForEach(result =>
             {
@@ -219,7 +223,7 @@ namespace verint_service.Services.Individual
 
             if (bestMatch != null && bestMatchScore >= 1)
             {
-                _logger.LogDebug($"IndividualService.GetBestMatchingAsync Match Found - Customer: {customer.Surname} Score: {bestMatchScore}");
+                _logger.LogDebug($"IndividualService.GetBestMatchingAsync:{customer.Surname}: Match found, score: {bestMatchScore}");
                 await UpdateIndividual(bestMatch, customer);
                 bestMatchingObjectID = bestMatch.BriefDetails.ObjectID;
             }
