@@ -199,7 +199,7 @@ namespace verint_service.Services.Individual
             {
                 tasks.Add(Task.Run(async () =>
                 {
-                    _logger.LogDebug($"IndividualService.GetBestMatchingAsync:{customer.Surname}: Retrievingindividual, Ref: {individualResult.ObjectID.ObjectReference.FirstOrDefault()}");
+                    _logger.LogDebug($"IndividualService.GetBestMatchingAsync:{customer.Surname}: Retrievingindividual");
                     return await _verintConnection.retrieveIndividualAsync(individualResult.ObjectID);
                 }));
             }
