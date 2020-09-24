@@ -82,18 +82,25 @@ namespace verint_service.Services.Case
 
         public async Task<string> Create(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
+            
+            _logger.LogDebug($"CaseService.Create:{crmCase.ID}: Create Interaction");
             var stopwatch = Stopwatch.StartNew();
             crmCase.InteractionReference = await _interactionService.CreateAsync(crmCase);
-            
-            _logger.LogDebug("CaseService.Create: Mapping CrmCase");
-            var caseDetails = _caseToFWTCaseCreateMapper.Map(crmCase);
-
-            _logger.LogDebug("CaseService.Create: Mapping CrmCase - Mapping finalised - Attempting to create case");
-            var result  = _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;
-            
             stopwatch.Stop();
-            _logger.LogDebug($"CaseService.Create: Case creation complete : {stopwatch.Elapsed.TotalSeconds}");
+            _logger.LogDebug($"CaseService.Create:{crmCase.ID}: Interaction created : elapsed {stopwatch.Elapsed.TotalSeconds}");
 
+            _logger.LogDebug($"CaseService.Create:{crmCase.ID}: Mapping CrmCase");
+            stopwatch = Stopwatch.StartNew();
+            var caseDetails = _caseToFWTCaseCreateMapper.Map(crmCase);
+            stopwatch.Stop();
+            _logger.LogDebug($"CaseService.Create:{crmCase.ID} Mapping finished, elapsed {stopwatch.Elapsed.TotalSeconds}");
+
+            _logger.LogDebug($"CaseService.Create:{crmCase.ID}: Verint createcase service call");
+            stopwatch = Stopwatch.StartNew();
+            var result  = _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;
+            stopwatch.Stop();
+            _logger.LogDebug($"CaseService.Create:{crmCase.ID} Verint createcase finished, elapsed {stopwatch.Elapsed.TotalSeconds}");
+            
             return result;
         }
 

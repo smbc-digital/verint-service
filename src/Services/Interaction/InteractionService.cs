@@ -26,7 +26,7 @@ namespace verint_service.Services
 
         public async Task<long> CreateAsync(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
-            _logger.LogDebug($"InteractionService.Create:Attempting to create interaction, Event {crmCase.EventTitle}, event code {crmCase.EventCode}");
+            _logger.LogDebug($"InteractionService.Create:{crmCase.ID}:Attempting to create interaction, Event {crmCase.EventTitle}, event code {crmCase.EventCode}");
             var interactionDetails = new FWTInteractionCreate
             {
                 Channel = VerintConstants.Channel,
@@ -51,7 +51,7 @@ namespace verint_service.Services
             }
 
             var createInteractionResult = await _verintConnection.createInteractionAsync(interactionDetails);
-            _logger.LogDebug($"InteractionService.Create: Created interaction, Id {createInteractionResult.InteractionID} Event {crmCase.EventTitle}, event code {crmCase.EventCode}");
+            _logger.LogDebug($"InteractionService.Create:{crmCase.ID}: Created interaction, Id {createInteractionResult.InteractionID} Event {crmCase.EventTitle}, event code {crmCase.EventCode}");
             
             return createInteractionResult.InteractionID;
         }

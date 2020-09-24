@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -52,15 +53,16 @@ namespace verint_service.Controllers
         {
             try
             {
-                _logger.LogDebug($"CaseController.Create:Attempting to create case {crmCase.EventTitle}, event code {crmCase.EventCode}");
+                _logger.LogDebug($"CaseController.Create:{crmCase.ID}:Attempting to create case {crmCase.EventTitle}, event code {crmCase.EventCode}");
+                var stopwatch = Stopwatch.StartNew();
                 var response = await _caseService.Create(crmCase);
-                _logger.LogDebug($"CaseController.Create: Reference {response}, Create case {crmCase.EventTitle}, event code {crmCase.EventCode}");
-
+                stopwatch.Stop();
+                _logger.LogDebug($"CaseController.Create:{crmCase.ID}: Reference {response}, Create case {crmCase.EventTitle}, event code {crmCase.EventCode}, elapsed {stopwatch.Elapsed.TotalSeconds}");
                 return CreatedAtAction("Create", response);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"CaseController.Create: Failed to create crm case {ex.Message}", ex.InnerException);
+                _logger.LogError($"CaseController.Create: Failed to create crm case {ex.Message}, {crmCase.ID}", ex.InnerException);
                 _logger.LogError(ex.StackTrace);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
