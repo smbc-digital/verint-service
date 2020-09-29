@@ -95,13 +95,19 @@ namespace verint_service.Services.Case
             stopwatch.Stop();
             _logger.LogDebug($"CaseService.Create:{crmCase.ID} Mapping finished, elapsed {stopwatch.Elapsed.TotalSeconds}");
 
-            _logger.LogDebug($"CaseService.Create:{crmCase.ID}: Verint createcase service call");
-            stopwatch = Stopwatch.StartNew();
-            var result  = _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;
-            stopwatch.Stop();
-            _logger.LogDebug($"CaseService.Create:{crmCase.ID} Verint createcase finished, elapsed {stopwatch.Elapsed.TotalSeconds}");
-            
-            return result;
+            try
+            {
+                _logger.LogDebug($"CaseService.Create:{crmCase.ID}: Verint createcase service call");
+                stopwatch = Stopwatch.StartNew();
+                var result  = _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;
+                stopwatch.Stop();
+                _logger.LogDebug($"CaseService.Create:{crmCase.ID} Verint create case finished, elapsed {stopwatch.Elapsed.TotalSeconds}");
+                return result;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception($"CaseService.Create:{crmCase.ID} Verint create case failed", ex);
+            }
         }
 
         public async Task<int> UpdateDescription(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
