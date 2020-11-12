@@ -89,6 +89,32 @@ namespace verint_service.Controllers
             }
         }
 
+        /// <summary>
+        /// Adds a case form field the specified case
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>An int declaring the state of the update</returns>
+        [HttpPatch]
+        [Route("add-caseform-field")]
+        public async Task<IActionResult> AddCaseFormField([FromBody]AddCaseFormFieldRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                _logger.LogDebug($"CaseController.AddCaseFormField: Adding field {request.Key} to case {request.CaseReference}");
+                return CreatedAtAction("AddCaseFormField", await _caseService.AddCaseFormField(request.CaseReference, request.Key, request.Value));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CaseController.AddCaseFormField: Failed to add case form field", ex.InnerException);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
         [HttpDelete]
         public IActionResult Delete([FromQuery]string caseId)
         {

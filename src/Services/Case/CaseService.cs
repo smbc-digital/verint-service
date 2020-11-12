@@ -8,6 +8,7 @@ using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Utils.Consts;
 using verint_service.Utils.Mappers;
 using System.Diagnostics;
+using verint_service.Utils.Builders;
 
 namespace verint_service.Services.Case
 {
@@ -128,6 +129,25 @@ namespace verint_service.Services.Case
                 _logger.LogError(exception, "Error when updating Description field");
                 throw;
             }
+        }
+
+        public async Task<bool> AddCaseFormField(string caseReference, string key, string value)
+        {
+            var caseDetails = new FWTCaseUpdate
+            {
+                CaseReference = caseReference,
+            };
+
+            caseDetails.Form = new FWTCaseForm{ 
+                                FormField = new FWTCaseFormField[] 
+                                    { 
+                                        CaseFormBuilder.CreateCaseFormField(key, value) 
+                                    }
+                                };
+                                
+            var result = await _verintConnection.updateCaseAsync(caseDetails);
+
+            return result != null;
         }
 
         public async Task CreateNotesWithAttachment(NoteWithAttachments note)

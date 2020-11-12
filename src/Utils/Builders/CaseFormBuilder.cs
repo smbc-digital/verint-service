@@ -34,13 +34,8 @@ namespace verint_service.Utils.Builders
             return caseForm;
         }
 
-        private static FWTCaseFormField CreateCaseFormField(CustomField customField)
-        {
-            var caseFormField = new FWTCaseFormField();
-            caseFormField.Value = customField.Value ?? string.Empty;
-            caseFormField.Key = customField.Name;
+        public static FWTCaseFormField CreateCaseFormField(CustomField customField) => CreateCaseFormField(customField.Name, customField.Value);     
 
-            return caseFormField;
-        }
+        public static FWTCaseFormField CreateCaseFormField(string key, string value) => new FWTCaseFormField { Value = value, Key = key };
     }
 }
