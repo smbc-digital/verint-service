@@ -107,6 +107,7 @@ namespace verint_service.Services.Case
             }
             catch(Exception ex)
             {
+                _logger.LogError($"CaseService.Create:{crmCase.ID} Verint create case failed", ex);
                 throw new Exception($"CaseService.Create:{crmCase.ID} Verint create case failed", ex);
             }
         }

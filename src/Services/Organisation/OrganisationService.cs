@@ -73,7 +73,7 @@ namespace verint_service.Services.Organisation
                 return organisationObject;    
             }
 
-            _logger.LogDebug($"OrganisationService.Resolve: No match - Creating new organisation - {organisation.Name}");
+            _logger.LogDebug($"OrganisationService.Resolve: No match - Creating new organisation - { organisation.Name }");
             return await CreateAsync(organisation);
         }
 
