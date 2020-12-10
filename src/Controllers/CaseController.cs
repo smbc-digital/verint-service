@@ -132,6 +132,7 @@ namespace verint_service.Controllers
 
             try
             {
+                _logger.LogInformation($"CaseController.UpdateIntegrationFormFields: Updating case - {updateEntity.CaseReference}");
                 await _updateService.UpdateIntegrationFormFields(updateEntity);
                 return Ok();
             }
