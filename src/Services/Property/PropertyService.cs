@@ -91,5 +91,44 @@ namespace verint_service.Services.Property
 
             return addressResults;
         }
+
+        [Obsolete("This method will not be used in the future.")]
+        public async Task<IEnumerable<StockportGovUK.NetStandard.Models.Verint.Address>> GetPropertiesAsync(FWTPropertySearch propertySearch)
+        {
+            var propertySearchResults = await _verintConnection.searchForPropertyAsync(propertySearch);
+            var addressResults = propertySearchResults.FWTObjectBriefDetailsList.Select(result => new AddressSearchResult
+            {
+                UniqueId = result.ObjectID.ObjectReference[0],
+                Name = result.ObjectDescription
+            });
+
+            var addressList = new List<StockportGovUK.NetStandard.Models.Verint.Address>();            
+
+            foreach (var address in addressResults)
+            {
+                var fWTObjectID = new FWTObjectID
+                {
+                    ObjectReference = new[] { address.UniqueId },
+                    ObjectType = VerintConstants.PropertyObjectType
+                };
+
+                var result = await _verintConnection.retrievePropertyAsync(fWTObjectID);
+
+                addressList.Add(new StockportGovUK.NetStandard.Models.Verint.Address
+                {
+                    UPRN = result.FWTProperty.UPRN,
+                    AddressLine1 = result.FWTProperty.AddressLine1,
+                    AddressLine2 = result.FWTProperty.AddressLine2,
+                    City = result.FWTProperty.City,
+                    Postcode = result.FWTProperty.Postcode,
+                    Number = result.FWTProperty.AddressNumber,
+                    USRN = result.FWTProperty.USRN,
+                    Easting = result.FWTProperty.GPSItmGeoCode,
+                    Northing = result.FWTProperty.GPSUtmGeoCode
+                });
+            }
+
+            return addressList;
+        }
     }
 }

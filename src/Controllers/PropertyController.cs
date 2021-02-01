@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Addresses;
 using verint_service.Services.Property;
+using VerintWebService;
 
 namespace verint_service.Controllers
 {
@@ -32,6 +33,13 @@ namespace verint_service.Controllers
         public async Task<StockportGovUK.NetStandard.Models.Verint.Address> Get(string id)
         {
             return await _propertyService.GetPropertyAsync(id);
+        }
+
+        [HttpGet]
+        [Route("{propertySearch}")]
+        public async Task<IEnumerable<StockportGovUK.NetStandard.Models.Verint.Address>> GetProperties(FWTPropertySearch propertySearch)
+        {
+            return await _propertyService.GetPropertiesAsync(propertySearch);
         }
     }
 }
