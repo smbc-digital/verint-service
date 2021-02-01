@@ -36,8 +36,8 @@ namespace verint_service.Controllers
         }
 
         [HttpGet]
-        [Route("{propertySearch}")]
-        public async Task<IEnumerable<StockportGovUK.NetStandard.Models.Verint.Address>> GetProperties(FWTPropertySearch propertySearch)
+        [Route("searchTerm/{propertySearch}")]
+        public async Task<IEnumerable<StockportGovUK.NetStandard.Models.Verint.Address>> GetProperties(string propertySearch)
         {
             return await _propertyService.GetPropertiesAsync(propertySearch);
         }

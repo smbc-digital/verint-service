@@ -93,9 +93,14 @@ namespace verint_service.Services.Property
         }
 
         [Obsolete("This method will not be used in the future.")]
-        public async Task<IEnumerable<StockportGovUK.NetStandard.Models.Verint.Address>> GetPropertiesAsync(FWTPropertySearch propertySearch)
+        public async Task<IEnumerable<StockportGovUK.NetStandard.Models.Verint.Address>> GetPropertiesAsync(string propertySearch)
         {
-            var propertySearchResults = await _verintConnection.searchForPropertyAsync(propertySearch);
+            var fWTPropertySearch = new FWTPropertySearch
+            {
+                SearchMatch = propertySearch
+            };
+
+            var propertySearchResults = await _verintConnection.searchForPropertyAsync(fWTPropertySearch);
             var addressResults = propertySearchResults.FWTObjectBriefDetailsList.Select(result => new AddressSearchResult
             {
                 UniqueId = result.ObjectID.ObjectReference[0],

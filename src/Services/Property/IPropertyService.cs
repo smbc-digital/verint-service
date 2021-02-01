@@ -16,6 +16,6 @@ namespace verint_service.Services.Property
         Task<string> CheckUPRNForId(StockportGovUK.NetStandard.Models.Verint.Address address);
 
         [Obsolete]
-        Task<IEnumerable<StockportGovUK.NetStandard.Models.Verint.Address>> GetPropertiesAsync(FWTPropertySearch propertySearch);
+        Task<IEnumerable<StockportGovUK.NetStandard.Models.Verint.Address>> GetPropertiesAsync(string propertySearch);
     }
 }
