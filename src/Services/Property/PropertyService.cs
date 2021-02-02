@@ -97,7 +97,7 @@ namespace verint_service.Services.Property
         {
             var fWTPropertySearch = new FWTPropertySearch
             {
-                SearchMatch = propertySearch
+                Postcode = propertySearch
             };
 
             var propertySearchResults = await _verintConnection.searchForPropertyAsync(fWTPropertySearch);
