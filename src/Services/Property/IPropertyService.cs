@@ -17,5 +17,7 @@ namespace verint_service.Services.Property
 
         [Obsolete]
         Task<IEnumerable<StockportGovUK.NetStandard.Models.Verint.Address>> GetPropertiesAsync(string propertySearch);
+        [Obsolete("This method will not be used in the future.")]
+        Task<StockportGovUK.NetStandard.Models.Verint.Address> GetPropertyByUprnAsync(string uprn);
     }
 }
