@@ -44,9 +44,16 @@ namespace verint_service.Controllers
 
         [HttpGet]
         [Route("uprn/{uprn}")]
-        public async Task<StockportGovUK.NetStandard.Models.Verint.Address> GetPropertiesByUPRN(string uprn)
+        public async Task<IActionResult> GetPropertiesByUPRN(string uprn)
         {
-            return await _propertyService.GetPropertyByUprnAsync(uprn);
+            var result = await _propertyService.GetPropertyByUprnAsync(uprn);
+
+            if (result == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(result);
         }
     }
 }

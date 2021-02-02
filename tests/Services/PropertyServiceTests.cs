@@ -20,30 +20,28 @@ namespace verint_service_tests.Services
 
         public PropertyServiceTests()
         {
-            var FWTObjectBriefDetailsList = new List<FWTObjectBriefDetails>
-            {
-                new FWTObjectBriefDetails
-                {
-                    ObjectID = new FWTObjectID { ObjectReference = new string[] { "test"} },
-                    ObjectDescription = "test"
-                }
-            };
-            
-            var propertySearchResults = new searchForPropertyResponse()
-            {
-                FWTObjectBriefDetailsList = FWTObjectBriefDetailsList.ToArray()
-            };
-
-            var fWTObjectID = new FWTObjectID
-            {
-                ObjectReference = new[] { "test" },
-                ObjectType = VerintConstants.PropertyObjectType
-            };
-
             _mockConnection
                 .Setup(_ => _.Client())
                 .Returns(_mockClient.Object);
 
+            _service = new PropertyService(_mockConnection.Object, _mockLogger.Object);
+        }
+
+        [Fact]
+        public async Task SearchByPostCode_GetPropertiesAsync_ShouldReturnListOfAddress()
+        {
+            var propertySearchResults = new searchForPropertyResponse()
+            {
+                FWTObjectBriefDetailsList = new List<FWTObjectBriefDetails>
+                {
+                    new FWTObjectBriefDetails
+                    {
+                        ObjectID = new FWTObjectID { ObjectReference = new string[] { "test"} },
+                        ObjectDescription = "test"
+                    }
+                }.ToArray()
+            };
+           
             _mockConnection
                 .Setup(_ => _.Client().searchForPropertyAsync(It.Is<FWTPropertySearch>(_ => _.Postcode.Equals("sk2 5tl"))))
                 .ReturnsAsync(propertySearchResults);
@@ -52,12 +50,6 @@ namespace verint_service_tests.Services
                 .Setup(_ => _.Client().retrievePropertyAsync(It.IsAny<FWTObjectID>()))
                 .ReturnsAsync(new retrievePropertyResponse() { FWTProperty = new FWTProperty { UPRN = "Test" } });
 
-            _service = new PropertyService(_mockConnection.Object, _mockLogger.Object);
-        }
-
-        [Fact]
-        public async Task SearchByPostCode_GetPropertiesAsync_ShouldReturnListOfAddress()
-        {
             var result = await _service.GetPropertiesAsync("sk2 5tl");
 
             // Assert
@@ -67,11 +59,9 @@ namespace verint_service_tests.Services
         [Fact]
         public async Task SearchByPostCode_GetPropertiesAsync_ShouldReturnEmptyList()
         {
-            var FWTObjectBriefDetailsList = new List<FWTObjectBriefDetails>();
-
             var propertySearchResults = new searchForPropertyResponse()
             {
-                FWTObjectBriefDetailsList = FWTObjectBriefDetailsList.ToArray()
+                FWTObjectBriefDetailsList = new List<FWTObjectBriefDetails>().ToArray()
             };
 
             _mockConnection
@@ -82,6 +72,49 @@ namespace verint_service_tests.Services
 
             // Assert
             Assert.Empty(result);
+        }
+
+        [Fact]
+        public async Task SearchByUprn_GetPropertyAsync_ShouldReturnAddress()
+        {
+            var propertySearchResults = new searchForPropertyResponse()
+            {
+                FWTObjectBriefDetailsList = new List<FWTObjectBriefDetails>
+                {
+                    new FWTObjectBriefDetails
+                    {
+                        ObjectID = new FWTObjectID { ObjectReference = new string[] { "test"} },
+                        ObjectDescription = "test"
+                    }
+                }.ToArray()
+            };
+
+            _mockConnection
+                .Setup(_ => _.Client().searchForPropertyAsync(It.Is<FWTPropertySearch>(_ => _.UPRN.Equals("100011489689"))))
+                .ReturnsAsync(propertySearchResults);
+
+            _mockConnection
+               .Setup(_ => _.Client().retrievePropertyAsync(It.IsAny<FWTObjectID>()))
+               .ReturnsAsync(new retrievePropertyResponse() { FWTProperty = new FWTProperty { UPRN = "Test", AddressLine1 = "Address 1" } });
+
+            var result = await _service.GetPropertyByUprnAsync("100011489689");
+
+            // Assert
+            Assert.IsType<StockportGovUK.NetStandard.Models.Verint.Address>(result);
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public async Task SearchByUprn_GetPropertyAsync_ShouldReturnNull()
+        {
+            _mockConnection
+                .Setup(_ => _.Client().searchForPropertyAsync(It.Is<FWTPropertySearch>(_ => _.UPRN.Equals("100011489689"))))
+                .Returns(Task.FromResult<searchForPropertyResponse>(null));
+
+            var result = await _service.GetPropertyByUprnAsync("100011489689");
+
+            // Assert
+            Assert.Null(result);
         }
     }
 }
