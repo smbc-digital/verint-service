@@ -121,16 +121,16 @@ namespace verint_service.Services.Property
 
                 addressList.Add(new StockportGovUK.NetStandard.Models.Verint.Address
                 {
-                    UPRN = result.FWTProperty.UPRN.Trim(),
-                    Description = address.Name,
-                    AddressLine1 = result.FWTProperty.AddressLine1,
-                    AddressLine2 = result.FWTProperty.AddressLine2,
-                    City = result.FWTProperty.City,
-                    Postcode = result.FWTProperty.Postcode,
-                    Number = result.FWTProperty.AddressNumber,
-                    USRN = result.FWTProperty.USRN.Trim(),
-                    Easting = result.FWTProperty.GPSItmGeoCode,
-                    Northing = result.FWTProperty.GPSUtmGeoCode
+                    UPRN = result.FWTProperty.UPRN?.Trim(),
+                    Description = address.Name?.Trim(),
+                    AddressLine1 = result.FWTProperty.AddressLine1?.Trim(),
+                    AddressLine2 = result.FWTProperty.AddressLine2?.Trim(),
+                    City = result.FWTProperty.City?.Trim(),
+                    Postcode = result.FWTProperty.Postcode?.Trim(),
+                    Number = result.FWTProperty.AddressNumber?.Trim(),
+                    USRN = result.FWTProperty.USRN?.Trim(),
+                    Easting = result.FWTProperty.GPSItmGeoCode?.Trim(),
+                    Northing = result.FWTProperty.GPSUtmGeoCode?.Trim()
                 });
             }
 
