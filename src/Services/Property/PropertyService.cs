@@ -122,10 +122,11 @@ namespace verint_service.Services.Property
                 addressList.Add(new StockportGovUK.NetStandard.Models.Verint.Address
                 {
                     UPRN = result.FWTProperty.UPRN,
-                    AddressLine1 = result.FWTProperty.AddressLine1,
-                    AddressLine2 = result.FWTProperty.AddressLine2,
-                    City = result.FWTProperty.City,
-                    Postcode = result.FWTProperty.Postcode,
+                    Description = address.Name,
+                    AddressLine1 = address.AddressLine1,
+                    AddressLine2 = address.AddressLine2,
+                    City = address.AddressLine3,
+                    Postcode = address.Postcode,
                     Number = result.FWTProperty.AddressNumber,
                     USRN = result.FWTProperty.USRN,
                     Easting = result.FWTProperty.GPSItmGeoCode,
