@@ -66,5 +66,28 @@ $ dotnet run
 
 When cases are created if user information is passed to the verint-service a matching algorithm is used to match users to individuals already stored within verint. Information about the expected behaviour of this user matching can be found in [Sharepoint](https://stockportcouncil.sharepoint.com/:w:/r/sites/col/dbd/_layouts/15/doc2.aspx?sourcedoc=%7B42D5148B-1BB4-4C1A-BCEE-F4C490C39FC8%7D&file=Verint%20user%20matching%20scoring%20.docx&action=default&mobileredirect=true&cid=c521fe92-43fa-4708-b88d-6b3e856f33a6)
 
+
+## Verint online forms & Confirm Integration
+
+The verint-service can be used to create cases with attached verint online forms. Primarily this is to power an integration between verint and the Confirm place management system.
+
+
+
+## Attaching documents and notes to cases
+
+Documents can now be attached to verint cases as part of case creation by adding them to the `Case.NotesWithAttachments` list. If the `Case.UploadNotesWithAttachmentsAfterCaseCreation` flag is set to `true` the uploaded notes will be cached until they are requested to be uploaded using the [Upload Cached Notes Webhook](#Upload-Cached-Notes-Webhook). 
+
+Caching note/uploads is useful when other back office automated processes need to complete before the files can be attached; for example: the Confirm integration needs to fire before uploads are added if the files are to be subsequently passed to Confirm.
+
+Notes can also be attached on request at any time using the `api/v1/case/add-note-with-attachments` endpoint.
+
+### Upload Cached Notes Webhook
+
+The upload cached notes webhook will retrieve notes from the cache and then attach them to the requested case. The webhooks endpoint can be found at the address below.
+
+```/api/v1/webhooks/upload-cached-notes/{id}```
+
+**Note**: This used the same mechanism as `add-note-with-attachments`, The `NoteWithAttachments` object must have the correct `CaseRef` value set for the case. If `UploadNotesWithAttachmentsAfterCaseCreation` is set to true this should be done for you automatically after the base case has been created.
+
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)

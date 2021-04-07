@@ -12,6 +12,7 @@ using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Utils.Builders;
 using verint_service.Utils.Consts;
 using verint_service.Utils.Mappers;
+using StockportGovUK.NetStandard.Abstractions.Caching;
 
 namespace verint_service_tests.Services
 {
@@ -22,6 +23,9 @@ namespace verint_service_tests.Services
         private readonly Mock<ILogger<CaseService>> _mockLogger = new Mock<ILogger<CaseService>>();
         private readonly Mock<IInteractionService> _mockInteractionService = new Mock<IInteractionService>();
         private readonly Mock<IIndividualService> _mockIndividualService = new Mock<IIndividualService>();
+
+        private readonly Mock<ICacheProvider> _mockCacheProvider = new Mock<ICacheProvider>();
+
         private readonly Mock<IAssociatedObjectResolver> _mockAssociatedObjectHelper = new Mock<IAssociatedObjectResolver>();
         private readonly CaseService _caseService;
 
@@ -39,7 +43,9 @@ namespace verint_service_tests.Services
                 .Setup(helper => helper.Resolve(It.IsAny<Case>()))
                 .Returns(It.IsAny<FWTObjectBriefDetails>());
 
-            _caseService = new CaseService(_mockConnection.Object, _mockLogger.Object, _mockInteractionService.Object, new CaseToFWTCaseCreateMapper(new CaseFormBuilder(), _mockAssociatedObjectHelper.Object), _mockIndividualService.Object);
+
+
+            _caseService = new CaseService(_mockConnection.Object, _mockLogger.Object, _mockInteractionService.Object, new CaseToFWTCaseCreateMapper(new CaseFormBuilder(), _mockAssociatedObjectHelper.Object), _mockIndividualService.Object, _mockCacheProvider.Object);
         }
 
         [Theory]
