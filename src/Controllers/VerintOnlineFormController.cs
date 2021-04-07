@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using StockportGovUK.AspNetCore.Attributes.TokenAuthentication;
 using StockportGovUK.NetStandard.Models.Models.Verint.VerintOnlineForm;
+using System;
 using System.Threading.Tasks;
 using verint_service.Attributes;
 using verint_service.Services.VerintOnlineForm;
@@ -28,7 +29,18 @@ namespace verint_service.Controllers
         /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create(VerintOnlineFormRequest model)
-            => Ok(await _verintOnlineFormService.CreateVOFCase(model));
+        {
+            try
+            {
+                var result = await _verintOnlineFormService.CreateVOFCase(model);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+            
 
         /// <summary>
         /// Gets a verint online form case

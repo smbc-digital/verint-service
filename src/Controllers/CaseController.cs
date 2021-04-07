@@ -144,7 +144,7 @@ namespace verint_service.Controllers
         }
 
         [HttpPost]
-        [Route("event")]
+        [Route ("event")]
         public void CaseEventHandler([ModelBinder(typeof(CaseEventModelBinder))]CaseEventModel model)
         {
             _eventService.HandleCaseEvent(model);
