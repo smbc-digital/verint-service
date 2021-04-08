@@ -41,7 +41,8 @@ Service to interact with our Case Management System
 ## Table of Contents
 - [Requirments](#requirments)
 - [Installation](#installation)
-- [Server Integration](#server_integration)
+- [Server Integration](#server_integration) 
+- [Confirm/Verint Online Form integrations](#Confirm-and-Verint-Online-Form-integrations)
 - [A note about matching individuals](#a-note-about-matching-individuals)
 
 ## Requirments
@@ -65,6 +66,10 @@ $ dotnet run
 ## A note about matching individuals
 
 When cases are created if user information is passed to the verint-service a matching algorithm is used to match users to individuals already stored within verint. Information about the expected behaviour of this user matching can be found in [Sharepoint](https://stockportcouncil.sharepoint.com/:w:/r/sites/col/dbd/_layouts/15/doc2.aspx?sourcedoc=%7B42D5148B-1BB4-4C1A-BCEE-F4C490C39FC8%7D&file=Verint%20user%20matching%20scoring%20.docx&action=default&mobileredirect=true&cid=c521fe92-43fa-4708-b88d-6b3e856f33a6)
+
+## Confirm and Verint Online Form integrations
+
+Coming soon.
 
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
