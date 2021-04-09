@@ -18,8 +18,6 @@ namespace verint_service
     [ExcludeFromCodeCoverage]
     public class Startup
     {
-        
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;

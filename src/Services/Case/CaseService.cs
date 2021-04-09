@@ -33,8 +33,7 @@ namespace verint_service.Services.Case
                             IInteractionService interactionService,
                             CaseToFWTCaseCreateMapper caseToFWTCaseCreateMapper,
                             IIndividualService individualService,
-                            ICacheProvider cacheProvider
-                            )
+                            ICacheProvider cacheProvider)
         {
             _logger = logger;
             _verintConnection = verint.Client();
@@ -165,7 +164,7 @@ namespace verint_service.Services.Case
 
         public async Task WriteCachedNotes(string id)
         {
-            if(id.Contains('-'))
+            if (id.Contains('-'))
                 id = id.Split('-')[1];
 
             string json = await _cacheProvider.GetStringAsync(id);

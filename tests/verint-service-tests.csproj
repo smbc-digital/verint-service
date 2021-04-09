@@ -20,17 +20,4 @@
   <ItemGroup>
     <ProjectReference Include="..\src\verint-service.csproj" />
   </ItemGroup>
-<!-- 
-  <ItemGroup>
-    <Reference Include="StockportGovUK.NetStandard.Gateways">
-      <HintPath>\local\file\path\src\bin\Debug\netstandard2.1\StockportGovUK.NetStandard.Gateways.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="StockportGovUK.NetStandard.Models">
-      <HintPath>\local\file\path\bin\Debug\netstandard2.1\StockportGovUK.NetStandard.Models.dll</HintPath>
-    </Reference>
-  </ItemGroup> -->
-
 </Project>

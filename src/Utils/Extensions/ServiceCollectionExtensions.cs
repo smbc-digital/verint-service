@@ -108,7 +108,6 @@ namespace verint_service.Utils.Extensions
             });
         }
 
-        
         public static void AddStorageProvider(this IServiceCollection services, IConfiguration configuration)
         {
             var storageProviderConfiguration = configuration.GetSection("StorageProvider");            

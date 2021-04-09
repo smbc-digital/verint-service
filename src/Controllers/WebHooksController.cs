@@ -11,10 +11,8 @@ namespace verint_service.Controllers
     {        
         private readonly ICaseService _caseService;
         
-        public WebHooksController(ICaseService caseService)
-        {
+        public WebHooksController(ICaseService caseService) =>
             _caseService = caseService;
-        }
 
         [HttpGet]
         [Route("upload-cached-notes/{id}")]

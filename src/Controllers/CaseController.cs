@@ -144,14 +144,14 @@ namespace verint_service.Controllers
         }
 
         [HttpPost]
-        [Route ("event")]
+        [Route("event")]
         public void CaseEventHandler([ModelBinder(typeof(CaseEventModelBinder))]CaseEventModel model)
         {
             _eventService.HandleCaseEvent(model);
         }
 
         [HttpPost]
-        [Route ("add-note-with-attachments")]
+        [Route("add-note-with-attachments")]
         public async Task<IActionResult> AddNoteWithAttachments([FromBody] NoteWithAttachments model)
         {
             if (!ModelState.IsValid)

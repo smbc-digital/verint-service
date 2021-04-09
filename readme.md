@@ -71,8 +71,6 @@ When cases are created if user information is passed to the verint-service a mat
 
 The verint-service can be used to create cases with attached verint online forms. Primarily this is to power an integration between verint and the Confirm place management system.
 
-
-
 ## Attaching documents and notes to cases
 
 Documents can now be attached to verint cases as part of case creation by adding them to the `Case.NotesWithAttachments` list. If the `Case.UploadNotesWithAttachmentsAfterCaseCreation` flag is set to `true` the uploaded notes will be cached until they are requested to be uploaded using the [Upload Cached Notes Webhook](#Upload-Cached-Notes-Webhook). 
