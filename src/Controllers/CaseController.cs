@@ -151,7 +151,7 @@ namespace verint_service.Controllers
         }
 
         [HttpPost]
-        [Route ("add-note-with-attachments")]
+        [Route("add-note-with-attachments")]
         public async Task<IActionResult> AddNoteWithAttachments([FromBody] NoteWithAttachments model)
         {
             if (!ModelState.IsValid)
