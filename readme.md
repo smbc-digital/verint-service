@@ -77,7 +77,7 @@ To enable "Verint Online Forms" integration we have a new object `VerintOnlineFo
 
 ### Extension methods
 
-There extension methods which help with correctly creating `VerintOnlineForRequest` these can be found in the `StockportGovUK.NetStandard.Extensions` nuget package.
+Extension methods help correctly create `VerintOnlineForRequest`, these can be found in the `StockportGovUK.NetStandard.Extensions` nuget package.
 
 If a case has no attributes (extra pieces of information required by confirm) you should be able to use the `Case.ToConfirmIntegrationFormCase` extension method in order to create your Verint Online Form request. This will take all the standard information from the `Case` map it and configuration date to the correct `FormData` fields.
 
