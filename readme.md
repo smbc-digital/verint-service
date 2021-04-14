@@ -73,9 +73,11 @@ The verint-service can be used to create cases with attached verint online forms
 
 Previously integrations such as this relied on the older verint e-forms technology, the data required to enable this was stored or at least was expected to be provided as part of the `Case` object. This is no longer the case.
 
-To enable "Verint Online Forms" integration we have a new object `VerintOnlineFormRequest`, this is part of the `StockportGovUk.NetStandard.Models` package, it wraps the pre-existing `Case` object and adds `FormName`, a string specifiying which VerintOnlineForm to use (this is pretty much always `confirm_universalform`), and `FormData` a key/value dictionary which maps the VerintOnlineForm fields and their values for the standard integration.
+To enable "Verint Online Forms" integration we have a new object `VerintOnlineFormRequest`, this is part of the `StockportGovUk.NetStandard.Models` nuget package, it wraps the pre-existing `Case` object and adds `FormName`, a string specifiying which VerintOnlineForm to use (this is pretty much always `confirm_universalform`), and `FormData` a key/value dictionary which maps the VerintOnlineForm fields and their values for the standard integration.
 
 ### Extension methods
+
+There extension methods which help with correctly creating `VerintOnlineForRequest` these can be found in the `StockportGovUK.NetStandard.Extensions` nuget package.
 
 If a case has no attributes (extra pieces of information required by confirm) you should be able to use the `Case.ToConfirmIntegrationFormCase` extension method in order to create your Verint Online Form request. This will take all the standard information from the `Case` map it and configuration date to the correct `FormData` fields.
 
@@ -119,19 +121,14 @@ Forms that require atrributes request extra information to be provided in `FormD
             verintOnlineFormRequest.FormData.Add("CONF_ATTRIBUTE_YYYY", "ABCDE");
 ```
 
-However it may be preffereable to create a new extension method for that use case, for example
+However it may be preffereable to create a new extension method for that which themselves call the base behaviour and then add the attributes on, for example
 
 ```
         public static VerintOnlineFormRequest ToConfirmExampleCustomIntegrationFormCase(this Case crmCase, ConfirmCustomIntegrationFormOptions configuration)
         {
             var baseCase = crmCase.ToConfirmIntegrationFormCase(configuration);
-
-            if(!string.IsNullOrEmpty(configuration.FloodingSourceReported))
-                baseCase.FormData.Add("CONF_ATTRIBUTE_XXXX", configuration.ValueOfXXXX);
-
-            if(!string.IsNullOrEmpty(configuration.LocationOfFlooding))
-                baseCase.FormData.Add("CONF_ATTRIBUTE_YYYY", configuration.ValueOfYYYY;
-
+            baseCase.FormData.Add("CONF_ATTRIBUTE_XXXX", configuration.ValueOfXXXX);
+            baseCase.FormData.Add("CONF_ATTRIBUTE_YYYY", configuration.ValueOfYYYY;
             return baseCase;
         }
  ```
@@ -147,12 +144,12 @@ However it may be preffereable to create a new extension method for that use cas
 In order to create the Verint Online Form and attach to a case we can use the `VerintServiceGateway` which is in the `StockportGovUk.NetStandard.Gateways` package. This will orchestrate the process of setting up a verint case, attaching the Verint Online Form and ensuring the required data is added.
 
 ```
-            var result = await _verintServiceGateway.CreateVerintOnlineFormCase(verintRequest);
+            var result = await _verintServiceGateway.CreateVerintOnlineFormCase(verintOnlineFormRequest);
 ```
 
-If we want to post directly to the service you can do this by making a POST request to the service endpoint
+If we want to post directly to the service you can do this by making a POST request to the service endpoint, where the body is the request serialized to a json string
 
-```https://my-service-url:port/api/v1/VerintOnlineForm
+```https://my-service-url:port/api/v1/VerintOnlineForm```
 
 ## Attaching documents and notes to cases
 
