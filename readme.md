@@ -159,6 +159,8 @@ Caching note/uploads is useful when other back office automated processes need t
 
 Notes can also be attached on request at any time using the `api/v1/case/add-note-with-attachments` endpoint.
 
+NOTE: For confirm file uploads via the webhook - each uploaded document need be added to a seperate note. i.e. 1 note per document.
+
 ### Upload cached notes webhook
 
 The upload cached notes webhook will retrieve notes from the cache and then attach them to the requested case. The webhooks endpoint can be found at the address below.
