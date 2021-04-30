@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
+using System.Reflection;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
 using verint_service.Attributes;
@@ -105,6 +106,35 @@ namespace verint_service.Utils.Extensions
                 });
                 c.CustomSchemaIds(x => x.FullName);
             });
+        }
+
+        public static void AddStorageProvider(this IServiceCollection services, IConfiguration configuration)
+        {
+            var storageProviderConfiguration = configuration.GetSection("StorageProvider");            
+            
+            switch (storageProviderConfiguration["Type"])
+            {
+                case "Redis":
+                    services.AddStackExchangeRedisCache(options => 
+                    {
+                        options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions
+                        {
+                            EndPoints = 
+                            {
+                                { storageProviderConfiguration["Address"] ?? "127.0.0.1",  6379}
+                            },
+                            ClientName = storageProviderConfiguration["Name"] ?? Assembly.GetEntryAssembly()?.GetName().Name,
+                            SyncTimeout = 30000,
+                            AsyncTimeout = 30000
+                        };
+                    });
+                    break;
+                case "None":
+                    break;
+                default:
+                    services.AddDistributedMemoryCache();
+                    break;
+            }
         }
     }
 }

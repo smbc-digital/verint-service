@@ -14,6 +14,9 @@ namespace verint_service.Services.Case
         Task CreateNotesWithAttachment(NoteWithAttachments note);
         
         Task<bool> AddCaseFormField(string caseId, string key, string value);
+
         Task<string> Close(string id, string reasonTitle, string description);
+
+        Task WriteCachedNotes(string id);
     }
 }

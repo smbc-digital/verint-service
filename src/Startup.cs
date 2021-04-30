@@ -12,7 +12,7 @@ using StockportGovUK.NetStandard.Gateways.Extensions;
 using verint_service.Utils.Extensions;
 using verint_service.Utils.HealthChecks;
 using ServiceCollectionExtensions = StockportGovUK.NetStandard.Gateways.Extensions.ServiceCollectionExtensions;
-
+using StockportGovUK.NetStandard.Abstractions.Caching;
 namespace verint_service
 {
     [ExcludeFromCodeCoverage]
@@ -43,7 +43,12 @@ namespace verint_service
             services.RegisterHelpers();
             services.RegisterServices();
             services.RegisterAttributes();
-            services.RegisterUtils();
+            services.RegisterUtils();          
+            
+            services.AddStorageProvider(Configuration);     
+            services.Configure<CacheProviderConfiguration>(Configuration.GetSection("CacheProviderConfiguration"));
+            services.AddSingleton<ICacheProvider, CacheProvider>();
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
