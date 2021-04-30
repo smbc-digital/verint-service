@@ -41,6 +41,8 @@ namespace VerintWebService
         Task<addDocumentToRepositoryResponse> addDocumentToRepositoryAsync(FWTDocument FWTDocument);
 
         Task<retrieveStreetResponse> retrieveStreetAsync(FWTObjectID FLStreetID);
+
+        Task<closeCasesResponse> closeCasesAsync(VerintWebService.FWTCaseClose FWTCaseClose);
     }
 
     public partial class FLWebInterfaceClient : IVerintClient

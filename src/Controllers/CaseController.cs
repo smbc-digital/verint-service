@@ -122,6 +122,26 @@ namespace verint_service.Controllers
         }
 
         [HttpPatch]
+        [Route("close-case")]
+        public async Task<IActionResult> CloseCase([FromBody]CloseCaseRequest closeCaseRequest)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            try
+            {
+                _logger.LogInformation($"CaseController.CloseCase: Updating case - {closeCaseRequest.CaseReference}");
+                await _caseService.Close(closeCaseRequest.CaseReference, closeCaseRequest.ReasonTitle, closeCaseRequest.Description);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CaseController.CloseCase: Failed to cloase crm case - {closeCaseRequest.CaseReference}", ex.InnerException);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPatch]
         [Route("integration-form-fields")]
         public async Task<IActionResult> UpdateIntegrationFormFields([FromBody]IntegrationFormFieldsUpdateModel updateEntity)
         {

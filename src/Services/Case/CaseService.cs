@@ -99,6 +99,26 @@ namespace verint_service.Services.Case
             }
         }
 
+        public async Task<string> Close(string caseReference, string reasonTitle, string description)
+        {
+            _logger.LogDebug($"CaseService.Close:{caseReference}");    
+            try
+            {
+                var closeCase = new FWTCaseClose
+                {
+                    CaseReference = new[] {caseReference},
+                    Reason = new FWTCaseActionReason {Title = reasonTitle, Description = description}
+                };
+
+                var reference = await _verintConnection.closeCasesAsync(closeCase);
+                return reference.ToString();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception($"CaseService.Create:{caseReference} Verint create case failed", ex);
+            }
+        }
+
         public async Task<int> UpdateDescription(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
             var caseDetails = new FWTCaseUpdate
