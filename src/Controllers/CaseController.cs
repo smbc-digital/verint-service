@@ -53,11 +53,8 @@ namespace verint_service.Controllers
         {
             try
             {
-                _logger.LogDebug($"CaseController.Create:{crmCase.ID}:Attempting to create case {crmCase.EventTitle}, event code {crmCase.EventCode}");
                 var stopwatch = Stopwatch.StartNew();
                 var response = await _caseService.Create(crmCase);
-                stopwatch.Stop();
-                _logger.LogDebug($"CaseController.Create:{crmCase.ID}: Reference {response}, Create case {crmCase.EventTitle}, event code {crmCase.EventCode}, elapsed {stopwatch.Elapsed.TotalSeconds}");
                 return CreatedAtAction("Create", response);
             }
             catch (Exception ex)
@@ -99,13 +96,10 @@ namespace verint_service.Controllers
         public async Task<IActionResult> AddCaseFormField([FromBody]AddCaseFormFieldRequest request)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest();
-            }
 
             try
             {
-                _logger.LogDebug($"CaseController.AddCaseFormField: Adding field {request.Key} to case {request.CaseReference}");
                 return CreatedAtAction("AddCaseFormField", await _caseService.AddCaseFormField(request.CaseReference, request.Key, request.Value));
             }
             catch (Exception ex)
@@ -130,7 +124,6 @@ namespace verint_service.Controllers
 
             try
             {
-                _logger.LogInformation($"CaseController.CloseCase: Updating case - {closeCaseRequest.CaseReference}");
                 await _caseService.Close(closeCaseRequest.CaseReference, closeCaseRequest.ReasonTitle, closeCaseRequest.Description);
                 return Ok();
             }
@@ -146,13 +139,10 @@ namespace verint_service.Controllers
         public async Task<IActionResult> UpdateIntegrationFormFields([FromBody]IntegrationFormFieldsUpdateModel updateEntity)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest();
-            }
 
             try
             {
-                _logger.LogInformation($"CaseController.UpdateIntegrationFormFields: Updating case - {updateEntity.CaseReference}");
                 await _updateService.UpdateIntegrationFormFields(updateEntity);
                 return Ok();
             }
@@ -175,9 +165,7 @@ namespace verint_service.Controllers
         public async Task<IActionResult> AddNoteWithAttachments([FromBody] NoteWithAttachments model)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest();
-            }
 
             try
             {

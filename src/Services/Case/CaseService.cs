@@ -7,7 +7,6 @@ using VerintWebService;
 using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Utils.Consts;
 using verint_service.Utils.Mappers;
-using System.Diagnostics;
 using verint_service.Utils.Builders;
 using StockportGovUK.NetStandard.Abstractions.Caching;
 using Newtonsoft.Json;
@@ -88,13 +87,11 @@ namespace verint_service.Services.Case
 
         public async Task<string> Create(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
-            _logger.LogDebug($"CaseService.Create:{crmCase.ID}: Create Interaction");
             crmCase.InteractionReference = await _interactionService.CreateAsync(crmCase);
             var caseDetails = _caseToFWTCaseCreateMapper.Map(crmCase);
 
             try
             {
-                _logger.LogDebug($"CaseService.Create:{crmCase.ID}: Create Case");
                 var result = _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;
                 if (crmCase.UploadNotesWithAttachmentsAfterCaseCreation)
                 {
@@ -120,7 +117,6 @@ namespace verint_service.Services.Case
 
         public async Task<string> Close(string caseReference, string reasonTitle, string description)
         {
-            _logger.LogDebug($"CaseService.Close:{caseReference}");    
             try
             {
                 var closeCase = new FWTCaseClose
