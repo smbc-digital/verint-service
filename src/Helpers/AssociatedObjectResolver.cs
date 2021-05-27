@@ -38,7 +38,7 @@ namespace verint_service.Helpers
                     break;
 
                 case AssociatedWithBehaviourEnum.Organisation:
-                    if(crmCase.Organisation.Reference != null)
+                    if(crmCase.Organisation != null && crmCase.Organisation.Reference != null)
                     {
                         associatedObjectBriefDetails.ObjectID =  new FWTObjectID
                         {

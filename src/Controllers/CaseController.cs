@@ -178,5 +178,24 @@ namespace verint_service.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPost]
+        [Route("add-note")]
+        public async Task<IActionResult> AddNote([FromBody] NoteRequest noteRequest)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            try
+            {
+                await _caseService.CreateNote(noteRequest);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("CaseController.AddNoteWithAttachments: Failed to create note with attachments", ex.InnerException);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }
