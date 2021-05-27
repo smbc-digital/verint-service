@@ -229,6 +229,21 @@ namespace verint_service.Services.Case
             }
         }
 
+        public async Task CreateNote(NoteRequest noteRequest)
+        {
+                var note = new FWTCreateNoteToParent
+                {
+                    NoteDetails = new FWTCreateNoteDetail
+                    {
+                        Text = noteRequest.NoteText
+                    },
+                    ParentId = noteRequest.CaseRef,
+                    ParentType = noteRequest.Interaction
+                };
+
+                await _verintConnection.createNotesAsync(note);
+        }
+
         private async Task<List<FWTAttachedDocument>> AddDocumentToRepository(List<StockportGovUK.NetStandard.Models.FileManagement.File> attachments)
         {
             var attachedDocuments = new List<FWTAttachedDocument>();
