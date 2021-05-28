@@ -22,7 +22,6 @@
     <PackageReference Include="StockportGovUK.AspNetCore.Availability" Version="1.1.0" />
     <PackageReference Include="StockportGovUK.AspNetCore.Logging.Elasticsearch.Aws" Version="1.0.0" />
     <PackageReference Include="StockportGovUK.AspNetCore.Middleware.ExceptionHandling" Version="2.0.2" />
-    <PackageReference Include="StockportGovUK.NetStandard.Models" Version="3.4.0" />
     <PackageReference Include="StockportGovUK.NetStandard.Abstractions.Caching" Version="1.2.0" />
     <PackageReference Include="StockportGovUK.NetStandard.Gateways" Version="7.4.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
