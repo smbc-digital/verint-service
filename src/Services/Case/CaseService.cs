@@ -95,12 +95,13 @@ namespace verint_service.Services.Case
                 var result = _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;
                 if (crmCase.UploadNotesWithAttachmentsAfterCaseCreation)
                 {
+                    _logger.LogError($"CaseService.create: (crmCase.Note.Count) Notes {crmCase.Notes.Count}. Attachments {crmCase.NotesWithAttachments.Count}. ");
                     crmCase.NotesWithAttachments.ForEach(note => note.CaseRef = Convert.ToInt64(result));
                     await CacheNotesWithAttachments(result, crmCase.NotesWithAttachments);
                 }
                 else
                 {
-                    _logger.LogError($"CaseService.create: (crmCase.NotesWithAttachments.Count) {crmCase.NotesWithAttachments.Count}. ");
+                    _logger.LogError($"CaseService.create: (crmCase.NotesWithAttachments.Count) Notes {crmCase.Notes.Count}. Attachments {crmCase.NotesWithAttachments.Count}. ");
                     crmCase.NotesWithAttachments.ForEach(async note => {
                         note.CaseRef = Convert.ToInt64(result);
                         await CreateNotesWithAttachment(note);
