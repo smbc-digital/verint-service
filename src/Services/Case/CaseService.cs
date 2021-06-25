@@ -100,6 +100,7 @@ namespace verint_service.Services.Case
                 }
                 else
                 {
+                    _logger.LogError($"CaseService.create: (crmCase.NotesWithAttachments.Count) {crmCase.NotesWithAttachments.Count}. ");
                     crmCase.NotesWithAttachments.ForEach(async note => {
                         note.CaseRef = Convert.ToInt64(result);
                         await CreateNotesWithAttachment(note);
@@ -219,7 +220,7 @@ namespace verint_service.Services.Case
                     ParentType = note.Interaction
                 };
 
-                _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}");
+                _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}. This is just one each time.");
                 await _verintConnection.createNotesAsync(noteWithAttachments);
             }
             catch (Exception exception)
