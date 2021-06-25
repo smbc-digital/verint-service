@@ -32,14 +32,15 @@ namespace verint_service.Helpers.VerintConnection
 
             if (elements == null)
             {
-                throw new Exception($"Verint Exception. Unable to parse XML. {reply}");
+                throw new Exception($"RequestInspector:AfterReceiveReply: Unable to parse XML. {reply}");
             }
 
             var errorMessage = elements.Element("ErrorMessage")?.Value;
             var errorCode = elements.Element("ErrorCode")?.Value;
+            var name = elements.Element("Name")?.Value;
             var additionalInfo = elements.Element("AdditionalInfo")?.Value;
 
-            throw new Exception($"Verint Exception. Error message: {errorMessage}. Error code: {errorCode}. Additional info: {additionalInfo}");
+            throw new Exception($"RequestInspector:AfterReceiveReply: Verint Exception. Error message: {errorMessage}, Error code: {name}:{errorCode}, Additional info: {additionalInfo}, XML: {reply.ToString()}");
         }
 
         public object BeforeSendRequest(ref Message request, IClientChannel channel)

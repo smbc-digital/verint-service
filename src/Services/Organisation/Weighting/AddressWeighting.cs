@@ -40,18 +40,18 @@ namespace verint_service.Services.Organisation.Weighting
                 _logger.LogDebug($"AddressWeighting.Calculate - NON matching postcode {organisation.Address.Postcode}, {organisation.Name}");
             }
 
-            if (!string.IsNullOrEmpty(organisation.Address.Number) &&
-                organisationObject.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressNumber) && 
-                string.Equals(x.AddressNumber.Trim(), organisation.Address.Number.ToString(), StringComparison.CurrentCultureIgnoreCase)))
-            {
-                _logger.LogDebug($"AddressWeighting.Calculate - IS matching number {organisation.Address.Number}, {organisation.Name}");
-                hasMatchingNumber = true;
-            }
-            else{
-                _logger.LogDebug($"AddressWeighting.Calculate - NON matching number {organisation.Address.Number}, {organisation.Name}");
-            }
+            // if (!string.IsNullOrEmpty(organisation.Address.Number) &&
+            //     organisationObject.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressNumber) && 
+            //     string.Equals(x.AddressNumber.Trim(), organisation.Address.Number.ToString(), StringComparison.CurrentCultureIgnoreCase)))
+            // {
+            //     _logger.LogDebug($"AddressWeighting.Calculate - IS matching number {organisation.Address.Number}, {organisation.Name}");
+            //     hasMatchingNumber = true;
+            // }
+            // else{
+            //     _logger.LogDebug($"AddressWeighting.Calculate - NON matching number {organisation.Address.Number}, {organisation.Name}");
+            // }
 
-            if(hasMatchingNumber && hasMatchingPostcode)
+            if(hasMatchingPostcode)
             {
                 _logger.LogDebug($"AddressWeighting.Calculate - IS Matching address (postcode, number) - Returning 1 - {organisation.Name}");
                 return 1;
@@ -59,32 +59,6 @@ namespace verint_service.Services.Organisation.Weighting
 
             _logger.LogDebug($"AddressWeighting.Calculate - NON Matching address (postcode, number) - Returning 0 - {organisation.Name}");
             return 0;
-
-            // if (!string.IsNullOrEmpty(organisation.Address.AddressLine1) &&
-            //     organisationObject.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressLine[0]) && string.Equals(x.AddressLine[0].Trim(), organisation.Address.AddressLine1.ToString(), StringComparison.CurrentCultureIgnoreCase)))
-            // {
-            //     score += 1;
-            // }
-
-            // if (!string.IsNullOrEmpty(organisation.Address.AddressLine2) &&
-            //     organisationObject.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressLine[1]) && string.Equals(x.AddressLine[1].Trim(), organisation.Address.AddressLine2.ToString(), StringComparison.CurrentCultureIgnoreCase)))
-            // {
-            //     score += 1;
-            // }
-
-            // if (!string.IsNullOrEmpty(organisation.Address.AddressLine3) &&
-            //     organisationObject.ContactPostals.Any(x => !string.IsNullOrEmpty(x.AddressLine[2]) && string.Equals(x.AddressLine[2].Trim(), organisation.Address.AddressLine3.ToString(), StringComparison.CurrentCultureIgnoreCase)))
-            // {
-            //     score += 1;
-            // }
-
-            // if (!string.IsNullOrEmpty(organisation.Address.City) &&
-            //     organisationObject.ContactPostals.Any(x => !string.IsNullOrEmpty(x.City) && string.Equals(x.City.Trim(), organisation.Address.City.ToString(), StringComparison.CurrentCultureIgnoreCase)))
-            // {
-            //     score += 1;
-            // }
-            
-            // return score > 2 ? 2 : score;
         }
     }
 }

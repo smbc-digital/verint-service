@@ -7,7 +7,9 @@ using VerintWebService;
 using StockportGovUK.NetStandard.Models.Verint;
 using verint_service.Utils.Consts;
 using verint_service.Utils.Mappers;
-using System.Diagnostics;
+using verint_service.Utils.Builders;
+using StockportGovUK.NetStandard.Abstractions.Caching;
+using Newtonsoft.Json;
 
 namespace verint_service.Services.Case
 {
@@ -21,20 +23,23 @@ namespace verint_service.Services.Case
 
         private IIndividualService _individualService;
 
+        private ICacheProvider _cacheProvider;
+
         private CaseToFWTCaseCreateMapper _caseToFWTCaseCreateMapper;
 
         public CaseService(IVerintConnection verint,
                             ILogger<CaseService> logger,
                             IInteractionService interactionService,
                             CaseToFWTCaseCreateMapper caseToFWTCaseCreateMapper,
-                            IIndividualService individualService
-                            )
+                            IIndividualService individualService,
+                            ICacheProvider cacheProvider)
         {
             _logger = logger;
             _verintConnection = verint.Client();
             _interactionService = interactionService;
             _caseToFWTCaseCreateMapper = caseToFWTCaseCreateMapper;
             _individualService = individualService;
+            _cacheProvider = cacheProvider;
         }
 
         public async Task<StockportGovUK.NetStandard.Models.Verint.Case> GetCase(string caseId)
@@ -82,31 +87,50 @@ namespace verint_service.Services.Case
 
         public async Task<string> Create(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
         {
-            
-            _logger.LogDebug($"CaseService.Create:{crmCase.ID}: Create Interaction");
-            var stopwatch = Stopwatch.StartNew();
             crmCase.InteractionReference = await _interactionService.CreateAsync(crmCase);
-            stopwatch.Stop();
-            _logger.LogDebug($"CaseService.Create:{crmCase.ID}: Interaction created : elapsed {stopwatch.Elapsed.TotalSeconds}");
-
-            _logger.LogDebug($"CaseService.Create:{crmCase.ID}: Mapping CrmCase");
-            stopwatch = Stopwatch.StartNew();
             var caseDetails = _caseToFWTCaseCreateMapper.Map(crmCase);
-            stopwatch.Stop();
-            _logger.LogDebug($"CaseService.Create:{crmCase.ID} Mapping finished, elapsed {stopwatch.Elapsed.TotalSeconds}");
 
             try
             {
-                _logger.LogDebug($"CaseService.Create:{crmCase.ID}: Verint createcase service call");
-                stopwatch = Stopwatch.StartNew();
-                var result  = _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;
-                stopwatch.Stop();
-                _logger.LogDebug($"CaseService.Create:{crmCase.ID} Verint create case finished, elapsed {stopwatch.Elapsed.TotalSeconds}");
+                var result = _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;
+                if (crmCase.UploadNotesWithAttachmentsAfterCaseCreation)
+                {
+                    crmCase.NotesWithAttachments.ForEach(note => note.CaseRef = Convert.ToInt64(result));
+                    await CacheNotesWithAttachments(result, crmCase.NotesWithAttachments);
+                }
+                else
+                {
+                    crmCase.NotesWithAttachments.ForEach(async note => {
+                        note.CaseRef = Convert.ToInt64(result);
+                        await CreateNotesWithAttachment(note);
+                    });
+                }                
+
                 return result;
             }
             catch(Exception ex)
             {
-                throw new Exception($"CaseService.Create:{crmCase.ID} Verint create case failed", ex);
+                _logger.LogError(ex, $"CaseService.Create:{crmCase.ID} Verint create case failed");
+                throw ex;
+            }
+        }
+
+        public async Task<string> Close(string caseReference, string reasonTitle, string description)
+        {
+            try
+            {
+                var closeCase = new FWTCaseClose
+                {
+                    CaseReference = new[] {caseReference},
+                    Reason = new FWTCaseActionReason {Title = reasonTitle, Description = description}
+                };
+
+                var reference = await _verintConnection.closeCasesAsync(closeCase);
+                return reference.ToString();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception($"CaseService.Create:{caseReference} Verint create case failed", ex);
             }
         }
 
@@ -127,6 +151,43 @@ namespace verint_service.Services.Case
             {
                 _logger.LogError(exception, "Error when updating Description field");
                 throw;
+            }
+        }
+
+        public async Task<bool> AddCaseFormField(string caseReference, string key, string value)
+        {
+            var caseDetails = new FWTCaseUpdate
+            {
+                CaseReference = caseReference,
+            };
+
+            caseDetails.Form = new FWTCaseForm{ 
+                                FormField = new FWTCaseFormField[] 
+                                    { 
+                                        CaseFormBuilder.CreateCaseFormField(key, value) 
+                                    }
+                                };
+                                
+            var result = await _verintConnection.updateCaseAsync(caseDetails);
+
+            return result != null;
+        }
+
+        private async Task CacheNotesWithAttachments(string id, List<NoteWithAttachments> notesWithAttachment)
+        {
+            await _cacheProvider.SetStringAsync(id, JsonConvert.SerializeObject(notesWithAttachment));
+        }
+
+        public async Task WriteCachedNotes(string id)
+        {
+            if (id.Contains('-'))
+                id = id.Split('-')[1];
+
+            string json = await _cacheProvider.GetStringAsync(id);
+            if (!string.IsNullOrEmpty(json))
+            {
+                var notes = JsonConvert.DeserializeObject<List<NoteWithAttachments>>(json);
+                notes.ForEach(async note => await CreateNotesWithAttachment(note));
             }
         }
 
@@ -166,6 +227,21 @@ namespace verint_service.Services.Case
                 _logger.LogError(exception, "Error when adding attachment");
                 throw;
             }
+        }
+
+        public async Task CreateNote(NoteRequest noteRequest)
+        {
+                var note = new FWTCreateNoteToParent
+                {
+                    NoteDetails = new FWTCreateNoteDetail
+                    {
+                        Text = noteRequest.NoteText
+                    },
+                    ParentId = noteRequest.CaseRef,
+                    ParentType = noteRequest.Interaction
+                };
+
+                await _verintConnection.createNotesAsync(note);
         }
 
         private async Task<List<FWTAttachedDocument>> AddDocumentToRepository(List<StockportGovUK.NetStandard.Models.FileManagement.File> attachments)

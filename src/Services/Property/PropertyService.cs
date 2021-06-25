@@ -36,11 +36,11 @@ namespace verint_service.Services.Property
         {
             var propertySearch = new FWTObjectID
             {
-                ObjectReference = new [] { id },
+                ObjectReference = new[] { id },
                 ObjectType = VerintConstants.PropertyObjectType
             };
 
-            var result  = await _verintConnection.retrievePropertyAsync(propertySearch);
+            var result = await _verintConnection.retrievePropertyAsync(propertySearch);
 
             var address = new StockportGovUK.NetStandard.Models.Verint.Address
             {
@@ -62,18 +62,19 @@ namespace verint_service.Services.Property
         {
             // HACK: Check whether UPRN provided is actually an ID and if so lookup the real UPRN
             // If it's a real ID it shouldn't return a property!
-            if(!string.IsNullOrEmpty(address.UPRN))
+            if (!string.IsNullOrEmpty(address.UPRN))
             {
-                try{
+                try
+                {
                     var propertyResult = await GetPropertyAsync(address.UPRN);
-                    if(propertyResult != null)
+                    if (propertyResult != null)
                     {
                         return propertyResult.UPRN;
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    _logger.LogWarning($"PropertyService.CheckUPRNForId - Exception occurred searching for property, assuming UPRN {address.UPRN}", ex);            
+                    _logger.LogWarning($"PropertyService.CheckUPRNForId - Exception occurred searching for property, assuming UPRN {address.UPRN}", ex);
                 }
             }
 
@@ -90,6 +91,90 @@ namespace verint_service.Services.Property
             });
 
             return addressResults;
+        }
+
+        [Obsolete("This method will not be used in the future.")]
+        public async Task<IEnumerable<StockportGovUK.NetStandard.Models.Verint.Address>> GetPropertiesAsync(string propertySearch)
+        {
+            var fWTPropertySearch = new FWTPropertySearch
+            {
+                Postcode = propertySearch
+            };
+
+            var propertySearchResults = await _verintConnection.searchForPropertyAsync(fWTPropertySearch);
+            var addressResults = propertySearchResults.FWTObjectBriefDetailsList.Select(result => new AddressSearchResult
+            {
+                UniqueId = result.ObjectID.ObjectReference[0],
+                Name = result.ObjectDescription
+            });
+
+            var addressList = new List<StockportGovUK.NetStandard.Models.Verint.Address>();
+
+            foreach (var address in addressResults)
+            {
+                var fWTObjectID = new FWTObjectID
+                {
+                    ObjectReference = new[] { address.UniqueId },
+                    ObjectType = VerintConstants.PropertyObjectType
+                };
+
+                var result = await _verintConnection.retrievePropertyAsync(fWTObjectID);
+
+                addressList.Add(new StockportGovUK.NetStandard.Models.Verint.Address
+                {
+                    UPRN = result.FWTProperty.UPRN?.Trim(),
+                    Description = address.Name?.Trim(),
+                    AddressLine1 = result.FWTProperty.AddressLine1?.Trim(),
+                    AddressLine2 = result.FWTProperty.AddressLine2?.Trim(),
+                    City = result.FWTProperty.City?.Trim(),
+                    Postcode = result.FWTProperty.Postcode?.Trim(),
+                    Number = result.FWTProperty.AddressNumber?.Trim(),
+                    USRN = result.FWTProperty.USRN?.Trim(),
+                    Easting = result.FWTProperty.GPSItmGeoCode?.Trim(),
+                    Northing = result.FWTProperty.GPSUtmGeoCode?.Trim()
+                });
+            }
+
+            return addressList;
+        }
+
+        [Obsolete("This method will not be used in the future.")]
+        public async Task<StockportGovUK.NetStandard.Models.Verint.Address> GetPropertyByUprnAsync(string uprn)
+        {
+            var fwtPropertySearch = new FWTPropertySearch
+            {
+                UPRN = uprn
+            };
+
+            var propertySearchResults = await _verintConnection.searchForPropertyAsync(fwtPropertySearch);
+
+            if (propertySearchResults == null || !propertySearchResults.FWTObjectBriefDetailsList.Any())
+            {
+                return null;
+            }
+
+            var fWTObjectID = new FWTObjectID
+            {
+                ObjectReference = new[] { propertySearchResults.FWTObjectBriefDetailsList.FirstOrDefault().ObjectID.ObjectReference[0] },
+                ObjectType = VerintConstants.PropertyObjectType
+            };
+
+            var result = await _verintConnection.retrievePropertyAsync(fWTObjectID);
+
+            var address = new StockportGovUK.NetStandard.Models.Verint.Address
+            {
+                UPRN = result.FWTProperty.UPRN?.Trim(),
+                Description = propertySearchResults.FWTObjectBriefDetailsList.FirstOrDefault().ObjectDescription?.Trim(),
+                AddressLine1 = result.FWTProperty.AddressLine1?.Trim(),
+                AddressLine2 = result.FWTProperty.AddressLine2?.Trim(),
+                City = result.FWTProperty.City?.Trim(),
+                Postcode = result.FWTProperty.Postcode?.Trim(),
+                Number = result.FWTProperty.AddressNumber?.Trim(),
+                USRN = result.FWTProperty.USRN?.Trim(),
+                Easting = result.FWTProperty.GPSItmGeoCode?.Trim(),
+                Northing = result.FWTProperty.GPSUtmGeoCode?.Trim()
+            };
+            return address;
         }
     }
 }

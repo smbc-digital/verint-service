@@ -11,6 +11,13 @@
             <param name="crmCase">The case to be updated</param>
             <returns>An int declaring the state of the update</returns>
         </member>
+        <member name="M:verint_service.Controllers.CaseController.AddCaseFormField(StockportGovUK.NetStandard.Models.Verint.Update.AddCaseFormFieldRequest)">
+            <summary>
+            Adds a case form field the specified case
+            </summary>
+            <param name="request"></param>
+            <returns>An int declaring the state of the update</returns>
+        </member>
         <member name="M:verint_service.Controllers.OrganisationController.Get(System.String)">
             <summary>
             Gets an existing orgnisation
