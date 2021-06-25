@@ -169,7 +169,6 @@ namespace verint_service.Controllers
 
             try
             {
-                _logger.LogDebug($"CaseController.AddNoteWithAttachments: Number of attachments {model.Attachments.Count}");
                 await _caseService.CreateNotesWithAttachment(model);
                 return Ok();
             }

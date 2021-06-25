@@ -219,6 +219,7 @@ namespace verint_service.Services.Case
                     ParentType = note.Interaction
                 };
 
+                _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}");
                 await _verintConnection.createNotesAsync(noteWithAttachments);
             }
             catch (Exception exception)
