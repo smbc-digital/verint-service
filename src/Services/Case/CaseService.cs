@@ -189,16 +189,56 @@ namespace verint_service.Services.Case
             if (!string.IsNullOrEmpty(json))
             {
                 var notes = JsonConvert.DeserializeObject<List<NoteWithAttachments>>(json);
-                notes.ForEach(note => CreateNotesWithAttachment(note));
-                //notes.ForEach(async note => await CreateNotesWithAttachment(note));
+                notes.ForEach(async note => await CreateNotesWithAttachment(note));
+                //CreateNotesWithAttachments(notes);
             }
         }
 
-        public async Task CreateNotesWithAttachment(NoteWithAttachments note)
+		//private void CreateNotesWithAttachments(List<NoteWithAttachments> notes)
+		//{
+  //          try
+  //          {
+  //              var repositoryResult = await AddDocumentToRepository(note.Attachments);
+  //              var attachedFileReferences = new List<FWTNoteDetailAttachment>();
+
+  //              repositoryResult.ForEach(r =>
+  //              {
+  //                  attachedFileReferences.Add(new FWTNoteDetailAttachment
+  //                  {
+  //                      AttachmentIdentifier = r.documentReference,
+  //                      AttachmentName = r.documentName,
+  //                      AttachmentTypeSpecified = false
+  //                  });
+  //              });
+
+  //              var noteWithAttachments = new FWTCreateNoteToParent
+  //              {
+  //                  NoteDetails = new FWTCreateNoteDetail
+  //                  {
+  //                      Text = note.AttachmentsDescription,
+  //                      NoteAttachments = attachedFileReferences.ToArray()
+  //                  },
+  //                  ParentId = note.CaseRef,
+  //                  ParentType = note.Interaction
+  //              };
+
+  //              _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
+  //              await _verintConnection.createNotesAsync(noteWithAttachments);
+  //          }
+  //          catch (Exception exception)
+  //          {
+  //              Console.WriteLine(exception);
+  //              _logger.LogError(exception, "Error when adding attachment");
+  //              throw;
+  //          }
+  //      }
+
+		public async Task CreateNotesWithAttachment(NoteWithAttachments note)
         {
             try
             {
                 var repositoryResult = await AddDocumentToRepository(note.Attachments);
+                _logger.LogError($"CaseController.CreateNotesWithAttachment: Docuiment attachmet keyname {note.Attachments[0].KeyName}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
                 var attachedFileReferences = new List<FWTNoteDetailAttachment>();
 
                 repositoryResult.ForEach(r =>
@@ -224,9 +264,6 @@ namespace verint_service.Services.Case
 
                 _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
                 await _verintConnection.createNotesAsync(noteWithAttachments);
-
-                Thread.Sleep(5000);
-                _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
             }
             catch (Exception exception)
             {
