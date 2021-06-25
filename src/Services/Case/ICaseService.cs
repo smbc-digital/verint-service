@@ -20,5 +20,6 @@ namespace verint_service.Services.Case
         Task<string> Close(string id, string reasonTitle, string description);
 
         Task WriteCachedNotes(string id);
+        Task<int> UpdateTitle(StockportGovUK.NetStandard.Models.Verint.Case crmCase);
     }
 }

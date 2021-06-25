@@ -154,6 +154,26 @@ namespace verint_service.Services.Case
             }
         }
 
+        public async Task<int> UpdateTitle(StockportGovUK.NetStandard.Models.Verint.Case crmCase)
+        {
+            var caseDetails = new FWTCaseUpdate
+            {
+                CaseReference = crmCase.CaseReference,
+                Title = crmCase.CaseTitle
+            };
+
+            try
+            {
+                var result = await _verintConnection.updateCaseAsync(caseDetails);
+                return result.FWTCaseUpdateResponse;
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, "Error when updating Description field");
+                throw;
+            }
+        }
+
         public async Task<bool> AddCaseFormField(string caseReference, string key, string value)
         {
             var caseDetails = new FWTCaseUpdate

@@ -87,6 +87,28 @@ namespace verint_service.Controllers
         }
 
         /// <summary>
+        /// Method to update case title
+        /// </summary>
+        /// <param name="crmCase">The case to be updated</param>
+        /// <returns>An int declaring the state of the update</returns>
+        [HttpPost]
+        [Route("updatecasetitle")]
+        public async Task<IActionResult> UpdateCaseTitle(Case crmCase)
+        {
+            try
+            {
+                var response = await _caseService.UpdateTitle(crmCase);
+
+                return CreatedAtAction("UpdateCaseTitle", response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"CaseController.UpdateCaseTitle: Failed to update crm case title: {crmCase.CaseReference}", ex.InnerException);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        /// <summary>
         /// Adds a case form field the specified case
         /// </summary>
         /// <param name="request"></param>
