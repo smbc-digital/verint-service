@@ -10,6 +10,7 @@ using verint_service.Utils.Mappers;
 using verint_service.Utils.Builders;
 using StockportGovUK.NetStandard.Abstractions.Caching;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace verint_service.Services.Case
 {
@@ -101,7 +102,6 @@ namespace verint_service.Services.Case
                 }
                 else
                 {
-                    _logger.LogError($"CaseService.create: (crmCase.NotesWithAttachments.Count) Notes. Attachments {crmCase.NotesWithAttachments.Count}. ");
                     crmCase.NotesWithAttachments.ForEach(async note => {
                         note.CaseRef = Convert.ToInt64(result);
                         await CreateNotesWithAttachment(note);
@@ -223,6 +223,7 @@ namespace verint_service.Services.Case
 
                 _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}. This is just one each time.");
                 await _verintConnection.createNotesAsync(noteWithAttachments);
+                Thread.Sleep(2000);
             }
             catch (Exception exception)
             {
