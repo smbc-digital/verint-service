@@ -221,9 +221,10 @@ namespace verint_service.Services.Case
                     ParentType = note.Interaction
                 };
 
-                _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}. This is just one each time.");
+                _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
                 await _verintConnection.createNotesAsync(noteWithAttachments);
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
+                _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
             }
             catch (Exception exception)
             {
