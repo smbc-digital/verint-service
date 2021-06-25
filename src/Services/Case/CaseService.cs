@@ -101,7 +101,7 @@ namespace verint_service.Services.Case
                 }
                 else
                 {
-                    _logger.LogError($"CaseService.create: (crmCase.NotesWithAttachments.Count) Notes {crmCase.Notes.Count}. Attachments {crmCase.NotesWithAttachments.Count}. ");
+                    _logger.LogError($"CaseService.create: (crmCase.NotesWithAttachments.Count) Notes. Attachments {crmCase.NotesWithAttachments.Count}. ");
                     crmCase.NotesWithAttachments.ForEach(async note => {
                         note.CaseRef = Convert.ToInt64(result);
                         await CreateNotesWithAttachment(note);
