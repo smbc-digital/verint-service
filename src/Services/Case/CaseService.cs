@@ -189,7 +189,8 @@ namespace verint_service.Services.Case
             if (!string.IsNullOrEmpty(json))
             {
                 var notes = JsonConvert.DeserializeObject<List<NoteWithAttachments>>(json);
-                notes.ForEach(async note => await CreateNotesWithAttachment(note));
+                notes.ForEach(note => CreateNotesWithAttachment(note));
+                //notes.ForEach(async note => await CreateNotesWithAttachment(note));
             }
         }
 
@@ -223,6 +224,7 @@ namespace verint_service.Services.Case
 
                 _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
                 await _verintConnection.createNotesAsync(noteWithAttachments);
+
                 Thread.Sleep(5000);
                 _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
             }
