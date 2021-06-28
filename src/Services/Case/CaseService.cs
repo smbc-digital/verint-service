@@ -194,7 +194,7 @@ namespace verint_service.Services.Case
 				{
                     await CreateNotesWithAttachment(note);
                     _logger.LogError($"CaseController.WriteCachedNotes: {note.Attachments[0].TrustedOriginalFileName}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
-                    Thread.Sleep(2000);
+                    //Thread.Sleep(1000);
                 }
             }
         }
