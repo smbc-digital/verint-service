@@ -189,49 +189,17 @@ namespace verint_service.Services.Case
             if (!string.IsNullOrEmpty(json))
             {
                 var notes = JsonConvert.DeserializeObject<List<NoteWithAttachments>>(json);
-                notes.ForEach(async note => await CreateNotesWithAttachment(note));
-                //CreateNotesWithAttachments(notes);
+//                notes.ForEach(async note => await CreateNotesWithAttachment(note));
+				foreach (var note in notes)
+				{
+                    await CreateNotesWithAttachment(note);
+                    _logger.LogError($"CaseController.WriteCachedNotes: {note.Attachments[0].TrustedOriginalFileName}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
+                    Thread.Sleep(5000);
+                }
+                    
             }
         }
 
-		//private void CreateNotesWithAttachments(List<NoteWithAttachments> notes)
-		//{
-  //          try
-  //          {
-  //              var repositoryResult = await AddDocumentToRepository(note.Attachments);
-  //              var attachedFileReferences = new List<FWTNoteDetailAttachment>();
-
-  //              repositoryResult.ForEach(r =>
-  //              {
-  //                  attachedFileReferences.Add(new FWTNoteDetailAttachment
-  //                  {
-  //                      AttachmentIdentifier = r.documentReference,
-  //                      AttachmentName = r.documentName,
-  //                      AttachmentTypeSpecified = false
-  //                  });
-  //              });
-
-  //              var noteWithAttachments = new FWTCreateNoteToParent
-  //              {
-  //                  NoteDetails = new FWTCreateNoteDetail
-  //                  {
-  //                      Text = note.AttachmentsDescription,
-  //                      NoteAttachments = attachedFileReferences.ToArray()
-  //                  },
-  //                  ParentId = note.CaseRef,
-  //                  ParentType = note.Interaction
-  //              };
-
-  //              _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
-  //              await _verintConnection.createNotesAsync(noteWithAttachments);
-  //          }
-  //          catch (Exception exception)
-  //          {
-  //              Console.WriteLine(exception);
-  //              _logger.LogError(exception, "Error when adding attachment");
-  //              throw;
-  //          }
-  //      }
 
 		public async Task CreateNotesWithAttachment(NoteWithAttachments note)
         {
