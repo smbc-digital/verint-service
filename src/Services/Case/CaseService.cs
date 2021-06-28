@@ -189,14 +189,13 @@ namespace verint_service.Services.Case
             if (!string.IsNullOrEmpty(json))
             {
                 var notes = JsonConvert.DeserializeObject<List<NoteWithAttachments>>(json);
-//                notes.ForEach(async note => await CreateNotesWithAttachment(note));
-				foreach (var note in notes)
-				{
-                    await CreateNotesWithAttachment(note);
-                    _logger.LogError($"CaseController.WriteCachedNotes: {note.Attachments[0].TrustedOriginalFileName}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
-                    Thread.Sleep(5000);
-                }
-                    
+              notes.ForEach(async note => await CreateNotesWithAttachment(note));
+				//foreach (var note in notes)
+				//{
+                //    await CreateNotesWithAttachment(note);
+                //    _logger.LogError($"CaseController.WriteCachedNotes: {note.Attachments[0].TrustedOriginalFileName}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
+                //    Thread.Sleep(5000);
+                //}
             }
         }
 
