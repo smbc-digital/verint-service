@@ -189,12 +189,10 @@ namespace verint_service.Services.Case
             if (!string.IsNullOrEmpty(json))
             {
                 var notes = JsonConvert.DeserializeObject<List<NoteWithAttachments>>(json);
-              //notes.ForEach(async note => await CreateNotesWithAttachment(note));
+                //notes.ForEach(async note => await CreateNotesWithAttachment(note));
 				foreach (var note in notes)
 				{
                     await CreateNotesWithAttachment(note);
-                    _logger.LogError($"CaseController.WriteCachedNotes: {note.Attachments[0].TrustedOriginalFileName}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
-                    //Thread.Sleep(1000);
                 }
             }
         }
@@ -205,7 +203,6 @@ namespace verint_service.Services.Case
             try
             {
                 var repositoryResult = await AddDocumentToRepository(note.Attachments);
-                _logger.LogError($"CaseController.CreateNotesWithAttachment: Docuiment attachmet keyname {note.Attachments[0].TrustedOriginalFileName}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
                 var attachedFileReferences = new List<FWTNoteDetailAttachment>();
 
                 repositoryResult.ForEach(r =>
@@ -229,7 +226,6 @@ namespace verint_service.Services.Case
                     ParentType = note.Interaction
                 };
 
-                _logger.LogError($"CaseController.AddNoteWithAttachments: Number of attachments {note.Attachments.Count}. {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}");
                 await _verintConnection.createNotesAsync(noteWithAttachments);
             }
             catch (Exception exception)
