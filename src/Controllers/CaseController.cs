@@ -92,7 +92,7 @@ namespace verint_service.Controllers
         /// <param name="crmCase">The case to be updated</param>
         /// <returns>An int declaring the state of the update</returns>
         [HttpPost]
-        [Route("updatecasetitle")]
+        [Route("update-case-title")]
         public async Task<IActionResult> UpdateCaseTitle(Case crmCase)
         {
             try
