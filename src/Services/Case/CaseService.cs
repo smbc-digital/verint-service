@@ -10,6 +10,7 @@ using verint_service.Utils.Mappers;
 using verint_service.Utils.Builders;
 using StockportGovUK.NetStandard.Abstractions.Caching;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace verint_service.Services.Case
 {
@@ -95,6 +96,7 @@ namespace verint_service.Services.Case
                 var result = _verintConnection.createCaseAsync(caseDetails).Result.CaseReference;
                 if (crmCase.UploadNotesWithAttachmentsAfterCaseCreation)
                 {
+                    _logger.LogError($"CaseService.create: (crmCase.Note.Count) Notes {crmCase.NotesWithAttachments.Count}. ");
                     crmCase.NotesWithAttachments.ForEach(note => note.CaseRef = Convert.ToInt64(result));
                     await CacheNotesWithAttachments(result, crmCase.NotesWithAttachments);
                 }
@@ -207,11 +209,16 @@ namespace verint_service.Services.Case
             if (!string.IsNullOrEmpty(json))
             {
                 var notes = JsonConvert.DeserializeObject<List<NoteWithAttachments>>(json);
-                notes.ForEach(async note => await CreateNotesWithAttachment(note));
+                //notes.ForEach(async note => await CreateNotesWithAttachment(note));
+				foreach (var note in notes)
+				{
+                    await CreateNotesWithAttachment(note);
+                }
             }
         }
 
-        public async Task CreateNotesWithAttachment(NoteWithAttachments note)
+
+		public async Task CreateNotesWithAttachment(NoteWithAttachments note)
         {
             try
             {
