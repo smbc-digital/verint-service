@@ -66,6 +66,10 @@ namespace verint_service.Utils.Extensions
 
             if ((individual.ContactPostals == null || individual.ContactPostals.Count() == 0) && customer.Address != null)
             {
+                //Check whether the address already exists contact postals
+                if(individual.ContactPostals.Any(contactPostal => contactPostal.UPRN == customer.Address.UPRN))
+                    return false;
+                
                 return true;
             }
 
