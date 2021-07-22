@@ -186,6 +186,7 @@ namespace verint_service.Services.Individual
 
             return await SearchAsync(baseSearchCriteria, customer);
         }
+        
         private async Task<FWTObjectID> GetBestMatchingAsync(FWTObjectBriefDetails[] individualResults, Customer customer)
         {
             FWTIndividual bestMatch = null;
